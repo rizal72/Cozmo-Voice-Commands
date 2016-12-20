@@ -17,7 +17,7 @@ on **Linux** from Terminal, do:
 `pip install git+https://github.com/rizal72/Cozmo-Voice-Commands`  
 
 ##Note for Developers:
-If you want to just run the App #without installing the package# , just run `./run.py` from the root folder,  
+If you want to just run the App **without installing the package** , just run `./run.py` from the root folder,  
 after you have cloned or downloaded the [repository](https://github.com/rizal72/Cozmo-Voice-Commands) content.
 
 ##Usage
