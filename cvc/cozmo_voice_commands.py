@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-Cozmo Voice Commands (CvC) - Version 0.1.0
+Cozmo Voice Commands (CvC)
 Author: Riccardo Sallusti - http://riccardosallusti.it
 Description: Issue complex voice commands to Cozmo, and watch him execute them.
 More informations: https://github.com/rizal72/Cozmo-Voice-Commands
