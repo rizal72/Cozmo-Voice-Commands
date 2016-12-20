@@ -9,19 +9,21 @@ You can say *"Cozmo, drive 20"*, or *"Cozmo, drive for 20 seconds"*, **and Cozmo
 Still in Beta - Work in Progress!**
 
 ##Installation
-1. install Cozmo SDK http://cozmosdk.anki.com/docs/
-2. install `portaudio`: `brew install portaudio`
-3. install a couple of packages: `pip3 install --user termcolor SpeechRecognition PyAudio`
-4. If you are on linux and PyAudio throws errors, do this:  
-`sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio`  
+1. #MacOS#: install `portaudio`: `brew install portaudio`  
+#Linux#: install `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio`
+2. install `cvc` package: `pip install git+https://github.com/rizal72/Cozmo-Voice-Commands`
+
+#Note for Developers:
+If you want to just run the App #without installing the package# , just run `./run.py` from the root folder,  
+after you have cloned or downloaded the [repository](https://github.com/rizal72/Cozmo-Voice-Commands) content.
 
 ##Usage
-* run command `./cozmo_voice_commands.py` from the Terminal application
+* run command `cvc` from the Terminal application
 * choose speech recognition language (English and Italian are currently supported)
 * issue commands by voice, starting with the activation word "**Cozmo**", then the command that may contain arguments if needed: a list of supported commands and arguments is provided at runtime
 
 ##Customization
-You can add as many new commands as you like, commands are located in `voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english, so for instance you'll create the method "en_smile()" and the voice command you'll have to say will be "smile"*.  
+You can add as many new commands as you like, commands are located in `cvc/voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english, so for instance you'll create the method "en_smile()" and the voice command you'll have to say will be "smile"*.  
 Some commands support one argument, for example: if you say *"drive for 10 seconds"*, 10 will be passed to the method *"en_drive"*, any other words will be ignored.
 
 ##Todo next
