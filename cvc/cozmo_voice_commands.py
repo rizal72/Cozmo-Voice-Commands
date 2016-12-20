@@ -55,9 +55,10 @@ def run(sdk_conn):
         cprint("You can give voice commands to Cozmo. Available Commands are:\n" + str(get_supported_commands()), "green")
         with sr.Microphone(chunk_size=512) as source:
             while 1:
-                checkBattery(robot)
-                flash_backpack(robot, True)
-                #robot.say_text(text="", play_excited_animation=True).wait_for_completed()
+                if robot:
+                    checkBattery(robot)
+                    flash_backpack(robot, True)
+                    #robot.say_text(text="", play_excited_animation=True).wait_for_completed()
                 print("\nSay something (ctrl+c to exit):")
                 hear(source, robot)
     except KeyboardInterrupt:
@@ -92,12 +93,12 @@ def set_language():
     cprint("\nlanguage set to: " + lang + "\n", "green")
 
 def checkBattery(robot):
-    if robot:
-        if (robot.battery_voltage <= 3.5):
-            color = "red"
-        else:
-            color = "yellow"
-        cprint("BATTERY LEVEL: %f" % robot.battery_voltage, color)
+
+    if (robot.battery_voltage <= 3.5):
+        color = "red"
+    else:
+        color = "yellow"
+    cprint("BATTERY LEVEL: %f" % robot.battery_voltage, color)
 
 
 def get_supported_commands():
