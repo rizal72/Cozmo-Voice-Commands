@@ -11,9 +11,8 @@ You can say *"Cozmo, drive 20"*, or *"Cozmo, drive for 20 seconds"*, **and Cozmo
 Still in Beta - Work in Progress!**
 
 ##Installation
-
-1. #MacOS#: install `portaudio`: `brew install portaudio`
-#Linux#: install `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio`
+1. on **MacOS** install **portaudio**: `brew install portaudio` (see [Homebrew](http://brew.sh/index_it.html) if you don't know what is)
+on **Linux** install: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio`
 2. install `cvc` package: `pip install git+https://github.com/rizal72/Cozmo-Voice-Commands`
 
 #Note for Developers:
