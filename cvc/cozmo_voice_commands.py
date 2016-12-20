@@ -19,11 +19,6 @@ try:
 except ImportError:
     sys.exit('run `pip3 install --user SpeechRecognition PyAudio` to run this script.\nIf you are on linux you must: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install pyaudio`')
 import cvc.voice_commands as voice_commands
-'''try: #this try is needed if you want to run cvc.voice_commands.py standalone without installing cvc
-    import cvc.voice_commands as voice_commands
-except ImportError:
-    import voice_commands'''
-
 
 ###### VARS ######
 lang = "en"
