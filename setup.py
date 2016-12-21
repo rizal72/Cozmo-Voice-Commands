@@ -4,7 +4,7 @@ import os
 setup(name='cvc',
       version="0.2.1",
       description='Control Cozmo with your voice',
-      url='https://github.com/rizal72/Cozmo-Apps',
+      url='https://github.com/rizal72/Cozmo-Voice-Commands',
       author='Riccardo Sallusti',
       author_email='riccardo.sallusti@gmail.com',
       license='GNU',
