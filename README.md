@@ -1,11 +1,12 @@
-#Cozmo voice Commands (CvC) v.0.1.0
+#Cozmo voice Commands (CvC) Version 0.1.1
 
-Issue voice commands to Cozmo, and watch him execute them: highly customizable, you can add new commands with ease.
+Issue complex voice commands to Cozmo, and watch him execute them: highly customizable, you can add new commands with ease.
 Recognizes *English* and *Italian*.
 
-##Examples
-You can say *"Cozmo, drive 20"*, or *"Cozmo, drive for 20 seconds"*, **and Cozmo will execute the command in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, it even parses numbers inside long sentences ;)  
-**Tested on macOS an Linux! Should work on Windows as well, installing the corresponding libraries.  
+##Description
+You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING for 20 seconds"*, **and Cozmo will execute the command in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, **it even parses verbs in their different conjugations**, and numbers inside long sentences ;)
+
+**Tested on macOS an Linux!
 Still in Beta - Work in Progress!**
 
 ##Installation
@@ -26,11 +27,11 @@ after you have cloned/downloaded the [repository](https://github.com/rizal72/Coz
 * issue commands by voice, starting with the activation word "**Cozmo**", then the command that may contain arguments if needed: a list of supported commands and arguments is provided at runtime
 
 ##Customization
-You can add as many new commands as you like, commands are located in `cvc/voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english, so for instance you'll create the method "en_smile()" and the voice command you'll have to say will be "smile"*.  
+You can add as many new commands as you like, commands are located in `cvc/voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english so, for instance, you'll create the method "en_smile()" and the voice command you'll have to say will be "smile" (or "smiling" or "smiled"... magic...)*.  
 Some commands support one argument, for example: if you say *"drive for 10 seconds"*, 10 will be passed to the method *"en_drive"*, any other words will be ignored.
 
 ##Todo next
-* Allow more complex commands, and concurrent commands (async).
+* Allow more commands in one sentence, to perform concurrent commands (async), or make them sequential using the word *"then"* in between.  
 
 **Please note:** Cozmo does not have built-in microphone, so you should talk with your computer ;)  
 **Please pardon** my python scripting capabilities, it's not my *"native language"* ;)

@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-
+'''
+Cozmo Voice Commands (CvC)
+Author: Riccardo Sallusti - http://riccardosallusti.it
+Description: Issue complex voice commands to Cozmo, and watch him execute them.
+More informations: https://github.com/rizal72/Cozmo-Voice-Commands
+License: GNU
+'''
 import sys
 import os
 import asyncio
@@ -13,11 +19,6 @@ try:
 except ImportError:
     sys.exit('run `pip3 install --user SpeechRecognition PyAudio` to run this script.\nIf you are on linux you must: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install pyaudio`')
 import cvc.voice_commands as voice_commands
-'''try: #this try is needed if you want to run cvc.voice_commands.py standalone without installing cvc
-    import cvc.voice_commands as voice_commands
-except ImportError:
-    import voice_commands'''
-
 
 ###### VARS ######
 lang = "en"
@@ -49,21 +50,17 @@ def run(sdk_conn):
         robot = None
 
     vc = voice_commands.VoiceCommands(robot)
-
+    if robot:
+        robot.play_anim("anim_cozmosays_getout_short_01").wait_for_completed()
+    set_language()
+    cprint("You can give voice commands to Cozmo. Available Commands are:\n" + str(get_supported_commands()), "green")
     try:
-        set_language()
-        cprint("You can give voice commands to Cozmo. Available Commands are:\n" + str(get_supported_commands()), "green")
         with sr.Microphone(chunk_size=512) as source:
             while 1:
                 if robot:
-                    if (robot.battery_voltage < 3.5):
-                        color = "red"
-                    else:
-                        color = "yellow"
-                    cprint("BATTERY LEVEL: %f" % robot.battery_voltage, color)
+                    checkBattery(robot)
                     flash_backpack(robot, True)
-                    # robot.say_text(text="", play_excited_animation=True).wait_for_completed()
-
+                    robot.play_anim("anim_meetcozmo_getin").wait_for_completed()
                 print("\nSay something (ctrl+c to exit):")
                 hear(source, robot)
     except KeyboardInterrupt:
@@ -97,22 +94,40 @@ def set_language():
 
     cprint("\nlanguage set to: " + lang + "\n", "green")
 
+def checkBattery(robot):
+
+    if (robot.battery_voltage <= 3.5):
+        color = "red"
+    else:
+        color = "yellow"
+    cprint("BATTERY LEVEL: %f" % robot.battery_voltage, color)
+
+
 def get_supported_commands():
     '''Construct a list of all methods in this class that start with 'lang' variabler content - these are commands we accept'''
     prefix_str = lang + "_"
-    prefix_len = len(prefix_str)
     supported_commands = []
-    for func_name in dir(vc.__class__):
+    for func_name in dir(vc):
         if func_name.startswith(prefix_str):
-            supported_commands.append(func_name[prefix_len:])
+            supported_commands.append(func_name[len(prefix_str):])
     return supported_commands
 
 def get_command(command_name):
     '''Find a matching function inside 'VoiceCommands' class and return it. return None if there's no match'''
-    try:
-        return getattr(vc, lang + "_" + command_name.lower()) #here the magic happens
-    except AttributeError:
-        return None
+    prefix_str = lang + "_"
+    for func_name in dir(vc):
+        '''cycle through all the methods in vc and look for one that is contained in the command as a substring!
+        this allows us to use similar words like drive o driving to be executed as well!'''
+        if func_name.startswith(prefix_str):
+            splitted = func_name[len(prefix_str):len(func_name)-1] #get only the right part
+            if splitted in command_name.lower(): #here the magic happens
+                return getattr(vc, func_name)
+    return None
+
+    # try:
+    #     return getattr(vc, lang + "_"prefix_str + command_name.lower()) #here the magic happens
+    # except AttributeError:
+    #     return None
 
 def extract_command_from_string(in_string):
     '''Separate inString at each space, loop through until we find a command, return tuple of cmd_func and cmd_args'''
@@ -125,7 +140,6 @@ def extract_command_from_string(in_string):
 
         if cmd_func:
             cmd_args = split_string[i + 1:]
-            #cmd_first_int = re.search(r'\d+', cmd_args).group()
             return cmd_func, cmd_args
 
     # No valid command found
@@ -155,8 +169,10 @@ def hear(source, robot):
             else:
                 cprint("Sorry I don't understand your command, available commands are:", "red")
                 cprint(str(get_supported_commands()), "green")
+                robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
         else:
             cprint("You did not say the magic word " + command_activate, "red")
+            robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
 
     except sr.UnknownValueError:
         cprint("Google Speech Recognition could not understand audio", "red")
