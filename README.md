@@ -21,19 +21,13 @@ You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING for 2
 ```Shell
 pip install git+https://github.com/rizal72/Cozmo-Voice-Commands
 ```
-
-**Done.**
-
-**note:** to update **CvC**, type again:
-```Shell
-pip install git+https://github.com/rizal72/Cozmo-Voice-Commands
-```
+**note:** to update **CvC**, type again the above install command.
 
 ### Usage
 * run command `cvc` from the Terminal application
 * choose speech recognition language (English and Italian are currently supported)
-* issue commands by voice, not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: *"Ok COZMO, my friend, would you enjoy ROTATING 90 degrees?"*  
-A list of supported commands and arguments is provided at runtime
+* issue commands by voice, not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: *"Ok COZMO, my friend, would you enjoy ROTATING 90 degrees?"*
+* A list of supported commands and arguments is provided at runtime
 
 ### Customization
 You can add as many new commands as you like, commands are located in `cvc/voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english so, for instance, you'll create the method `en_smile()`` and the voice command you'll have to say will be "smile" (or "smiling" or "smiled", and so on...)*.  
