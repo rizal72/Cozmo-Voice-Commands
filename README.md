@@ -31,7 +31,7 @@ You can add as many new commands as you like, commands are located in `cvc/voice
 Some commands support one argument, for example: if you say *"drive for 10 seconds"*, 10 will be passed to the method *"en_drive"*, any other words will be ignored.
 
 ##Todo next
-* Allow more commands in one sentence, to perform concurrent commands (async), or make them sequential using the word *"then"* in between.  
+* Allow more commands in one sentence, to perform at the same time (async), or make them sequential using the word *"then"* in between.  
 
 **Please note:** Cozmo does not have built-in microphone, so you should talk with your computer ;)  
 **Please pardon** my python scripting capabilities, it's not my *"native language"* ;)
