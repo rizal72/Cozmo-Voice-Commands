@@ -52,9 +52,11 @@ def run(sdk_conn):
     vc = voice_commands.VoiceCommands(robot)
     if robot:
         robot.play_anim("anim_cozmosays_getout_short_01").wait_for_completed()
-    set_language()
-    cprint("You can give voice commands to Cozmo. Available Commands are:\n" + str(get_supported_commands()), "green")
+
     try:
+        set_language()
+        cprint("You can give voice commands to Cozmo. Available Commands are:\n" + str(get_supported_commands()), "green")
+
         with sr.Microphone(chunk_size=512) as source:
             while 1:
                 if robot:
