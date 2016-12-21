@@ -21,7 +21,7 @@ Still in Beta - Work in Progress!**
 ### Usage
 * run command `cvc` from the Terminal application
 * choose speech recognition language (English and Italian are currently supported)
-* issue commands by voice, not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: *"Ok COZMO, my friend, would you enjoy ROTATING 90 degrees?""*  
+* issue commands by voice, not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: *"Ok COZMO, my friend, would you enjoy ROTATING 90 degrees?"*  
 A list of supported commands and arguments is provided at runtime
 
 ### Customization
