@@ -11,17 +11,12 @@ Still in Beta - Work in Progress!**
 ### Installation
 1. **CvC** requires `portaudio`:
    * on **MacOS** (see [Homebrew](http://brew.sh/index_it.html) if you don't know what `brew` is):
-   ```Shell
-   brew install portaudio
-   ```
+   `   brew install portaudio`  
    * on **Linux**:
-   ```Shell
-   sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio
-   ```
+   `   sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio`  
 2. install `cvc` package:  
-```Shell
-pip install git+https://github.com/rizal72/Cozmo-Voice-Commands
-```  
+`pip install git+https://github.com/rizal72/Cozmo-Voice-Commands`
+
 **Done.**  
 
 **note:** to update **CvC**, type again: `pip install git+https://github.com/rizal72/Cozmo-Voice-Commands`
