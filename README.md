@@ -10,10 +10,18 @@ Still in Beta - Work in Progress!**
 
 ### Installation
 1. **CvC** requires `portaudio`:
-   * on **MacOS**: `brew install portaudio` (see [Homebrew](http://brew.sh/index_it.html) if you don't know what `brew` is)  
-   * on **Linux**: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio`
+   * on **MacOS** (see [Homebrew](http://brew.sh/index_it.html) if you don't know what `brew` is):
+   ```
+   brew install portaudio
+   ```
+   * on **Linux**:
+   ```
+   sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio
+   ```
 2. install `cvc` package:  
-`pip install git+https://github.com/rizal72/Cozmo-Voice-Commands`  
+```
+pip install git+https://github.com/rizal72/Cozmo-Voice-Commands
+```  
 **Done.**  
 
 **note:** to update **CvC**, type again: `pip install git+https://github.com/rizal72/Cozmo-Voice-Commands`
@@ -25,8 +33,8 @@ Still in Beta - Work in Progress!**
 A list of supported commands and arguments is provided at runtime
 
 ### Customization
-You can add as many new commands as you like, commands are located in `cvc/voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english so, for instance, you'll create the method "en_smile()" and the voice command you'll have to say will be "smile" (or "smiling" or "smiled"... magic...)*.  
-Some commands support one argument, for example: if you say *"drive for 10 seconds"*, 10 will be passed to the method *"en_drive"*, any other words will be ignored.
+You can add as many new commands as you like, commands are located in `cvc/voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english so, for instance, you'll create the method `en_smile()`` and the voice command you'll have to say will be "smile" (or "smiling" or "smiled", and so on...)*.  
+Some commands support one argument, for example: if you say *"Cozmo, drive for 10 seconds"*, `10` will be passed to the method `en_drive()`, any other words will be ignored.
 
 #### Note for Developers:
 If you want to just run the App **without installing the package**, you need to execute `./run.py` from the root folder, after you have cloned/downloaded the [repository](https://github.com/rizal72/Cozmo-Voice-Commands) content.
