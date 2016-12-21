@@ -15,7 +15,9 @@ Still in Beta - Work in Progress!**
 on **Linux** from Terminal, do:  
 `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio`
 2. install `cvc` package:  
-`pip install git+https://github.com/rizal72/Cozmo-Voice-Commands`
+`pip install --user git+https://github.com/rizal72/Cozmo-Voice-Commands`
+
+**Done.** to update cvc, type: `pip install --user --upgrade cvc`
 
 ##Note for Developers:
 If you want to just run the App **without installing the package**, you need to execute `./run.py` from the root folder,  
