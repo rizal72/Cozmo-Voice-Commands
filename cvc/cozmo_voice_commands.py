@@ -121,7 +121,7 @@ def get_command(command_name):
         '''cycle through all the methods in vc and look for one that is contained in the command as a substring!
         this allows us to use similar words like drive o driving to be executed as well!'''
         if func_name.startswith(prefix_str):
-            splitted = func_name[len(prefix_str):len(func_name)-1] #get only the right part
+            splitted = func_name[len(prefix_str):-1] #get only the right part minus the last letter
             if splitted in command_name.lower(): #here the magic happens
                 return getattr(vc, func_name)
     return None
