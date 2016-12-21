@@ -16,6 +16,7 @@ You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING for 2
    * on **Linux**:
    ```Shell
    sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio```  
+
 2. install `cvc` package:
 ```Shell
 pip install git+https://github.com/rizal72/Cozmo-Voice-Commands
