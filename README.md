@@ -33,7 +33,7 @@ pip install git+https://github.com/rizal72/Cozmo-Voice-Commands
 A list of supported commands and arguments is provided at runtime
 
 ### Customization
-You can add as many new commands as you like, commands are located in `cvc/voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english so, for instance, you'll create the method `en_smile()`` and the voice command you'll have to say will be "smile" (or "smiling" or "smiled", and so on...)*.  
+You can add as many new commands as you like, commands are located in `cvc/voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english so, for instance, you'll create the method `en_smile()` and the voice command you'll have to say will be "smile" (or "smiling" or "smiled", and so on...)*.  
 Some commands support one argument, for example: if you say *"Cozmo, drive for 10 seconds"*, `10` will be passed to the method `en_drive()`, any other words will be ignored.
 
 #### Note for Developers:
