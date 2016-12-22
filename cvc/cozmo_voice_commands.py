@@ -126,11 +126,6 @@ def get_command(command_name):
                 return getattr(vc, func_name)
     return None
 
-    # try:
-    #     return getattr(vc, lang + "_"prefix_str + command_name.lower()) #here the magic happens
-    # except AttributeError:
-    #     return None
-
 def extract_command_from_string(in_string):
     '''Separate inString at each space, loop through until we find a command, return tuple of cmd_func and cmd_args'''
 
