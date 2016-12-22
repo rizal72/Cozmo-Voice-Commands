@@ -20,17 +20,15 @@ def extract_float(cmd_args, index=0):
 
 
 def extract_next_float(cmd_args, index=0):
-    #Loop through arguments to find first float!
+    #Loop through arguments to find first float and position!
 
-    #for i in range(index, len(cmd_args)): #NOT WORKING!?
-    for arg in cmd_args:
+    for i in range(index, len(cmd_args)):
         try:
-            #float_val = float(cmd_args[index]) #NOT WORKING!? Not recognizing floats...
-            float_val = float(arg)
-            return float_val
+            float_val = float(cmd_args[i])
+            return float_val#, i #can return position if needed
         except ValueError:
             pass
-    return None
+    return None#, None
 
 class VoiceCommands():
 
@@ -146,7 +144,7 @@ class VoiceCommands():
         usage = "'drive X' where X is number of seconds to drive for"
         error_message = ""
 
-        drive_duration = extract_next_float(cmd_args)
+        drive_duration = extract_next_float(cmd_args)#[0]
 
         if drive_duration is not None:
             drive_speed = 50
@@ -167,7 +165,7 @@ class VoiceCommands():
     def en_turn(self, robot, cmd_args):
         usage = "'turn X' where X is a number of degrees to turn"
 
-        drive_angle = extract_next_float(cmd_args)
+        drive_angle = extract_next_float(cmd_args)#[0]
 
         if drive_angle is not None:
             robot.turn_in_place(degrees(drive_angle)).wait_for_completed()
@@ -181,7 +179,7 @@ class VoiceCommands():
     def en_lift(self, robot, cmd_args):
         usage = "'lift X' where X is desired height for lift"
 
-        lift_height = extract_next_float(cmd_args)
+        lift_height = extract_next_float(cmd_args)#[0]
 
         if lift_height is not None:
             robot.set_lift_height(height=lift_height).wait_for_completed()
@@ -195,7 +193,7 @@ class VoiceCommands():
     def en_head(self, robot, cmd_args):
         usage = "'head X' where X is desired angle for head" #-25 (down) to 44.5 degrees (up)
 
-        head_angle = extract_next_float(cmd_args)
+        head_angle = extract_next_float(cmd_args)#[0]
 
         if head_angle is not None:
             head_angle_action = robot.set_head_angle(degrees(head_angle))
