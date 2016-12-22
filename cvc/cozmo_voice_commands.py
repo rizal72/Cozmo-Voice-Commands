@@ -30,9 +30,9 @@ def main():
         cozmo.run_program(run)
         #cozmo.run_program(run, use_viewer=True, force_viewer_on_top=True)
     except SystemExit as e:
-        #print('exception = "%s"' % e)
+        print('exception = "%s"' % e)
         #ONLY FOR TESTING PURPOSES
-        cprint('\nGoing on without Cozmo.', 'yellow')
+        cprint('\nGoing on without Cozmo. Fer testing purposes only!', 'yellow')
         run(None)
 
 ##### APP ######
