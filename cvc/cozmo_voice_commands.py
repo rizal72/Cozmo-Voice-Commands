@@ -146,13 +146,13 @@ def flash_backpack(robot, flag):
     robot.set_all_backpack_lights(cozmo.lights.green_light.flash() if flag else cozmo.lights.off_light)
 
 def hear(source, robot):
-    # Speech recognition using Google Speech Recognition
-    # for testing purposes, we're just using the default API key
+    '''Speech recognition using Google Speech Recognition
+    for testing purposes, we're just using the default API key'''
     audio = recognizer.listen(source)
     recognized = None
     try:
-        # to use another API key, use:
-        #recognized = recognizer.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", language=lang)
+        '''to use another API key, use:
+        recognized = recognizer.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", language=lang)'''
         recognized = recognizer.recognize_google(audio, key=None, language=lang)
         print("You said: " + recognized)
         if command_activate in recognized or command_activate.lower() in recognized:
