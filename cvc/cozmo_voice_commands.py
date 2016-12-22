@@ -157,10 +157,12 @@ def hear(source, robot):
             else:
                 cprint("Sorry I don't understand your command, available commands are:", "red")
                 cprint(str(get_supported_commands()), "green")
-                robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
+                if robot:
+                    robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
         else:
             cprint("You did not say the magic word " + command_activate, "red")
-            robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
+            if robot:
+                robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
 
     except sr.UnknownValueError:
         cprint("Google Speech Recognition could not understand audio", "red")
