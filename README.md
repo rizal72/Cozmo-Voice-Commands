@@ -10,6 +10,7 @@ Still in Beta - Work in Progress!**
 
 ### Installation
 1. **CvC** requires `portaudio`:
+
   * on **MacOS** (see [Homebrew](http://brew.sh/index_it.html) if you don't know what `brew` is):
   ```shell
   brew install portaudio
