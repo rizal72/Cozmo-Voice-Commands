@@ -12,12 +12,9 @@ import asyncio
 import cozmo
 try:
     from termcolor import colored, cprint
-except ImportError:
-    sys.exit('run `pip3 install --user termcolor SpeechRecognition PyAudio` to run this script\nIf you are on linux you must: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install pyaudio`')
-try:
     import speech_recognition as sr
 except ImportError:
-    sys.exit('run `pip3 install --user SpeechRecognition PyAudio` to run this script.\nIf you are on linux you must: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install pyaudio`')
+    sys.exit('some packages are required, install them doing: `pip3 install --user termcolor SpeechRecognition PyAudio` to run this script\nIf you are on linux do: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install pyaudio`')
 import cvc.voice_commands as voice_commands
 
 ###### VARS ######
@@ -26,28 +23,27 @@ command_activate = "Cosmo"
 recognizer = sr.Recognizer()
 vc = None
 
+##### MAIN ######
 def main():
     clearScreen = os.system("clear")
-    cozmo.setup_basic_logging()
     try:
-        cozmo.connect(run)
-        #cozmo.connect_with_tkviewer(run, force_on_top=True)
-    except cozmo.ConnectionError as e:
-        #sys.exit("A connection error occurred: %s" % e)
-        cprint("A connection error occurred: %s" % e, "red")
+        cozmo.run_program(run)
+        #cozmo.run_program(run, use_viewer=True, force_viewer_on_top=True)
+    except:
         #ONLY FOR TESTING PURPOSES
         cprint('\nGoing on without Cozmo.', 'yellow')
         run(None)
 
-def run(sdk_conn):
+##### APP ######
+def run(robot: cozmo.robot.Robot):
     '''The run method runs once the Cozmo SDK is connected.'''
     global vc
 
-    if sdk_conn:
+    '''if sdk_conn:
         robot = sdk_conn.wait_for_robot()
     else:
         #ONLY FOR TESTING PURPOSES
-        robot = None
+        robot = None'''
 
     vc = voice_commands.VoiceCommands(robot)
     if robot:
@@ -126,11 +122,6 @@ def get_command(command_name):
                 return getattr(vc, func_name)
     return None
 
-    # try:
-    #     return getattr(vc, lang + "_"prefix_str + command_name.lower()) #here the magic happens
-    # except AttributeError:
-    #     return None
-
 def extract_command_from_string(in_string):
     '''Separate inString at each space, loop through until we find a command, return tuple of cmd_func and cmd_args'''
 
@@ -151,13 +142,13 @@ def flash_backpack(robot, flag):
     robot.set_all_backpack_lights(cozmo.lights.green_light.flash() if flag else cozmo.lights.off_light)
 
 def hear(source, robot):
-    # Speech recognition using Google Speech Recognition
-    # for testing purposes, we're just using the default API key
+    '''Speech recognition using Google Speech Recognition
+    for testing purposes, we're just using the default API key'''
     audio = recognizer.listen(source)
     recognized = None
     try:
-        # to use another API key, use:
-        #recognized = recognizer.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", language=lang)
+        '''to use another API key, use:
+        recognized = recognizer.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", language=lang)'''
         recognized = recognizer.recognize_google(audio, key=None, language=lang)
         print("You said: " + recognized)
         if command_activate in recognized or command_activate.lower() in recognized:
@@ -181,6 +172,6 @@ def hear(source, robot):
     except sr.RequestError as e:
         cprint("Could not request results from Google Speech Recognition service; {0}".format(e), "red")
 
-#ENTRY POINT
+###### ENTRY POINT ######
 if __name__ == "__main__":
     main()
