@@ -230,3 +230,6 @@ class VoiceCommands():
 
     def it_dici(self, robot, cmd_args):
         self.en_say(robot,cmd_args)
+
+    def it_bici(self, robot, cmd_args):
+        self.en_say(robot,cmd_args)
