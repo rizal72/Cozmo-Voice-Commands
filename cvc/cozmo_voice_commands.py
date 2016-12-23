@@ -145,6 +145,7 @@ def hear(source, robot):
         '''to use another API key, use:
         recognized = recognizer.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", language=lang)'''
         recognized = recognizer.recognize_google(audio, key=None, language=lang)
+        #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN)
         print("You said: " + recognized)
         if command_activate in recognized or command_activate.lower() in recognized:
             cprint("Action command recognized", "green")
@@ -165,9 +166,9 @@ def hear(source, robot):
                 robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
 
     except sr.UnknownValueError:
-        cprint("Google Speech Recognition could not understand audio", "red")
+        cprint("Speech Recognition service could not understand audio", "red")
     except sr.RequestError as e:
-        cprint("Could not request results from Google Speech Recognition service; {0}".format(e), "red")
+        cprint("Could not request results from Speech Recognition service, check your web connection; {0}".format(e), "red")
 
 ###### ENTRY POINT ######
 if __name__ == "__main__":
