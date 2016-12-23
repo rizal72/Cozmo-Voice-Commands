@@ -1,4 +1,4 @@
-# Cozmo voice Commands (CvC) - Version 0.2.1
+# Cozmo voice Commands (CvC) - Version 0.2.2
 
 Issue complex voice commands to Cozmo, and watch him execute them: highly customizable, you can add new commands with ease. Recognizes *English* and *Italian*.
 
