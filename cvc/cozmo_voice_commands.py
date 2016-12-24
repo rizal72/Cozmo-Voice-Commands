@@ -18,10 +18,13 @@ except ImportError:
 import cvc.voice_commands as voice_commands
 
 ###### VARS ######
+log = False
 lang = "en"
 command_activate = "Cosmo"
 recognizer = sr.Recognizer()
 vc = None
+en_seq_action_separator = " then "# don't foget spaces!
+it_seq_action_separator = " poi " # don't foget spaces!
 
 ##### MAIN ######
 def main():
@@ -42,18 +45,20 @@ def run(robot: cozmo.robot.Robot):
 
     vc = voice_commands.VoiceCommands(robot)
     if robot:
-        robot.play_anim("anim_cozmosays_getout_short_01").wait_for_completed()
+        robot.play_anim("anim_cozmosays_getout_short_01")
 
     try:
         set_language()
         cprint("You can give voice commands to Cozmo. Available Commands are:\n" + str(get_supported_commands()), "green")
-
         with sr.Microphone(chunk_size=512) as source:
             while 1:
                 if robot:
                     checkBattery(robot)
                     flash_backpack(robot, True)
-                    robot.play_anim("anim_meetcozmo_getin").wait_for_completed()
+                    try:
+                        robot.play_anim("anim_meetcozmo_getin").wait_for_completed()
+                    except:
+                        pass
                 print("\nSay something (ctrl+c to exit):")
                 hear(source, robot)
     except KeyboardInterrupt:
@@ -119,19 +124,33 @@ def get_command(command_name):
 
 def extract_command_from_string(in_string):
     '''Separate inString at each space, loop through until we find a command, return tuple of cmd_func and cmd_args'''
-
     split_string = in_string.split()
-
     for i in range(len(split_string)):
-
         cmd_func = get_command(split_string[i])
-
         if cmd_func:
             cmd_args = split_string[i + 1:]
             return cmd_func, cmd_args
-
     # No valid command found
     return None, None
+
+def extract_commands_from_string(in_string):
+    '''Separate inString at each "and" or "then", loop through until we find commands, return tuples of cmd_func and cmd_args'''
+    sentences = in_string.split(eval(lang + "_seq_action_separator"))
+    cmd_funcs = []
+    cmd_args = []
+    if log:
+        print("splitted sentences: ", sentences)
+    for sentence in sentences:
+        words = sentence.split()
+        for i in range(len(words)):
+            cmd_func = get_command(words[i])
+            if cmd_func:
+                cmd_funcs.append(cmd_func)
+                cmd_arg = words[i + 1:]
+                cmd_args.append(cmd_arg)
+    if log:
+        print("commands: ", cmd_funcs, "arguments: ", cmd_args)
+    return cmd_funcs, cmd_args # returns a touple of arrays of commands and arguments
 
 def flash_backpack(robot, flag):
     robot.set_all_backpack_lights(cozmo.lights.green_light.flash() if flag else cozmo.lights.off_light)
@@ -142,24 +161,15 @@ def hear(source, robot):
     audio = recognizer.listen(source)
     recognized = None
     try:
-        '''to use another API key, use:
-        recognized = recognizer.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", language=lang)'''
+        #to your API key, change key="YOUR_KEY":
         recognized = recognizer.recognize_google(audio, key=None, language=lang)
         #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN)
         print("You said: " + recognized)
         if command_activate in recognized or command_activate.lower() in recognized:
             cprint("Action command recognized", "green")
-            cmd_func, cmd_args = extract_command_from_string(recognized) #check if a corresponding command exists
+            cmd_funcs, cmd_args = extract_commands_from_string(recognized) #check if a corresponding command exists
+            executeComands(robot, cmd_funcs, cmd_args)
 
-            if cmd_func is not None:
-                result_string = cmd_func(robot, cmd_args) #remember: cmd_func contains vc as well thanks to 'getattr', like vc.en_dance()
-                if result_string:
-                    print(result_string)
-            else:
-                cprint("Sorry I don't understand your command, available commands are:", "red")
-                cprint(str(get_supported_commands()), "green")
-                if robot:
-                    robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
         else:
             cprint("You did not say the magic word " + command_activate, "red")
             if robot:
@@ -169,6 +179,23 @@ def hear(source, robot):
         cprint("Speech Recognition service could not understand audio", "red")
     except sr.RequestError as e:
         cprint("Could not request results from Speech Recognition service, check your web connection; {0}".format(e), "red")
+
+def executeComands(robot, cmd_funcs, cmd_args):
+
+    for i in range(len(cmd_funcs)):
+        if cmd_funcs[i] is not None:
+            result_string = cmd_funcs[i](robot, cmd_args[i]) #remember: cmd_func contains vc as well thanks to 'getattr', like vc.en_dance()
+            if result_string:
+                print(result_string)
+        else:
+            cprint("Sorry I didn't understand all of your commands, available commands are:", "red")
+            cprint(str(get_supported_commands()), "green")
+
+    if len(cmd_funcs) == 0:
+        cprint("Sorry I didn't understand any of your commands, available commands are:", "red")
+        cprint(str(get_supported_commands()), "green")
+            #if robot:
+            #    robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
 
 ###### ENTRY POINT ######
 if __name__ == "__main__":
