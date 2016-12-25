@@ -9,6 +9,8 @@ import asyncio
 from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 
+speed = 50
+
 def extract_float(cmd_args, index=0):
     if len(cmd_args) > index:
         try:
@@ -37,6 +39,7 @@ class VoiceCommands():
 
     ###### ACTIONS ######
     def en_blocks(self, robot, cmd_args):
+        usage = "Do blocks"
         print("looking for my blocks...")
         lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
 
@@ -57,6 +60,7 @@ class VoiceCommands():
         self.en_blocks(robot,cmd_args)
 
     def en_dance(self, robot, cmd_args):
+        usage = "Dance"
         print("dancing...")
         robot.play_anim("anim_speedtap_wingame_intensity02_01").wait_for_completed()
         return
@@ -65,6 +69,7 @@ class VoiceCommands():
         self.en_dance(robot,cmd_args)
 
     def en_look(self, robot, cmd_args):
+        usage = "Look for a face"
         any_face = None
         print("Looking for a face...")
         robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE).wait_for_completed()
@@ -94,6 +99,7 @@ class VoiceCommands():
         self.en_look(robot,cmd_args)
 
     def en_follow(self, robot, cmd_args):
+        usage = "Follow a face"
         print("Following your face - any face...")
         # Move lift down and tilt the head up
         robot.move_lift(-3)
@@ -124,6 +130,7 @@ class VoiceCommands():
         self.en_follow(robot,cmd_args)
 
     def en_picture(self, robot, cmd_args):
+        usage = "Take a picture"
         print("taking a picture...")
         pic_filename = "picture.png"
         robot.say_text("Say cheese!").wait_for_completed()
@@ -140,30 +147,37 @@ class VoiceCommands():
 
     #NEW COMMANDS#
     def en_drive(self, robot, cmd_args):
-        """drive X"""
-        usage = "'drive X' where X is number of seconds to drive for"
+        usage = "Drive forward/backwards X seconds"
         error_message = ""
-
+        print(cmd_args)
         drive_duration = extract_next_float(cmd_args)#[0]
 
         if drive_duration is not None:
-            drive_speed = 50
-            drive_dir = "forwards"
-            if drive_duration < 0:
-                drive_speed = -drive_speed
-                drive_duration = -drive_duration
+
+            if "backward" in cmd_args or "backwards" in cmd_args:
+                drive_speed = -speed
                 drive_dir = "backwards"
+            else:
+                drive_speed = speed
+                drive_dir = "forward"
 
             robot.drive_wheels(drive_speed, drive_speed, duration=drive_duration)
+            time.sleep(drive_duration)
+            
             return "I drove " + drive_dir + " for " + str(drive_duration) + " seconds!"
 
         return "Error: usage = " + usage + error_message
 
     def it_avanti(self, robot, cmd_args):
+        cmd_args.append("forward")
+        self.en_drive(robot,cmd_args)
+
+    def it_indietro(self, robot, cmd_args):
+        cmd_args.append("backward")
         self.en_drive(robot,cmd_args)
 
     def en_turn(self, robot, cmd_args):
-        usage = "'turn X' where X is a number of degrees to turn"
+        usage = "turn X degrees"
 
         drive_angle = extract_next_float(cmd_args)#[0]
 
@@ -177,7 +191,7 @@ class VoiceCommands():
         self.en_turn(robot,cmd_args)
 
     def en_lift(self, robot, cmd_args):
-        usage = "'lift X' where X is desired height for lift"
+        usage = "Lift X (min:0, max:1)"
 
         lift_height = extract_next_float(cmd_args)#[0]
 
@@ -191,7 +205,7 @@ class VoiceCommands():
         self.en_lift(robot,cmd_args)
 
     def en_head(self, robot, cmd_args):
-        usage = "'head X' where X is desired angle for head" #-25 (down) to 44.5 degrees (up)
+        usage = "Tilt head for X degrees (min:-25, max: 44)" #-25 (down) to 44.5 degrees (up)
 
         head_angle = extract_next_float(cmd_args)#[0]
 
@@ -210,7 +224,7 @@ class VoiceCommands():
         self.en_head(robot,cmd_args)
 
     def en_say(self, robot, cmd_args):
-        usage = "'say X' where X is any text for cozmo to say"
+        usage = "Say X (where X is any text to say)"
 
         entire_message = None
         if len(cmd_args) > 0:
