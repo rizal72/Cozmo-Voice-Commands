@@ -6,7 +6,6 @@ Some commands support one argument, for example: if you say *"drive for 10 secon
 '''
 import cozmo
 import asyncio
-import time
 from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 
