@@ -6,6 +6,7 @@ Some commands support one argument, for example: if you say *"drive for 10 secon
 '''
 import cozmo
 import asyncio
+import time
 from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 
@@ -38,7 +39,7 @@ class VoiceCommands():
         self.robot = robot
 
     ###### BLOCKS ######
-    def en_blocks(self, robot = None, cmd_args = None):
+    def en_blocks(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo plays with his blocks."
         if robot is None:
             return usage
@@ -58,7 +59,7 @@ class VoiceCommands():
         else:
             robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.StackBlocks, active_time=120)
 
-    def it_gioca(self, robot = None, cmd_args = None):
+    def it_gioca(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo gioca con i suoi cubi."
         if robot is None:
             return usage
@@ -66,7 +67,7 @@ class VoiceCommands():
 
 ###### DANCE ######
 
-    def en_dance(self, robot = None, cmd_args = None):
+    def en_dance(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo dances."
         if robot is None:
             return usage
@@ -74,7 +75,7 @@ class VoiceCommands():
         robot.play_anim("anim_speedtap_wingame_intensity02_01").wait_for_completed()
         return
 
-    def it_balla(self, robot = None, cmd_args = None):
+    def it_balla(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo balla."
         if robot is None:
             return usage
@@ -82,7 +83,7 @@ class VoiceCommands():
 
 ###### LOOK ######
 
-    def en_look(self, robot = None, cmd_args = None):
+    def en_look(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo looks for a face."
         if robot is None:
             return usage
@@ -111,7 +112,7 @@ class VoiceCommands():
         anim = robot.play_anim_trigger(cozmo.anim.Triggers.LookInPlaceForFacesBodyPause)
         anim.wait_for_completed()
 
-    def it_guarda(self, robot = None, cmd_args = None):
+    def it_guarda(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo cerca una faccia."
         if robot is None:
             return usage
@@ -119,7 +120,7 @@ class VoiceCommands():
 
 ###### FOLLOW ######
 
-    def en_follow(self, robot = None, cmd_args = None):
+    def en_follow(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo follows a face."
         if robot is None:
             return usage
@@ -149,7 +150,7 @@ class VoiceCommands():
 
             #time.sleep(.1)
 
-    def it_segui(self, robot = None, cmd_args = None):
+    def it_segui(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo segue una faccia."
         if robot is None:
             return usage
@@ -157,7 +158,7 @@ class VoiceCommands():
 
 ###### PICTURE ######
 
-    def en_picture(self, robot = None, cmd_args = None):
+    def en_picture(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo takes a picture."
         if robot is None:
             return usage
@@ -172,7 +173,7 @@ class VoiceCommands():
             print ("no picture saved")
         return
 
-    def it_foto(self, robot = None, cmd_args = None):
+    def it_foto(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo scatta una foto."
         if robot is None:
             return usage
@@ -180,7 +181,7 @@ class VoiceCommands():
 
 ###### DRIVE ######
 
-    def en_drive(self, robot = None, cmd_args = None):
+    def en_drive(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo drives forward/backwards for X seconds."
         if robot is None:
             return usage
@@ -191,27 +192,29 @@ class VoiceCommands():
         if drive_duration is not None:
 
             if "backward" in cmd_args or "backwards" in cmd_args:
-                drive_speed = -speed
+                drive_speed = speed
+                drive_duration = -drive_duration
                 drive_dir = "backwards"
             else:
                 drive_speed = speed
                 drive_dir = "forward"
 
-            robot.drive_wheels(drive_speed, drive_speed, duration=drive_duration)
-            time.sleep(drive_duration)
+            #robot.drive_wheels(drive_speed, drive_speed, duration=drive_duration)
+            robot.drive_straight(distance_mm(drive_duration*drive_speed), speed_mmps(drive_speed), should_play_anim=True).wait_for_completed()
+            #time.sleep(drive_duration)
 
             return "I drove " + drive_dir + " for " + str(drive_duration) + " seconds!"
 
         return "Error: usage = " + usage + error_message
 
-    def it_avanti(self, robot = None, cmd_args = None):
+    def it_avanti(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo si muove in avanti per X secondi."
         if robot is None:
             return usage
         cmd_args.append("forward")
         self.en_drive(robot, cmd_args)
 
-    def it_indietro(self, robot = None, cmd_args = None):
+    def it_indietro(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo si muove all'indietro per X secondi."
         if robot is None:
             return usage
@@ -220,7 +223,7 @@ class VoiceCommands():
 
 ###### TURN ######
 
-    def en_turn(self, robot = None, cmd_args = None):
+    def en_turn(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo turns X degrees."
         if robot is None:
             return usage
@@ -232,7 +235,7 @@ class VoiceCommands():
 
         return "Error: usage = " + usage
 
-    def it_ruota(self, robot = None, cmd_args = None):
+    def it_ruota(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo ruota di X gradi."
         if robot is None:
             return usage
@@ -240,7 +243,7 @@ class VoiceCommands():
 
 ###### LIFT ######
 
-    def en_lift(self, robot = None, cmd_args = None):
+    def en_lift(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo lifts his lift of X (min:0, max:1)."
         if robot is None:
             return usage
@@ -252,7 +255,7 @@ class VoiceCommands():
 
         return "Error: usage = " + usage
 
-    def it_solleva(self, robot = None, cmd_args = None):
+    def it_solleva(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo solleva il suo braccio di X (min:0, max:1)."
         if robot is None:
             return usage
@@ -260,7 +263,7 @@ class VoiceCommands():
 
 ###### HEAD ######
 
-    def en_head(self, robot = None, cmd_args = None):
+    def en_head(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo tilts his head of X degrees (min:-25, max: 44)." #-25 (down) to 44.5 degrees (up)
         if robot is None:
             return usage
@@ -277,7 +280,7 @@ class VoiceCommands():
 
         return "Error: usage = " + usage
 
-    def it_testa(self, robot = None, cmd_args = None):
+    def it_testa(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo muove la sua testa di X gradi (min:-25, max: 44)."
         if robot is None:
             return usage
@@ -285,7 +288,7 @@ class VoiceCommands():
 
 ###### SAY ######
 
-    def en_say(self, robot = None, cmd_args = None):
+    def en_say(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo says X (where X is any text)."
         if robot is None:
             return usage
@@ -305,13 +308,13 @@ class VoiceCommands():
 
         return "Error: usage = " + usage
 
-    def it_dici(self, robot = None, cmd_args = None):
+    def it_dici(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo dice X (dove X è un testo qualunque)."
         if robot is None:
             return usage
         self.en_say(robot, cmd_args)
 
-    def it_bici(self, robot = None, cmd_args = None):
+    def it_bici(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "alternativo a 'dici', Cozmo dice X (dove X è un testo qualunque)."
         if robot is None:
             return usage

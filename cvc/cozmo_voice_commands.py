@@ -20,7 +20,7 @@ import cvc.voice_commands as voice_commands
 ###### VARS ######
 log = False
 lang = "en"
-commands_activate = ["Cosmo", "Cosimo", "Kosmos"]
+commands_activate = ["cosmo", "cosimo", "kosmos", "osmo"]
 recognizer = sr.Recognizer()
 vc = None
 en_seq_action_separator = " then "# don't foget spaces!
@@ -173,7 +173,8 @@ def hear(source, robot):
         recognized = recognizer.recognize_google(audio, key=None, language=lang)
         #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN)
         print("You said: " + recognized)
-        if set(commands_activate).intesection(recognized) or set(commands_activate.lower()).intesection(recognized):
+        '''very nice: check if one of the activation commands is in the recognized string'''
+        if set(commands_activate).intersection(recognized.lower().split()):
             cprint("Action command recognized", "green")
             cmd_funcs, cmd_args = extract_commands_from_string(recognized) #check if a corresponding command exists
             executeComands(robot, cmd_funcs, cmd_args)
