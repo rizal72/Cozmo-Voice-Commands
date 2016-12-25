@@ -149,7 +149,7 @@ class VoiceCommands():
     def en_drive(self, robot, cmd_args):
         usage = "Drive forward/backwards X seconds"
         error_message = ""
-        print(cmd_args)
+        #print(cmd_args)
         drive_duration = extract_next_float(cmd_args)#[0]
 
         if drive_duration is not None:
@@ -163,7 +163,7 @@ class VoiceCommands():
 
             robot.drive_wheels(drive_speed, drive_speed, duration=drive_duration)
             time.sleep(drive_duration)
-            
+
             return "I drove " + drive_dir + " for " + str(drive_duration) + " seconds!"
 
         return "Error: usage = " + usage + error_message
