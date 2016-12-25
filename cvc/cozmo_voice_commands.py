@@ -49,7 +49,13 @@ def run(robot: cozmo.robot.Robot):
 
     try:
         set_language()
-        cprint("You can give voice commands to Cozmo. Available Commands are:\n" + str(get_supported_commands()), "green")
+
+        if lang=="en":
+            cprint("You can give voice commands to Cozmo. Available Commands are:", "green")
+        else:
+            cprint("Puoi impartire comandi vocali a Cozmo. I comandi disponibiloi sono:", "green")
+        print(*get_supported_commands(), sep="\n")
+
         with sr.Microphone(chunk_size=512) as source:
             while 1:
                 if robot:
@@ -107,7 +113,9 @@ def get_supported_commands():
     supported_commands = []
     for func_name in dir(vc):
         if func_name.startswith(prefix_str):
-            supported_commands.append(func_name[len(prefix_str):])
+            #print(getattr(vc, func_name)(help=True))
+            #supported_commands.append(func_name[len(prefix_str):])
+            supported_commands.append(func_name[len(prefix_str):] + ": " + getattr(vc, func_name)(help=True))
     return supported_commands
 
 def get_command(command_name):
@@ -188,14 +196,20 @@ def executeComands(robot, cmd_funcs, cmd_args):
             if result_string:
                 print(result_string)
         else:
-            cprint("Sorry I didn't understand all of your commands, available commands are:", "red")
-            cprint(str(get_supported_commands()), "green")
+            if lang=="en":
+                cprint("Sorry I didn't understand all of your commands, available commands are:", "red")
+            else:
+                cprint("Mi spiace non ho capito tutti i comandi, i comandi disponibili sono:", "red")
+            print(*get_supported_commands(), sep="\n")
 
     if len(cmd_funcs) == 0:
-        cprint("Sorry I didn't understand any of your commands, available commands are:", "red")
-        cprint(str(get_supported_commands()), "green")
-            #if robot:
-            #    robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
+        if lang=="en":
+            cprint("Sorry I didn't understand any of your commands, available commands are:", "red")
+        else:
+            cprint("Mi spiace non ho capito nessuno dei comandi, i comandi disponibili sono:", "red")
+        print(*get_supported_commands(), sep="\n")
+        if robot:
+            robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
 
 ###### ENTRY POINT ######
 if __name__ == "__main__":

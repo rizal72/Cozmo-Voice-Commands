@@ -38,8 +38,10 @@ class VoiceCommands():
         self.robot = robot
 
     ###### ACTIONS ######
-    def en_blocks(self, robot, cmd_args):
-        usage = "Do blocks"
+    def en_blocks(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo plays with his blocks."
+        if help == True:
+            return usage
         print("looking for my blocks...")
         lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
 
@@ -56,20 +58,30 @@ class VoiceCommands():
         else:
             robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.StackBlocks, active_time=120)
 
-    def it_gioca(self, robot, cmd_args):
-        self.en_blocks(robot,cmd_args)
+    def it_gioca(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo gioca con i suoi cubi."
+        if help == True:
+            return usage
+        self.en_blocks(robot, cmd_args)
 
-    def en_dance(self, robot, cmd_args):
-        usage = "Dance"
+    def en_dance(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo dances."
+        if help == True:
+            return usage
         print("dancing...")
         robot.play_anim("anim_speedtap_wingame_intensity02_01").wait_for_completed()
         return
 
-    def it_balla(self, robot, cmd_args):
-        self.en_dance(robot,cmd_args)
+    def it_balla(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo balla."
+        if help == True:
+            return usage
+        self.en_dance(robot, cmd_args)
 
-    def en_look(self, robot, cmd_args):
-        usage = "Look for a face"
+    def en_look(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo looks for a face."
+        if help == True:
+            return usage
         any_face = None
         print("Looking for a face...")
         robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE).wait_for_completed()
@@ -95,11 +107,16 @@ class VoiceCommands():
         anim = robot.play_anim_trigger(cozmo.anim.Triggers.LookInPlaceForFacesBodyPause)
         anim.wait_for_completed()
 
-    def it_guarda(self, robot, cmd_args):
-        self.en_look(robot,cmd_args)
+    def it_guarda(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo cerca una faccia."
+        if help == True:
+            return usage
+        self.en_look(robot, cmd_args)
 
-    def en_follow(self, robot, cmd_args):
-        usage = "Follow a face"
+    def en_follow(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo follows a face."
+        if help == True:
+            return usage
         print("Following your face - any face...")
         # Move lift down and tilt the head up
         robot.move_lift(-3)
@@ -126,11 +143,16 @@ class VoiceCommands():
 
             #time.sleep(.1)
 
-    def it_segui(self, robot, cmd_args):
-        self.en_follow(robot,cmd_args)
+    def it_segui(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo segue una faccia."
+        if help == True:
+            return usage
+        self.en_follow(robot, cmd_args)
 
-    def en_picture(self, robot, cmd_args):
-        usage = "Take a picture"
+    def en_picture(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo takes a picture."
+        if help == True:
+            return usage
         print("taking a picture...")
         pic_filename = "picture.png"
         robot.say_text("Say cheese!").wait_for_completed()
@@ -142,12 +164,17 @@ class VoiceCommands():
             print ("no picture saved")
         return
 
-    def it_foto(self, robot, cmd_args):
-        self.en_picture(robot,cmd_args)
+    def it_foto(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo scatta una foto."
+        if help == True:
+            return usage
+        self.en_picture(robot, cmd_args)
 
     #NEW COMMANDS#
-    def en_drive(self, robot, cmd_args):
-        usage = "Drive forward/backwards X seconds"
+    def en_drive(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo drives forward/backwards for X seconds."
+        if help == True:
+            return usage
         error_message = ""
         #print(cmd_args)
         drive_duration = extract_next_float(cmd_args)#[0]
@@ -168,17 +195,24 @@ class VoiceCommands():
 
         return "Error: usage = " + usage + error_message
 
-    def it_avanti(self, robot, cmd_args):
+    def it_avanti(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo si muove in avanti per X secondi."
+        if help == True:
+            return usage
         cmd_args.append("forward")
-        self.en_drive(robot,cmd_args)
+        self.en_drive(robot, cmd_args)
 
-    def it_indietro(self, robot, cmd_args):
+    def it_indietro(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo si muove all'indietro per X secondi."
+        if help == True:
+            return usage
         cmd_args.append("backward")
-        self.en_drive(robot,cmd_args)
+        self.en_drive(robot, cmd_args)
 
-    def en_turn(self, robot, cmd_args):
-        usage = "turn X degrees"
-
+    def en_turn(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo turns X degrees."
+        if help == True:
+            return usage
         drive_angle = extract_next_float(cmd_args)#[0]
 
         if drive_angle is not None:
@@ -187,12 +221,16 @@ class VoiceCommands():
 
         return "Error: usage = " + usage
 
-    def it_ruota(self, robot, cmd_args):
-        self.en_turn(robot,cmd_args)
+    def it_ruota(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo ruota di X gradi."
+        if help == True:
+            return usage
+        self.en_turn(robot, cmd_args)
 
-    def en_lift(self, robot, cmd_args):
-        usage = "Lift X (min:0, max:1)"
-
+    def en_lift(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo lifts his lift of X (min:0, max:1)."
+        if help == True:
+            return usage
         lift_height = extract_next_float(cmd_args)#[0]
 
         if lift_height is not None:
@@ -201,12 +239,16 @@ class VoiceCommands():
 
         return "Error: usage = " + usage
 
-    def it_solleva(self, robot, cmd_args):
-        self.en_lift(robot,cmd_args)
+    def it_solleva(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo solleva il suo braccio di X (min:0, max:1)."
+        if help == True:
+            return usage
+        self.en_lift(robot, cmd_args)
 
-    def en_head(self, robot, cmd_args):
-        usage = "Tilt head for X degrees (min:-25, max: 44)" #-25 (down) to 44.5 degrees (up)
-
+    def en_head(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo tilts his head of X degrees (min:-25, max: 44)." #-25 (down) to 44.5 degrees (up)
+        if help == True:
+            return usage
         head_angle = extract_next_float(cmd_args)#[0]
 
         if head_angle is not None:
@@ -220,12 +262,16 @@ class VoiceCommands():
 
         return "Error: usage = " + usage
 
-    def it_testa(self, robot, cmd_args):
-        self.en_head(robot,cmd_args)
+    def it_testa(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo muove la sua testa di X gradi (min:-25, max: 44)."
+        if help == True:
+            return usage
+        self.en_head(robot, cmd_args)
 
-    def en_say(self, robot, cmd_args):
-        usage = "Say X (where X is any text to say)"
-
+    def en_say(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo says X (where X is any text)."
+        if help == True:
+            return usage
         entire_message = None
         if len(cmd_args) > 0:
             try:
@@ -242,8 +288,14 @@ class VoiceCommands():
 
         return "Error: usage = " + usage
 
-    def it_dici(self, robot, cmd_args):
-        self.en_say(robot,cmd_args)
+    def it_dici(self, robot = None, cmd_args = None, help = False):
+        usage = "Cozmo dice X (dove X è un testo qualunque)."
+        if help == True:
+            return usage
+        self.en_say(robot, cmd_args)
 
-    def it_bici(self, robot, cmd_args):
-        self.en_say(robot,cmd_args)
+    def it_bici(self, robot = None, cmd_args = None, help = False):
+        usage = "alternativo a 'dici', Cozmo dice X (dove X è un testo qualunque)."
+        if help == True:
+            return usage
+        self.en_say(robot, cmd_args)
