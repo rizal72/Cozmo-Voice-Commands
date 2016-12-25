@@ -1,4 +1,4 @@
-# Cozmo voice Commands (CvC) - Version 0.3.0
+# Cozmo voice Commands (CvC) - Version 0.3.1
 
 Issue multiple voice commands to Cozmo, and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English* and *Italian*.
 
