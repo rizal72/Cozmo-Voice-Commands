@@ -3,9 +3,9 @@
 Issue multiple voice commands to Cozmo, and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English* and *Italian*.
 
 ### Description
-You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING for 20 seconds"*, **and Cozmo will execute the command in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, **it even parses verbs in their different conjugations**, and numbers as arguments of the action to perform.  
+You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING backwards for 20 seconds?"*, **and Cozmo will execute the command in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, **it even parses verbs in their different conjugations**, and numbers as arguments of the action to perform.  
 **NEW FEATURE: now you can issue MULTIPLE COMMANDS at once!**  
-**i.e.** _"Hello Cozmo, my little friend, could you please drive for 3 seconds **THEN** rotate 90 degrees **THEN** dance?"_
+**i.e.** _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate 90 degrees **THEN** dance?"_
 
 **Tested on macOS an Linux!
 Still in Beta - Work in Progress!**
@@ -36,7 +36,7 @@ A list of supported commands and arguments is provided at runtime
 
 ### Customization
 You can add as many new commands as you like, commands are located in `cvc/voice_commands.py` file: just prefix their function names with the language they are spoken in, *i.e. "it_" for Italian, "en_" for english so, for instance, you'll create the method `en_smile()` and the voice command you'll have to say will be "smile" (or "smiling" or "smiled", and so on...)*.  
-Some commands support one argument, for example: if you say *"Cozmo, drive for 10 seconds"*, `10` will be passed to the method `en_drive()`, any other words will be ignored.
+Some commands support arguments, for example: if you say *"Cozmo, drive backwards for 10 seconds"*, `backwards` and `10` will be passed to the method `en_drive()`, any other words will be ignored.
 
 #### Note for Developers:
 If you want to just run the App **without installing the package**, you need to execute `./run.py` from the root folder, after you have cloned/downloaded the [repository](https://github.com/rizal72/Cozmo-Voice-Commands) content.
