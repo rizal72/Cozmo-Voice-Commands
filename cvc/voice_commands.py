@@ -184,7 +184,7 @@ class VoiceCommands():
 ###### DRIVE ######
 
     def en_drive(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo drives forward/backwards for X seconds."
+        usage = "Cozmo drives forward/backwards for X seconds (i.e. 'Cozmo, drive backwards for 3 seconds')."
         if robot is None:
             return usage
         error_message = ""
@@ -210,14 +210,14 @@ class VoiceCommands():
         return "Error: usage = " + usage + error_message
 
     def it_avanti(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo si muove in avanti per X secondi."
+        usage = "Cozmo si muove in avanti per X secondi (es. 'Cozmo, vai avanti per 3 secondi')."
         if robot is None:
             return usage
         cmd_args.append("forward")
         self.en_drive(robot, cmd_args)
 
     def it_indietro(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo si muove all'indietro per X secondi."
+        usage = "Cozmo si muove all'indietro per X secondi (es. 'Cozmo, vai indietro per 3 secondi')"
         if robot is None:
             return usage
         cmd_args.append("backward")
@@ -246,7 +246,7 @@ class VoiceCommands():
 ###### LIFT ######
 
     def en_lift(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo lifts his lift of X (min:0, max:1)."
+        usage = "Cozmo lifts his lift of X (min:0, max:1 - i.e. 'Cozmo, lift your lift of 0.5')."
         if robot is None:
             return usage
         lift_height = extract_next_float(cmd_args)#[0]
@@ -258,7 +258,7 @@ class VoiceCommands():
         return "Error: usage = " + usage
 
     def it_solleva(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo solleva il suo braccio di X (min:0, max:1)."
+        usage = "Cozmo solleva il suo braccio di X (min:0, max:1 - es. 'Cozmo, solleva il tuo braccio di 0.5')."
         if robot is None:
             return usage
         self.en_lift(robot, cmd_args)
@@ -266,7 +266,7 @@ class VoiceCommands():
 ###### HEAD ######
 
     def en_head(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo tilts his head of X degrees (min:0, max:1)." #-25 (down) to 44.5 degrees (up)
+        usage = "Cozmo tilts his head of X (min:0, max:1)." #-25 (down) to 44.5 degrees (up)
         if robot is None:
             return usage
 
@@ -287,7 +287,7 @@ class VoiceCommands():
         return "Error: usage = " + usage
 
     def it_testa(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo muove la sua testa di X gradi (min:0, max:1)."
+        usage = "Cozmo muove la sua testa di X (min:0, max:1)."
         if robot is None:
             return usage
         self.en_head(robot, cmd_args)
