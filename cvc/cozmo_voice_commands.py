@@ -54,7 +54,7 @@ def run(robot: cozmo.robot.Robot):
             cprint("You issue voice commands to Cozmo.\nYou can give multiple commands separating them with the word 'THEN'.\nAvailable Commands are:", "green")
         else:
             cprint("Puoi impartire comandi vocali a Cozmo.\nPuoi dare comandi in sequenza separandoli con la parola 'POI'.\nI comandi disponibiloi sono:", "green")
-        print(*get_supported_commands(), sep="\n")
+        printSupportedCommands()
 
         with sr.Microphone(chunk_size=512) as source:
             while 1:
@@ -113,9 +113,16 @@ def get_supported_commands():
     supported_commands = []
     for func_name in dir(vc):
         if func_name.startswith(prefix_str):
-            #supported_commands.append(func_name[len(prefix_str):])
-            supported_commands.append(func_name[len(prefix_str):] + ": " + getattr(vc, func_name)())
+            #supported_commands.append(func_name[len(prefix_str):] + ": " + getattr(vc, func_name)())
+            supported_commands.append({"name": func_name[len(prefix_str):], "usage": getattr(vc, func_name)()})
     return supported_commands
+
+def printSupportedCommands():
+    #print(*get_supported_commands(), sep="\n")
+    commands = get_supported_commands()
+    for command in commands:
+        cprint(command['name'], "green", end="")
+        print(": " + command['usage'])
 
 def get_command(command_name):
     '''Find a matching function inside 'VoiceCommands' class and return it. return None if there's no match'''
@@ -200,14 +207,14 @@ def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
                 cprint("Sorry I didn't understand all of your commands, available commands are:", "red")
             else:
                 cprint("Mi spiace non ho capito tutti i comandi, i comandi disponibili sono:", "red")
-            print(*get_supported_commands(), sep="\n")
+            printSupportedCommands()
 
     if len(cmd_funcs) == 0:
         if lang=="en":
             cprint("Sorry I didn't understand any of your commands, available commands are:", "red")
         else:
             cprint("Mi spiace non ho capito nessuno dei comandi, i comandi disponibili sono:", "red")
-        print(*get_supported_commands(), sep="\n")
+        printSupportedCommands()
         if robot:
             robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
 
