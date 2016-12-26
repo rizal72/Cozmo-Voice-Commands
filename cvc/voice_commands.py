@@ -164,10 +164,12 @@ class VoiceCommands():
         usage = "Cozmo takes a picture."
         if robot is None:
             return usage
+        robot.camera.image_stream_enabled = True
         print("taking a picture...")
         pic_filename = "picture.png"
         robot.say_text("Say cheese!").wait_for_completed()
         latest_image = robot.world.latest_image
+        robot.camera.image_stream_enabled = True
         if latest_image:
             latest_image.raw_image.convert('L').save(pic_filename)
             print ("picture saved as: " + pic_filename)

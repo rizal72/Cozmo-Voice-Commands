@@ -7,8 +7,8 @@ You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING backw
 **NEW FEATURE: now you can issue MULTIPLE COMMANDS at once!**  
 **i.e.** _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate 90 degrees **THEN** dance?"_
 
-**Tested on macOS an Linux!
-Still in Beta - Work in Progress!**
+**Tested on macOS an Linux!**  
+**Still in Beta - Work in Progress!**
 
 ### Two steps installation
 1. **CvC** requires `portaudio`:
