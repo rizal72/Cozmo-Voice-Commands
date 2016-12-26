@@ -89,16 +89,16 @@ def set_language():
                 break
             else:
                 newLang = 0
-                print("That's not an option!")
+                cprint("That's not an option!", "red")
 
     if newLang == 1 or not newLang:
         lang = "en"
     elif newLang == 2:
         lang = "it"
 
-    cprint("\nlanguage set to: " + lang + "\n", "green")
+    cprint("\nlanguage set to: " + lang + "\n", "yellow")
 
-def checkBattery(robot):
+def checkBattery(robot: cozmo.robot.Robot):
 
     if (robot.battery_voltage <= 3.5):
         color = "red"
@@ -159,10 +159,10 @@ def extract_commands_from_string(in_string):
         print("commands: ", cmd_funcs, "arguments: ", cmd_args)
     return cmd_funcs, cmd_args # returns a touple of arrays of commands and arguments
 
-def flash_backpack(robot, flag):
+def flash_backpack(robot: cozmo.robot.Robot, flag):
     robot.set_all_backpack_lights(cozmo.lights.green_light.flash() if flag else cozmo.lights.off_light)
 
-def hear(source, robot):
+def hear(source, robot: cozmo.robot.Robot):
     '''Speech recognition using Google Speech Recognition
     for testing purposes, we're just using the default API key'''
     audio = recognizer.listen(source)
@@ -188,7 +188,7 @@ def hear(source, robot):
     except sr.RequestError as e:
         cprint("Could not request results from Speech Recognition service, check your web connection; {0}".format(e), "red")
 
-def executeComands(robot, cmd_funcs, cmd_args):
+def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
 
     for i in range(len(cmd_funcs)):
         if cmd_funcs[i] is not None:
