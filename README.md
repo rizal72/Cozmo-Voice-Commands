@@ -42,7 +42,7 @@ Some commands support arguments, for example: if you say *"Cozmo, drive backward
 If you want to just run the App **without installing the package**, you need to execute `./run.py` from the root folder, after you have cloned/downloaded the [repository](https://github.com/rizal72/Cozmo-Voice-Commands) content.
 
 ### Todo next
-* Allow more commands at once, to ve executed in parallel, using the word *"and"*.   
+* Allow more commands at once, to be executed in parallel, using the word *"and"*.   
 
 **Please note:** Cozmo does not have built-in microphone, so you should talk with your computer ;)  
 **Please pardon** my python scripting capabilities, it's not my *"native language"* ;)

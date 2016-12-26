@@ -113,7 +113,6 @@ def get_supported_commands():
     supported_commands = []
     for func_name in dir(vc):
         if func_name.startswith(prefix_str):
-            #print(getattr(vc, func_name)(help=True))
             #supported_commands.append(func_name[len(prefix_str):])
             supported_commands.append(func_name[len(prefix_str):] + ": " + getattr(vc, func_name)())
     return supported_commands
