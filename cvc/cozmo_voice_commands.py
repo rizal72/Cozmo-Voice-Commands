@@ -61,10 +61,10 @@ def run(robot: cozmo.robot.Robot):
                 if robot:
                     checkBattery(robot)
                     flash_backpack(robot, True)
-                    try:
+                    '''try:
                         robot.play_anim("anim_meetcozmo_getin").wait_for_completed()
                     except:
-                        pass
+                        pass'''
                 print("\nSay something (ctrl+c to exit):")
                 hear(source, robot)
     except KeyboardInterrupt:

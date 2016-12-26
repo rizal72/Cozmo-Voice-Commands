@@ -9,7 +9,7 @@ import asyncio
 from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 
-speed = 50
+speed = 75
 
 def extract_float(cmd_args, index=0):
     if len(cmd_args) > index:
@@ -29,7 +29,8 @@ def extract_next_float(cmd_args, index=0):
             float_val = float(cmd_args[i])
             return float_val#, i #can return position if needed
         except ValueError:
-            pass
+            if "zero" in cmd_args or "Zero" in cmd_args:
+                return 0
     return None#, None
 
 class VoiceCommands():
@@ -263,12 +264,16 @@ class VoiceCommands():
 ###### HEAD ######
 
     def en_head(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo tilts his head of X degrees (min:-25, max: 44)." #-25 (down) to 44.5 degrees (up)
+        usage = "Cozmo tilts his head of X degrees (min:0, max:1)." #-25 (down) to 44.5 degrees (up)
         if robot is None:
             return usage
-        head_angle = extract_next_float(cmd_args)#[0]
 
-        if head_angle is not None:
+        head_angle_01 = extract_next_float(cmd_args)#[0]
+
+        if head_angle_01 is not None:
+            #FORMULA: Result = ((Input - InputLow) / (InputHigh - InputLow)) * (OutputHigh - OutputLow) + OutputLow;
+            head_angle = head_angle_01 * (44 + 25) - 25;
+            print("head angle = ", head_angle)
             head_angle_action = robot.set_head_angle(degrees(head_angle))
             clamped_head_angle = head_angle_action.angle.degrees
             head_angle_action.wait_for_completed()
@@ -280,7 +285,7 @@ class VoiceCommands():
         return "Error: usage = " + usage
 
     def it_testa(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo muove la sua testa di X gradi (min:-25, max: 44)."
+        usage = "Cozmo muove la sua testa di X gradi (min:0, max:1)."
         if robot is None:
             return usage
         self.en_head(robot, cmd_args)
