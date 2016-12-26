@@ -170,11 +170,11 @@ def hear(source, robot):
     recognized = None
     try:
         #to your API key, change key="YOUR_KEY":
-        recognized = recognizer.recognize_google(audio, key=None, language=lang)
+        recognized = recognizer.recognize_google(audio, key=None, language=lang).lower()
         #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN)
         print("You said: " + recognized)
         '''very nice: check if one of the activation commands is in the recognized string'''
-        if set(commands_activate).intersection(recognized.lower().split()):
+        if set(commands_activate).intersection(recognized.split()):
             cprint("Action command recognized", "green")
             cmd_funcs, cmd_args = extract_commands_from_string(recognized) #check if a corresponding command exists
             executeComands(robot, cmd_funcs, cmd_args)

@@ -29,8 +29,10 @@ def extract_next_float(cmd_args, index=0):
             float_val = float(cmd_args[i])
             return float_val#, i #can return position if needed
         except ValueError:
-            if "zero" in cmd_args or "Zero" in cmd_args:
+            if "zero" in cmd_args:
                 return 0
+            if "one" in cmd_args or "uno" in cmd_args:
+                return 1
     return None#, None
 
 class VoiceCommands():
