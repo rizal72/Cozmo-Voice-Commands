@@ -4,8 +4,9 @@ You can add as many new commands as you like:
 just prefix their function names with the language they are spoken in, *i.e. "it_" for italian, "en_" for english, so for instance you'll create the method "en_smile()" and the voice command you'll have to say will be "smile"*.
 Some commands support one argument, for example: if you say *"drive for 10 seconds"*, 10 will be passed to the method *"en_drive"*, any other words will be ignored.
 '''
-import cozmo
 import asyncio
+
+import cozmo
 from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 

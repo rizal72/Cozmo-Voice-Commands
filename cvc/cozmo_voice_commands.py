@@ -9,13 +9,15 @@ License: GNU
 import sys
 import os
 import asyncio
+
 import cozmo
 try:
     from termcolor import colored, cprint
     import speech_recognition as sr
 except ImportError:
     sys.exit('some packages are required, install them doing: `pip3 install --user termcolor SpeechRecognition PyAudio` to run this script.\nIf you are on linux do: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install pyaudio`')
-import cvc.voice_commands as voice_commands
+
+from . import voice_commands
 
 ###### VARS ######
 log = False
