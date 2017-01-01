@@ -5,6 +5,7 @@ just prefix their function names with the language they are spoken in, *i.e. "it
 Some commands support one argument, for example: if you say *"drive for 10 seconds"*, 10 will be passed to the method *"en_drive"*, any other words will be ignored.
 '''
 import asyncio
+import time
 
 import cozmo
 from cozmo.util import distance_mm, speed_mmps, degrees
@@ -162,20 +163,20 @@ class VoiceCommands():
 ###### PICTURE ######
 
     def en_picture(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo takes a picture."
+        usage = "Cozmo takes a picture, then it saves it in the folder where you launched CvC."
         if robot is None:
             return usage
         robot.camera.image_stream_enabled = True
         print("taking a picture...")
-        pic_filename = "picture.png"
+        pic_filename = "cozmo_pic_" + str(int(time.time())) + ".png"
         robot.say_text("Say cheese!").wait_for_completed()
         latest_image = robot.world.latest_image
-        robot.camera.image_stream_enabled = True
         if latest_image:
             latest_image.raw_image.convert('L').save(pic_filename)
             print ("picture saved as: " + pic_filename)
         else:
             print ("no picture saved")
+        robot.camera.image_stream_enabled = False
         return
 
     def it_foto(self, robot:cozmo.robot.Robot = None, cmd_args = None):
