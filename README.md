@@ -23,7 +23,7 @@ You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING backw
   ```
 2. install `cvc` package:  
 ```Shell
-pip install git+https://github.com/rizal72/Cozmo-Voice-Commands
+pip3 install git+https://github.com/rizal72/Cozmo-Voice-Commands
 ```
 **note:** to update **CvC**, repeat step **2**.
 
