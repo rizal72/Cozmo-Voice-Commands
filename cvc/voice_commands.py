@@ -180,7 +180,7 @@ class VoiceCommands():
         return
 
     def it_foto(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo scatta una foto."
+        usage = "Cozmo scatta una foto, poi la salva nella cartella in cui ci si trova durante l'esecuzione di CvC."
         if robot is None:
             return usage
         self.en_picture(robot, cmd_args)
