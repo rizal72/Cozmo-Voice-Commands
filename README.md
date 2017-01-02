@@ -11,6 +11,7 @@ You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING backw
 **Still in Beta - Work in Progress!**
 
 ### Two steps installation
+Assuming that you've already performed [**Cozmo SDK Setup**](http://cozmosdk.anki.com/docs/), specific for your platform:  
 1. **CvC** requires `portaudio`:
 
   * on **MacOS** (see [Homebrew](http://brew.sh/index_it.html) if you don't know what `brew` is):
