@@ -69,6 +69,12 @@ class VoiceCommands():
             return usage
         self.en_blocks(robot, cmd_args)
 
+    def fr_joue(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo joue avec ses blocs."
+        if robot is None:
+            return usage
+        self.en_blocks(robot, cmd_args)
+
 ###### DANCE ######
 
     def en_dance(self, robot:cozmo.robot.Robot = None, cmd_args = None):
@@ -81,6 +87,12 @@ class VoiceCommands():
 
     def it_balla(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo balla."
+        if robot is None:
+            return usage
+        self.en_dance(robot, cmd_args)
+
+    def fr_danse(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo danse."
         if robot is None:
             return usage
         self.en_dance(robot, cmd_args)
@@ -118,6 +130,12 @@ class VoiceCommands():
 
     def it_guarda(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo cerca una faccia."
+        if robot is None:
+            return usage
+        self.en_look(robot, cmd_args)
+
+    def fr_regarde(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo regarde un visage."
         if robot is None:
             return usage
         self.en_look(robot, cmd_args)
@@ -160,6 +178,12 @@ class VoiceCommands():
             return usage
         self.en_follow(robot, cmd_args)
 
+    def fr_suit(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo suit un visage."
+        if robot is None:
+            return usage
+        self.en_follow(robot, cmd_args)
+
 ###### PICTURE ######
 
     def en_picture(self, robot:cozmo.robot.Robot = None, cmd_args = None):
@@ -181,6 +205,12 @@ class VoiceCommands():
 
     def it_foto(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo scatta una foto, poi la salva nella cartella in cui ci si trova durante l'esecuzione di CvC."
+        if robot is None:
+            return usage
+        self.en_picture(robot, cmd_args)
+
+    def fr_photo(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo prend une photo, puis la sauvegarde dans le repertoire où a été lancé CvC."
         if robot is None:
             return usage
         self.en_picture(robot, cmd_args)
@@ -220,8 +250,22 @@ class VoiceCommands():
         cmd_args.append("forward")
         self.en_drive(robot, cmd_args)
 
+    def fr_avance(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo avance pendant X secondes (ex. 'Cozmo, avance pendant 3 secondes')."
+        if robot is None:
+            return usage
+        cmd_args.append("forward")
+        self.en_drive(robot, cmd_args)
+
     def it_indietro(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo si muove all'indietro per X secondi (es. 'Cozmo, vai indietro per 3 secondi')"
+        if robot is None:
+            return usage
+        cmd_args.append("backward")
+        self.en_drive(robot, cmd_args)
+
+    def fr_recule(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo recule pendant X secondes (ex. 'Cozmo, recule pendant 3 secondes')."
         if robot is None:
             return usage
         cmd_args.append("backward")
@@ -247,6 +291,12 @@ class VoiceCommands():
             return usage
         self.en_turn(robot, cmd_args)
 
+    def fr_tourne(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo tourne de X degrés."
+        if robot is None:
+            return usage
+        self.en_turn(robot, cmd_args)
+
 ###### LIFT ######
 
     def en_lift(self, robot:cozmo.robot.Robot = None, cmd_args = None):
@@ -263,6 +313,12 @@ class VoiceCommands():
 
     def it_solleva(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo solleva il suo braccio di X (min:0, max:1 - es. 'Cozmo, solleva il tuo braccio di 0.5')."
+        if robot is None:
+            return usage
+        self.en_lift(robot, cmd_args)
+
+    def fr_souleve(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo soulève son bras de X (min:0, max:1 - ex. 'Cozmo, soulève ton bras de 0.5')."
         if robot is None:
             return usage
         self.en_lift(robot, cmd_args)
@@ -296,6 +352,12 @@ class VoiceCommands():
             return usage
         self.en_head(robot, cmd_args)
 
+    def fr_hoche(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo hoche sa tête de X (min:0, max:1)."
+        if robot is None:
+            return usage
+        self.en_head(robot, cmd_args)
+
 ###### SAY ######
 
     def en_say(self, robot:cozmo.robot.Robot = None, cmd_args = None):
@@ -320,6 +382,12 @@ class VoiceCommands():
 
     def it_dici(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo dice X (dove X è un testo qualunque)."
+        if robot is None:
+            return usage
+        self.en_say(robot, cmd_args)
+
+    def fr_dit(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo dit X (où X est n'importe quel texte)."
         if robot is None:
             return usage
         self.en_say(robot, cmd_args)

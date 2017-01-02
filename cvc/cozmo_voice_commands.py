@@ -22,11 +22,12 @@ from . import voice_commands
 ###### VARS ######
 log = False
 lang = "en"
-commands_activate = ["cosmo", "cosimo", "kosmos", "osmo"]
+commands_activate = ["cosmo", "cosimo", "kosmos", "osmo", "kosovo", "peau"]
 recognizer = sr.Recognizer()
 vc = None
 en_seq_action_separator = " then "# don't foget spaces!
 it_seq_action_separator = " poi " # don't foget spaces!
+fr_seq_action_separator = " alors " # don't foget spaces!
 
 ##### MAIN ######
 def main():
@@ -54,8 +55,10 @@ def run(robot: cozmo.robot.Robot):
 
         if lang=="en":
             cprint("You issue voice commands to Cozmo.\nYou can give multiple commands separating them with the word 'THEN'.\nAvailable Commands are:", "green")
-        else:
+        elif lang=="it":
             cprint("Puoi impartire comandi vocali a Cozmo.\nPuoi dare comandi in sequenza separandoli con la parola 'POI'.\nI comandi disponibiloi sono:", "green")
+        elif lang == "fr":
+            cprint("Donnez une commande vocale à Cozmo.\nVous pouvez en donner plusieurs en les séparant par le mot 'ALORS'.\nI Les commandes disponibles sont:", "green")
         printSupportedCommands()
 
         with sr.Microphone(chunk_size=512) as source:
@@ -74,17 +77,18 @@ def run(robot: cozmo.robot.Robot):
         cprint("Exit requested by user", "yellow")
 
 def set_language():
-    global lang
+    global lang, lang_sphinx
 
     cprint('\nCHOOSE YOUR LANGUAGE (hit "enter" for default [English]):', 'green')
     print('1: English')
     print('2: Italian')
+    print('3: French')
 
     newLang = 0
     while not newLang:
         try:
             newLang = int(input('>>>').strip())
-            if newLang not in (1, 2):
+            if newLang not in (1, 3):
                 raise ValueError
         except ValueError:
             if not newLang:
@@ -95,8 +99,13 @@ def set_language():
 
     if newLang == 1 or not newLang:
         lang = "en"
+        lang_sphinx = "en-US"
     elif newLang == 2:
         lang = "it"
+        lang_sphinx = "it-IT"
+    elif newLang == 3:
+        lang = "fr"
+        lang_sphinx = "fr-FR"
 
     cprint("\nlanguage set to: " + lang + "\n", "yellow")
 
@@ -174,12 +183,17 @@ def flash_backpack(robot: cozmo.robot.Robot, flag):
 def hear(source, robot: cozmo.robot.Robot):
     '''Speech recognition using Google Speech Recognition
     for testing purposes, we're just using the default API key'''
-    audio = recognizer.listen(source)
+    recognizer.pause_threshold = 0.8
+    recognizer.dynamic_energy_threshold = True
+
+    audio = recognizer.listen(source, timeout = None, phrase_time_limit = 5)
+    #audio = recognizer.listen(source)
     recognized = None
     try:
         #to your API key, change key="YOUR_KEY":
-        recognized = recognizer.recognize_google(audio, key=None, language=lang).lower()
+        #recognized = recognizer.recognize_google(audio, key=None, language=lang_sphinx).lower()
         #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN)
+        recognized = recognizer.recognize_sphinx(audio, language=lang_sphinx).lower()
         print("You said: " + recognized)
         '''very nice: check if one of the activation commands is in the recognized string'''
         if set(commands_activate).intersection(recognized.split()):
@@ -207,15 +221,19 @@ def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
         else:
             if lang=="en":
                 cprint("Sorry I didn't understand all of your commands, available commands are:", "red")
-            else:
+            elif lang == "it":
                 cprint("Mi spiace non ho capito tutti i comandi, i comandi disponibili sono:", "red")
+            elif lang == "fr":
+                cprint("Je suis désolé, je n'ai pas compris toutes les commandes, les commandes disponibles sont:", "red")
             printSupportedCommands()
 
     if len(cmd_funcs) == 0:
         if lang=="en":
             cprint("Sorry I didn't understand any of your commands, available commands are:", "red")
-        else:
+        elif lang == "it":
             cprint("Mi spiace non ho capito nessuno dei comandi, i comandi disponibili sono:", "red")
+        elif lang == "fr":
+            cprint("Je suis désolé, je n'ai compris aucune de vos commandes, les commandes disponibles sont:", "red")
         printSupportedCommands()
         if robot:
             robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
