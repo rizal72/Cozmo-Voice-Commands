@@ -36,7 +36,7 @@ pip3 install git+https://github.com/rizal72/Cozmo-Voice-Commands
 * run command `cvc` from the Terminal application
 * choose speech recognition language (English, Italian and French are currently supported)
 * issue commands by voice, not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: *"Ok COZMO, my friend, would you enjoy ROTATING 90 degrees?"*  
-**You can issue multiple commands at once:** use the word *"THEN"* (*"POI"* in Italian), to separate them. Right now these commands will be executed in a sequence. I plan to make some of them to be executed in parallel in the near future.
+**You can issue multiple commands at once:** use the word *"THEN"* (*"POI"* in Italian, *"ALORS"* in French), to separate them. Right now these commands will be executed in a sequence. I plan to make some of them to be executed in parallel in the near future.
 A list of supported commands and arguments is provided at runtime
 
 ### Customization
