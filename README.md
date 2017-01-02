@@ -7,7 +7,7 @@ You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING backw
 **NEW FEATURE: now you can issue MULTIPLE COMMANDS at once!**  
 **i.e.** _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate 90 degrees **THEN** dance?"_
 
-**Tested on macOS an Linux!**  
+**Tested on macOS, Windows and Linux!**  
 **Still in Beta - Work in Progress!**
 
 ### Two steps installation
@@ -21,6 +21,9 @@ You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING backw
   ```shell
   sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio
   ```
+  * on **Windows**:
+  you only need to [install git](https://git-scm.com/download/win) as it is not included by default.  
+
 2. install `cvc` package:  
 ```Shell
 pip3 install git+https://github.com/rizal72/Cozmo-Voice-Commands
