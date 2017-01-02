@@ -215,6 +215,12 @@ class VoiceCommands():
             return usage
         self.en_picture(robot, cmd_args)
 
+    def it_photo(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo prend une photo."
+        if robot is None:
+            return usage
+        self.en_picture(robot, cmd_args)
+
 ###### DRIVE ######
 
     def en_drive(self, robot:cozmo.robot.Robot = None, cmd_args = None):
