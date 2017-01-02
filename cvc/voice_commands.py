@@ -209,14 +209,8 @@ class VoiceCommands():
             return usage
         self.en_picture(robot, cmd_args)
 
-    def it_photo(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo prend une photo."
-        if robot is None:
-            return usage
-        self.en_picture(robot, cmd_args)
-
     def fr_photo(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo prend une photo."
+        usage = "Cozmo prend une photo, puis la sauvegarde dans le repertoire où a été lancé CvC."
         if robot is None:
             return usage
         self.en_picture(robot, cmd_args)
