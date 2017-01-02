@@ -1,6 +1,6 @@
 # Cozmo voice Commands (CvC) - Version 0.3.4
 
-Issue multiple voice commands to Cozmo, and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English* and *Italian*.
+Issue multiple voice commands to Cozmo, and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian and French*.
 
 ### Description
 You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING backwards for 20 seconds?"*, **and Cozmo will execute the command in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, **it even parses verbs in their different conjugations**, and numbers as arguments of the action to perform.  
