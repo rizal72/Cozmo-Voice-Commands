@@ -88,7 +88,7 @@ def set_language():
     while not newLang:
         try:
             newLang = int(input('>>>').strip())
-            if newLang not in range(1, 3):
+            if newLang not in range(1, 4):
                 raise ValueError
         except ValueError:
             if not newLang:
@@ -186,7 +186,7 @@ def hear(source, robot: cozmo.robot.Robot):
     recognizer.pause_threshold = 0.8
     recognizer.dynamic_energy_threshold = True
 
-    #audio = recognizer.listen(source, timeout = None, phrase_time_limit = 5)
+    #audio = recognizer.listen(source, timeout = None, phrase_time_limit = 8)
     audio = recognizer.listen(source)
     recognized = None
     try:
