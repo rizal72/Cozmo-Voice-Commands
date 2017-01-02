@@ -22,6 +22,8 @@ from . import voice_commands
 ###### VARS ######
 log = False
 lang = "en"
+title = "Cozmo-Voice-Commands (CvC) - Version 0.3.5"
+author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 commands_activate = ["cosmo", "cosimo", "kosmos", "osmo", "kosovo", "peau"]
 recognizer = sr.Recognizer()
 vc = None
@@ -32,13 +34,15 @@ fr_seq_action_separator = " alors " # don't foget spaces!
 ##### MAIN ######
 def main():
     clearScreen = os.system("clear")
+    cprint(title, "green", attrs=['bold'], end='')
+    cprint(author, "cyan")
     try:
         cozmo.run_program(run)
         #cozmo.run_program(run, use_viewer=True, force_viewer_on_top=True)
     except SystemExit as e:
         print('exception = "%s"' % e)
         #ONLY FOR TESTING PURPOSES
-        cprint('\nGoing on without Cozmo. Fer testing purposes only!', 'yellow')
+        cprint('\nGoing on without Cozmo: for testing purposes only!', 'yellow')
         run(None)
 
 ##### APP ######
@@ -87,7 +91,7 @@ def set_language():
     newLang = 0
     while not newLang:
         try:
-            newLang = int(input('>>>').strip())
+            newLang = int(input('>>> ').strip())
             if newLang not in range(1, 4):
                 raise ValueError
         except ValueError:
@@ -124,15 +128,13 @@ def get_supported_commands():
     supported_commands = []
     for func_name in dir(vc):
         if func_name.startswith(prefix_str):
-            #supported_commands.append(func_name[len(prefix_str):] + ": " + getattr(vc, func_name)())
             supported_commands.append({"name": func_name[len(prefix_str):], "usage": getattr(vc, func_name)()})
     return supported_commands
 
 def printSupportedCommands():
-    #print(*get_supported_commands(), sep="\n")
     commands = get_supported_commands()
     for command in commands:
-        cprint(command['name'], "green", end="")
+        cprint(command['name'], "cyan", end="")
         print(": " + command['usage'])
 
 def get_command(command_name):
@@ -186,11 +188,10 @@ def hear(source, robot: cozmo.robot.Robot):
     recognizer.pause_threshold = 0.8
     recognizer.dynamic_energy_threshold = True
 
-    #audio = recognizer.listen(source, timeout = None, phrase_time_limit = 8)
+    #audio = recognizer.listen(source, timeout = None, phrase_time_limit = 8) #needs forther testing
     audio = recognizer.listen(source)
     recognized = None
     try:
-        #to your API key, change key="YOUR_KEY":
         recognized = recognizer.recognize_google(audio, key=None, language=lang_sphinx).lower()
         #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN)
         #recognized = recognizer.recognize_sphinx(audio, language=lang_sphinx).lower()
