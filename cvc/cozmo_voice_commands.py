@@ -88,7 +88,7 @@ def set_language():
     while not newLang:
         try:
             newLang = int(input('>>>').strip())
-            if newLang not in (1, 3):
+            if newLang not in range(1, 3):
                 raise ValueError
         except ValueError:
             if not newLang:
@@ -186,14 +186,14 @@ def hear(source, robot: cozmo.robot.Robot):
     recognizer.pause_threshold = 0.8
     recognizer.dynamic_energy_threshold = True
 
-    audio = recognizer.listen(source, timeout = None, phrase_time_limit = 5)
-    #audio = recognizer.listen(source)
+    #audio = recognizer.listen(source, timeout = None, phrase_time_limit = 5)
+    audio = recognizer.listen(source)
     recognized = None
     try:
         #to your API key, change key="YOUR_KEY":
-        #recognized = recognizer.recognize_google(audio, key=None, language=lang_sphinx).lower()
+        recognized = recognizer.recognize_google(audio, key=None, language=lang_sphinx).lower()
         #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN)
-        recognized = recognizer.recognize_sphinx(audio, language=lang_sphinx).lower()
+        #recognized = recognizer.recognize_sphinx(audio, language=lang_sphinx).lower()
         print("You said: " + recognized)
         '''very nice: check if one of the activation commands is in the recognized string'''
         if set(commands_activate).intersection(recognized.split()):
