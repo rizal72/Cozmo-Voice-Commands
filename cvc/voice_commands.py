@@ -215,7 +215,7 @@ class VoiceCommands():
             return usage
         self.en_picture(robot, cmd_args)
 
-    def it_photo(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+    def fr_photo(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo prend une photo."
         if robot is None:
             return usage
@@ -358,6 +358,12 @@ class VoiceCommands():
             return usage
         self.en_head(robot, cmd_args)
 
+    def fr_hoche(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo hoche sa tête de X (min:0, max:1)."
+        if robot is None:
+            return usage
+        self.en_head(robot, cmd_args)
+
 ###### SAY ######
 
     def en_say(self, robot:cozmo.robot.Robot = None, cmd_args = None):
@@ -382,6 +388,12 @@ class VoiceCommands():
 
     def it_dici(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo dice X (dove X è un testo qualunque)."
+        if robot is None:
+            return usage
+        self.en_say(robot, cmd_args)
+
+    def fr_dit(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo dit X (où X est n'importe quel texte)."
         if robot is None:
             return usage
         self.en_say(robot, cmd_args)
