@@ -222,7 +222,7 @@ class VoiceCommands():
         usage = "Cozmo drives forward/backwards for X seconds (i.e. 'Cozmo, drive backwards for 3 seconds')."
         if robot is None:
             return usage
-            
+
         error_message = ""
         if log:
             print(cmd_args)
@@ -481,8 +481,9 @@ class VoiceCommands():
             if log:
                 print("Now the grand finalle: turn around and park!")
                 print("Turning...")
-            robot.turn_in_place(degrees(95)).wait_for_completed()
-            robot.turn_in_place(degrees(95)).wait_for_completed()
+            #this value needs to be tweaked (90 or 95)
+            robot.turn_in_place(degrees(90)).wait_for_completed()
+            robot.turn_in_place(degrees(90)).wait_for_completed()
             time.sleep( 1 )
             if log:
                 print("Get out of the way: here I go!")
