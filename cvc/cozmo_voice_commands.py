@@ -20,10 +20,10 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-log = False
-lang = "en"
 title = "Cozmo-Voice-Commands (CvC) - Version 0.3.5"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
+log = False
+lang = "en"
 commands_activate = ["cosmo", "cosimo", "kosmos", "osmo", "kosovo", "peau"]
 recognizer = sr.Recognizer()
 vc = None
@@ -52,17 +52,12 @@ def run(robot: cozmo.robot.Robot):
 
     vc = voice_commands.VoiceCommands(robot)
     if robot:
+        if robot.is_on_charger:
+            robot.drive_off_charger_contacts().wait_for_completed()
         robot.play_anim("anim_cozmosays_getout_short_01")
 
     try:
         set_language()
-
-        if lang=="en":
-            cprint("You issue voice commands to Cozmo.\nYou can give multiple commands separating them with the word 'THEN'.\nAvailable Commands are:", "green")
-        elif lang=="it":
-            cprint("Puoi impartire comandi vocali a Cozmo.\nPuoi dare comandi in sequenza separandoli con la parola 'POI'.\nI comandi disponibiloi sono:", "green")
-        elif lang == "fr":
-            cprint("Donnez une commande vocale à Cozmo.\nVous pouvez en donner plusieurs en les séparant par le mot 'ALORS'.\nI Les commandes disponibles sont:", "green")
         printSupportedCommands()
 
         with sr.Microphone(chunk_size=512) as source:
@@ -74,7 +69,8 @@ def run(robot: cozmo.robot.Robot):
                         robot.play_anim("anim_meetcozmo_getin").wait_for_completed()
                     except:
                         pass'''
-                print("\nSay something (ctrl+c to exit):")
+                cprint("\nSay something (ctrl+c to exit)", "magenta", attrs=['bold'], end="")
+                cprint(" > ", "magenta", attrs=['blink', 'bold'])
                 hear(source, robot)
     except KeyboardInterrupt:
         print("")
@@ -104,12 +100,15 @@ def set_language():
     if newLang == 1 or not newLang:
         lang = "en"
         lang_sphinx = "en-US"
+        cprint("You issue voice commands to Cozmo.\nYou can give multiple commands separating them with the word 'THEN'.\nAvailable Commands are:", "green")
     elif newLang == 2:
         lang = "it"
         lang_sphinx = "it-IT"
+        cprint("Puoi impartire comandi vocali a Cozmo.\nPuoi dare comandi in sequenza separandoli con la parola 'POI'.\nI comandi disponibiloi sono:", "green")
     elif newLang == 3:
         lang = "fr"
         lang_sphinx = "fr-FR"
+        cprint("Donnez une commande vocale à Cozmo.\nVous pouvez en donner plusieurs en les séparant par le mot 'ALORS'.\nI Les commandes disponibles sont:", "green")
 
     cprint("\nlanguage set to: " + lang + "\n", "yellow")
 
@@ -192,16 +191,18 @@ def hear(source, robot: cozmo.robot.Robot):
     audio = recognizer.listen(source)
     recognized = None
     try:
-        recognized = recognizer.recognize_google(audio, key=None, language=lang_sphinx).lower()
-        #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN)
-        #recognized = recognizer.recognize_sphinx(audio, language=lang_sphinx).lower()
+        '''for testing purposes, we're just using the default API key
+        to use another API key, change key=None to your API key'''
+        recognized = recognizer.recognize_google(audio, key=None, language=lang_sphinx).lower() #GOOGLE
+        #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN) #WIT
+        #recognized = recognizer.recognize_sphinx(audio, language=lang_sphinx).lower() #SPINX
         print("You said: " + recognized)
+
         '''very nice: check if one of the activation commands is in the recognized string'''
         if set(commands_activate).intersection(recognized.split()):
             cprint("Action command recognized", "green")
             cmd_funcs, cmd_args = extract_commands_from_string(recognized) #check if a corresponding command exists
             executeComands(robot, cmd_funcs, cmd_args)
-
         else:
             cprint("You did not say the magic word " + commands_activate[0], "red")
             if robot:

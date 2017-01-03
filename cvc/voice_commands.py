@@ -12,6 +12,7 @@ from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 
 speed = 75
+log = False
 
 def extract_float(cmd_args, index=0):
     if len(cmd_args) > index:
@@ -397,3 +398,112 @@ class VoiceCommands():
         if robot is None:
             return usage
         self.en_say(robot, cmd_args)
+
+###### CHARGER ######
+
+    def en_charger(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo tries to park on is charger, in 3 tries."
+        if robot is None:
+            return usage
+
+        trial = 1
+        # If the robot was on the charger, drive them forward and clear of the charger
+        if robot.is_on_charger:
+            # drive off the charger
+            if log:
+                print("I am on the charger. Driving off the charger...")
+            robot.drive_off_charger_contacts().wait_for_completed()
+            robot.drive_straight(distance_mm(70), speed_mmps(50)).wait_for_completed()
+            # Start moving the lift down
+            robot.move_lift(-3)
+            # turn around to look at the charger
+            robot.turn_in_place(degrees(180)).wait_for_completed()
+            # Tilt the head to be level
+            robot.set_head_angle(degrees(0)).wait_for_completed()
+            # wait half a second to ensure Cozmo has seen the charger
+            time.sleep(0.5)
+            # drive backwards away from the charger
+            robot.drive_straight(distance_mm(-60), speed_mmps(50)).wait_for_completed()
+
+        # try to find the charger
+        charger = None
+
+        # see if Cozmo already knows where the charger is
+        if robot.world.charger:
+            if robot.world.charger.pose.origin_id == robot.pose.origin_id:
+                if log:
+                    print("Cozmo already knows where the charger is!")
+                charger = robot.world.charger
+            else:
+                # Cozmo knows about the charger, but the pose is not based on the
+                # same origin as the robot (e.g. the robot was moved since seeing
+                # the charger) so try to look for the charger first
+                pass
+
+        if not charger:
+            # Tell Cozmo to look around for the charger
+            if log:
+                print("looking for the charger now...")
+            look_around = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
+            try:
+                charger = robot.world.wait_for_observed_charger(timeout=60)
+                print("Found charger: %s" % charger)
+            except asyncio.TimeoutError:
+                print("Didn't see the charger")
+            finally:
+                # whether we find it or not, we want to stop the behavior
+                look_around.stop()
+
+        if charger:
+            # lift his arms to manouver
+            robot.set_lift_height(0.8,0.8,0.8,0.1).wait_for_completed()
+            # Attempt to drive near to the charger, and then stop.
+            if log:
+                print("Trial number %s" % trial)
+                print("Going for the charger!!!")
+            action = robot.go_to_pose(charger.pose)
+            action.wait_for_completed()
+            if log:
+                print("Completed action: result = %s" % action)
+            robot.drive_straight(distance_mm(-30), speed_mmps(50)).wait_for_completed()
+            if log:
+                print("Done.")
+
+            # Turn 180 (and 10) degrees, then goes backwards at full speed
+            if log:
+                print("Now the grand finalle: turn around and park!")
+                print("Turning...")
+            robot.turn_in_place(degrees(95)).wait_for_completed()
+            robot.turn_in_place(degrees(95)).wait_for_completed()
+            time.sleep( 1 )
+            if log:
+                print("Get out of the way: here I go!")
+            robot.drive_straight(distance_mm(-130), speed_mmps(150)).wait_for_completed()
+            if log:
+                print("checking if I did it...")
+            if robot.is_on_charger:
+                print("I did it! Yay!")
+            else:
+                print("I did not manage to dock in the charger =(")
+                print("Trying again...")
+                robot.world.charger = None
+                if log:
+                    print("let me go a little bit further to be easier to see...")
+                robot.drive_straight(distance_mm(90), speed_mmps(50)).wait_for_completed()
+                trial += 1
+                if trial < 4:
+                    self.en_charger(robot)
+                else:
+                    print("tired of trying. Giving up =(")
+
+    def it_base(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo cerca di ritornare nella sua base, in 3 tentativi."
+        if robot is None:
+            return usage
+        self.en_charger(robot, cmd_args)
+
+    def fr_chargeur(self, robot:cozmo.robot.Robot = None, cmd_args = None):
+        usage = "Cozmo tente de retourner à son chargeur, en 3 tentatives."
+        if robot is None:
+            return usage
+        self.en_charger(robot, cmd_args)
