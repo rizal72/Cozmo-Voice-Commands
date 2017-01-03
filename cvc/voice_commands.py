@@ -222,8 +222,16 @@ class VoiceCommands():
         usage = "Cozmo drives forward/backwards for X seconds (i.e. 'Cozmo, drive backwards for 3 seconds')."
         if robot is None:
             return usage
+            
         error_message = ""
-        #print(cmd_args)
+        if log:
+            print(cmd_args)
+
+        #check if the user said "drive to charger" and redirect the command to en_charger()
+        if "charger" in cmd_args:
+            en_charger(robot, cmd_args)
+            return
+
         drive_duration = extract_next_float(cmd_args)#[0]
 
         if drive_duration is not None:
