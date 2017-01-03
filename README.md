@@ -27,7 +27,7 @@ Assuming that you've already performed the [**Cozmo SDK Setup**](http://cozmosdk
   you only need to [install git](https://git-scm.com/download/win) as it is not included by default.  
 
 2. install `cvc` package:  
-```Shell
+```shell
 pip3 install git+https://github.com/rizal72/Cozmo-Voice-Commands
 ```
 **note:** to update **CvC**, repeat step **2**.
