@@ -425,9 +425,9 @@ class VoiceCommands():
             # Start moving the lift down
             robot.move_lift(-3)
             # turn around to look at the charger
-            robot.turn_in_place(degrees(180)).wait_for_completed()
+            robot.turn_in_place(degrees(180),in_parallel=True)#.wait_for_completed()
             # Tilt the head to be level
-            robot.set_head_angle(degrees(0)).wait_for_completed()
+            robot.set_head_angle(degrees(0), in_parallel=True)#.wait_for_completed()
             # wait half a second to ensure Cozmo has seen the charger
             time.sleep(0.5)
             # drive backwards away from the charger
@@ -464,12 +464,12 @@ class VoiceCommands():
 
         if charger:
             # lift his arms to manouver
-            robot.set_lift_height(0.8,0.8,0.8,0.1).wait_for_completed()
+            robot.set_lift_height(0.8,0.8,0.8,0.1)#.wait_for_completed()
             # Attempt to drive near to the charger, and then stop.
             if log:
                 print("Trial number %s" % trial)
                 print("Going for the charger!!!")
-            action = robot.go_to_pose(charger.pose)
+            action = robot.go_to_pose(charger.pose, in_parallel=True)
             action.wait_for_completed()
             if log:
                 print("Completed action: result = %s" % action)
