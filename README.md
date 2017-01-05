@@ -5,7 +5,7 @@ Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watc
 ### Description
 You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING backwards for 20 seconds?"*, **and Cozmo will execute the command in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, **it even parses verbs in their different conjugations**, and numbers as arguments of the action to perform.  
 **NEW FEATURE: now you can issue MULTIPLE COMMANDS at once!**  
-**i.e.** _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate 90 degrees **THEN** dance?"_
+**i.e.** _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate 90 degrees **THEN** dance **THEN** drive back to your charger?"_
 
 **Tested on macOS, Windows and Linux!**  
 **Still in Beta - Work in Progress!**
