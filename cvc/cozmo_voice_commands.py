@@ -217,7 +217,7 @@ def hear(source, robot: cozmo.robot.Robot):
 
 def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
     if robot:
-        vc.check_charger(robot)
+        vc.check_charger(robot,distance=70)
     for i in range(len(cmd_funcs)):
         if cmd_funcs[i] is not None:
             result_string = cmd_funcs[i](robot, cmd_args[i]) #remember: cmd_func contains vc as well thanks to 'getattr', like vc.en_dance()

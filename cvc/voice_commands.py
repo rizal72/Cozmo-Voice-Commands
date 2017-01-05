@@ -44,12 +44,12 @@ class VoiceCommands():
         self.robot = robot
 
     ##### NOT A VOICE COMMAND FOR NOW #####
-    def check_charger(self, robot:cozmo.robot.Robot):
+    def check_charger(self, robot:cozmo.robot.Robot, distance=150, speed=100):
         if robot.is_on_charger:
             if log:
                 print("I am on the charger. Driving off the charger...")
             robot.drive_off_charger_contacts().wait_for_completed()
-            robot.drive_straight(distance_mm(150), speed_mmps(speed)).wait_for_completed()
+            robot.drive_straight(distance_mm(distance), speed_mmps(speed)).wait_for_completed()
             robot.move_lift(-8)
 
     ###### BLOCKS ######
