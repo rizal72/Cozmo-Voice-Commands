@@ -11,8 +11,8 @@ import cozmo
 from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 
-speed = 75
-log = False
+speed = 80
+log = True
 
 def extract_float(cmd_args, index=0):
     if len(cmd_args) > index:
@@ -42,6 +42,15 @@ class VoiceCommands():
 
     def __init__(self, robot):
         self.robot = robot
+
+    ##### NOT A VOICE COMMAND FOR NOW #####
+    def check_charger(self, robot:cozmo.robot.Robot):
+        if robot.is_on_charger:
+            if log:
+                print("I am on the charger. Driving off the charger...")
+            robot.drive_off_charger_contacts().wait_for_completed()
+            robot.drive_straight(distance_mm(150), speed_mmps(speed)).wait_for_completed()
+            robot.move_lift(-8)
 
     ###### BLOCKS ######
     def en_blocks(self, robot:cozmo.robot.Robot = None, cmd_args = None):
@@ -229,7 +238,7 @@ class VoiceCommands():
 
         #check if the user said "drive to charger" and redirect the command to en_charger()
         if "charger" in cmd_args:
-            en_charger(robot, cmd_args)
+            self.en_charger(robot, cmd_args)
             return
 
         drive_duration = extract_next_float(cmd_args)#[0]
@@ -415,24 +424,6 @@ class VoiceCommands():
             return usage
 
         trial = 1
-        # If the robot was on the charger, drive them forward and clear of the charger
-        if robot.is_on_charger:
-            # drive off the charger
-            if log:
-                print("I am on the charger. Driving off the charger...")
-            robot.drive_off_charger_contacts().wait_for_completed()
-            robot.drive_straight(distance_mm(70), speed_mmps(50)).wait_for_completed()
-            # Start moving the lift down
-            robot.move_lift(-3)
-            # turn around to look at the charger
-            robot.turn_in_place(degrees(180),in_parallel=True)#.wait_for_completed()
-            # Tilt the head to be level
-            robot.set_head_angle(degrees(0), in_parallel=True)#.wait_for_completed()
-            # wait half a second to ensure Cozmo has seen the charger
-            time.sleep(0.5)
-            # drive backwards away from the charger
-            robot.drive_straight(distance_mm(-60), speed_mmps(50)).wait_for_completed()
-
         # try to find the charger
         charger = None
 
@@ -463,13 +454,15 @@ class VoiceCommands():
                 look_around.stop()
 
         if charger:
-            # lift his arms to manouver
-            robot.set_lift_height(0.8,0.8,0.8,0.1)#.wait_for_completed()
+            if log:
+                print("lifting my arms to manouver...")
+
+            robot.move_lift(10)
             # Attempt to drive near to the charger, and then stop.
             if log:
                 print("Trial number %s" % trial)
                 print("Going for the charger!!!")
-            action = robot.go_to_pose(charger.pose, in_parallel=True)
+            action = robot.go_to_pose(charger.pose)
             action.wait_for_completed()
             if log:
                 print("Completed action: result = %s" % action)
@@ -477,13 +470,13 @@ class VoiceCommands():
             if log:
                 print("Done.")
 
-            # Turn 180 (and 10) degrees, then goes backwards at full speed
+            # Turn 180 (and 5) degrees, then goes backwards at full speed
             if log:
                 print("Now the grand finalle: turn around and park!")
                 print("Turning...")
             #this value needs to be tweaked (90 or 95)
             robot.turn_in_place(degrees(90)).wait_for_completed()
-            robot.turn_in_place(degrees(90)).wait_for_completed()
+            robot.turn_in_place(degrees(95)).wait_for_completed()
             time.sleep( 1 )
             if log:
                 print("Get out of the way: here I go!")
@@ -491,6 +484,7 @@ class VoiceCommands():
             if log:
                 print("checking if I did it...")
             if robot.is_on_charger:
+                robot.move_lift(-8)
                 print("I did it! Yay!")
             else:
                 print("I did not manage to dock in the charger =(")

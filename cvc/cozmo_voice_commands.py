@@ -11,6 +11,7 @@ import os
 import asyncio
 
 import cozmo
+from cozmo.util import distance_mm, speed_mmps, degrees
 try:
     from termcolor import colored, cprint
     import speech_recognition as sr
@@ -24,7 +25,7 @@ title = "Cozmo-Voice-Commands (CvC) - Version 0.3.6"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
 lang = "en"
-commands_activate = ["cosmo", "cosimo", "kosmos", "osmo", "kosovo", "peau"]
+commands_activate = ["cosmo", "cosimo", "cosma, ""kosmos", "osmo", "kosovo", "peau"]
 recognizer = sr.Recognizer()
 vc = None
 en_seq_action_separator = " then "# don't foget spaces!
@@ -36,6 +37,7 @@ def main():
     clearScreen = os.system("clear")
     cprint(title, "green", attrs=['bold'], end='')
     cprint(author, "cyan")
+    cozmo.robot.Robot.drive_off_charger_on_connect = False
     try:
         cozmo.run_program(run)
         #cozmo.run_program(run, use_viewer=True, force_viewer_on_top=True)
@@ -52,8 +54,8 @@ def run(robot: cozmo.robot.Robot):
 
     vc = voice_commands.VoiceCommands(robot)
     if robot:
-        if robot.is_on_charger:
-            robot.drive_off_charger_contacts().wait_for_completed()
+        vc.check_charger(robot)
+
         robot.play_anim("anim_cozmosays_getout_short_01")
 
     try:
@@ -70,7 +72,7 @@ def run(robot: cozmo.robot.Robot):
                     except:
                         pass'''
                 cprint("\nSay something (ctrl+c to exit)", "magenta", attrs=['bold'], end="")
-                cprint(" > ", "magenta", attrs=['blink', 'bold'])
+                cprint(" > ", "green", attrs=['bold'])
                 hear(source, robot)
     except KeyboardInterrupt:
         print("")
@@ -214,7 +216,8 @@ def hear(source, robot: cozmo.robot.Robot):
         cprint("Could not request results from Speech Recognition service, check your web connection; {0}".format(e), "red")
 
 def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
-
+    if robot:
+        vc.check_charger(robot)
     for i in range(len(cmd_funcs)):
         if cmd_funcs[i] is not None:
             result_string = cmd_funcs[i](robot, cmd_args[i]) #remember: cmd_func contains vc as well thanks to 'getattr', like vc.en_dance()
