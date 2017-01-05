@@ -11,7 +11,7 @@ import os
 import asyncio
 
 import cozmo
-from cozmo.util import distance_mm, speed_mmps, degrees
+
 try:
     from termcolor import colored, cprint
     import speech_recognition as sr
