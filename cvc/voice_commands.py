@@ -12,7 +12,7 @@ from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 
 speed = 80
-log = True
+log = False
 
 def extract_float(cmd_args, index=0):
     if len(cmd_args) > index:
