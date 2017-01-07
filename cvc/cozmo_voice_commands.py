@@ -21,11 +21,11 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-title = "Cozmo-Voice-Commands (CvC) - Version 0.4.0"
+title = "Cozmo-Voice-Commands (CvC) - Version 0.4.1"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
 lang = "en"
-commands_activate = ["cosmo", "cosimo", "cosma, ""kosmos", "osmo", "kosovo", "peau"]
+commands_activate = ["cosmo", "cosimo", "cosma", "cosima", "kosmos", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
 recognizer = sr.Recognizer()
 vc = None
 en_seq_action_separator = " then "# don't foget spaces!
