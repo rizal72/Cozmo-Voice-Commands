@@ -71,7 +71,7 @@ class VoiceCommands():
         elif len(cubes) == 1:
             robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.RollBlock, active_time=60)
         else:
-            robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.StackBlocks, active_time=120)
+            robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.StackBlocks, active_time=60)
 
     def it_gioca(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo gioca con i suoi cubi."
