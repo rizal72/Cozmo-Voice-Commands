@@ -14,20 +14,22 @@ import cozmo
 
 try:
     from termcolor import colored, cprint
+    from pynput.keyboard import Key, Listener
     import speech_recognition as sr
 except ImportError:
-    sys.exit('some packages are required, install them doing: `pip3 install --user termcolor SpeechRecognition PyAudio` to run this script.\nIf you are on linux do: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install pyaudio`')
+    sys.exit('some packages are required, install them doing: `pip3 install --user termcolor SpeechRecognition PyAudio Pyinput` to run this script.\nIf you are on linux do: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install pyinput pyaudio`')
 
 from . import voice_commands
 
 ###### VARS ######
-title = "Cozmo-Voice-Commands (CvC) - Version 0.4.2"
+title = "Cozmo-Voice-Commands (CvC) - Version 0.5.0"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
 lang = "en"
 commands_activate = ["cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
 recognizer = sr.Recognizer()
 vc = None
+text_start = "\nPLEASE PRESS SHIFT TO START VOICE RECOGNITION..."
 en_seq_action_separator = " then "# don't foget spaces!
 it_seq_action_separator = " poi " # don't foget spaces!
 fr_seq_action_separator = " alors " # don't foget spaces!
@@ -53,6 +55,21 @@ def run(robot: cozmo.robot.Robot):
     global vc
 
     vc = voice_commands.VoiceCommands(robot)
+
+    def on_press(key):
+        pass
+        #print('{0} pressed'.format(key))
+        #if key == Key.shift_l:
+        #    print("now listening...")
+            #listen(robot)
+
+    def on_release(key):
+        #print('{0} release'.format(key))
+        if key == Key.shift_l:
+            listen(robot)
+            # Stop listener
+            #print("not listening: wait for recognition...")
+
     if robot:
         vc.check_charger(robot)
 
@@ -62,21 +79,26 @@ def run(robot: cozmo.robot.Robot):
         set_language()
         printSupportedCommands()
 
-        with sr.Microphone(chunk_size=512) as source:
-            while 1:
-                if robot:
-                    checkBattery(robot)
-                    flash_backpack(robot, True)
-                    '''try:
-                        robot.play_anim("anim_meetcozmo_getin").wait_for_completed()
-                    except:
-                        pass'''
-                cprint("\nSay something (ctrl+c to exit)", "magenta", attrs=['bold'], end="")
-                cprint(" > ", "green", attrs=['bold'])
-                hear(source, robot)
+        cprint(text_start, "green")
+        with Listener(on_press=on_press, on_release=on_release) as listener:
+            listener.join()
+
+
     except KeyboardInterrupt:
         print("")
         cprint("Exit requested by user", "yellow")
+
+def listen(robot):
+    with sr.Microphone(chunk_size=512) as source:
+        #while 1:
+        if robot:
+            checkBattery(robot)
+            flash_backpack(robot, True)
+
+        cprint("\nSay something (Tiemout: 10 seconds - ctrl+c to exit)", "magenta", attrs=['bold'], end="")
+        cprint(" > ", "green", attrs=['bold'])
+        hear(source, robot)
+
 
 def set_language():
     global lang, lang_sphinx
@@ -189,10 +211,11 @@ def hear(source, robot: cozmo.robot.Robot):
     recognizer.pause_threshold = 0.8
     recognizer.dynamic_energy_threshold = True
 
-    #audio = recognizer.listen(source, timeout = None, phrase_time_limit = 8) #needs forther testing
-    audio = recognizer.listen(source)
-    recognized = None
     try:
+        audio = recognizer.listen(source, timeout = 10)
+        #audio = recognizer.listen(source)
+        recognized = None
+    #try:
         '''for testing purposes, we're just using the default API key
         to use another API key, change key=None to your API key'''
         recognized = recognizer.recognize_google(audio, key=None, language=lang_sphinx).lower() #GOOGLE
@@ -214,6 +237,9 @@ def hear(source, robot: cozmo.robot.Robot):
         cprint("Speech Recognition service could not understand audio", "red")
     except sr.RequestError as e:
         cprint("Could not request results from Speech Recognition service, check your web connection; {0}".format(e), "red")
+    except sr.WaitTimeoutError:
+        cprint("Timeout...", "red")
+        cprint(text_start, "green")
 
 def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
     if robot:
