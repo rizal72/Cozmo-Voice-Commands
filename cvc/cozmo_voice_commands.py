@@ -57,18 +57,17 @@ def run(robot: cozmo.robot.Robot):
     vc = voice_commands.VoiceCommands(robot)
 
     def on_press(key):
-        pass
         #print('{0} pressed'.format(key))
-        #if key == Key.shift_l:
-        #    print("now listening...")
-            #listen(robot)
+        if key == Key.shift_l or key == Key.shift_r:
+            try:
+                listen(robot)
 
     def on_release(key):
         #print('{0} release'.format(key))
-        if key == Key.shift_l:
-            listen(robot)
-            # Stop listener
-            #print("not listening: wait for recognition...")
+        if key == Key.shift_l or key == Key.shift_r:
+            #listen(robot)
+            pass
+
 
     if robot:
         vc.check_charger(robot)
@@ -95,7 +94,7 @@ def listen(robot):
             checkBattery(robot)
             flash_backpack(robot, True)
 
-        cprint("\nSay something (Tiemout: 10 seconds - ctrl+c to exit)", "magenta", attrs=['bold'], end="")
+        cprint("\nSay something (Tiemout: 5 seconds - ctrl+c to exit)", "magenta", attrs=['bold'], end="")
         cprint(" > ", "green", attrs=['bold'])
         hear(source, robot)
 
@@ -210,12 +209,11 @@ def hear(source, robot: cozmo.robot.Robot):
     for testing purposes, we're just using the default API key'''
     recognizer.pause_threshold = 0.8
     recognizer.dynamic_energy_threshold = True
+    recognized = None
 
     try:
-        audio = recognizer.listen(source, timeout = 10)
-        #audio = recognizer.listen(source)
-        recognized = None
-    #try:
+        audio = recognizer.listen(source, timeout = 5)
+
         '''for testing purposes, we're just using the default API key
         to use another API key, change key=None to your API key'''
         recognized = recognizer.recognize_google(audio, key=None, language=lang_sphinx).lower() #GOOGLE
@@ -223,7 +221,7 @@ def hear(source, robot: cozmo.robot.Robot):
         #recognized = recognizer.recognize_sphinx(audio, language=lang_sphinx).lower() #SPINX
         print("You said: " + recognized)
 
-        '''very nice: check if one of the activation commands is in the recognized string'''
+        '''Check if one of the activation commands is in the recognized string'''
         if set(commands_activate).intersection(recognized.split()):
             cprint("Action command recognized", "green")
             cmd_funcs, cmd_args = extract_commands_from_string(recognized) #check if a corresponding command exists
