@@ -29,7 +29,7 @@ lang = "en"
 commands_activate = ["cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
 recognizer = sr.Recognizer()
 vc = None
-text_start = "\nPLEASE PRESS SHIFT TO START VOICE RECOGNITION..."
+text_start = "\nPRESS SHIFT WHEN YOU ARE READY TO SPEAK..."
 en_seq_action_separator = " then "# don't foget spaces!
 it_seq_action_separator = " poi " # don't foget spaces!
 fr_seq_action_separator = " alors " # don't foget spaces!
@@ -59,8 +59,7 @@ def run(robot: cozmo.robot.Robot):
     def on_press(key):
         #print('{0} pressed'.format(key))
         if key == Key.shift_l or key == Key.shift_r:
-            try:
-                listen(robot)
+            listen(robot)
 
     def on_release(key):
         #print('{0} release'.format(key))
@@ -77,8 +76,8 @@ def run(robot: cozmo.robot.Robot):
     try:
         set_language()
         printSupportedCommands()
+        prompt()
 
-        cprint(text_start, "green")
         with Listener(on_press=on_press, on_release=on_release) as listener:
             listener.join()
 
@@ -98,6 +97,8 @@ def listen(robot):
         cprint(" > ", "green", attrs=['bold'])
         hear(source, robot)
 
+def prompt():
+    cprint(text_start, "green")
 
 def set_language():
     global lang, lang_sphinx
@@ -230,14 +231,17 @@ def hear(source, robot: cozmo.robot.Robot):
             cprint("You did not say the magic word " + commands_activate[0], "red")
             if robot:
                 robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
+        prompt()
 
     except sr.UnknownValueError:
         cprint("Speech Recognition service could not understand audio", "red")
+        prompt()
     except sr.RequestError as e:
         cprint("Could not request results from Speech Recognition service, check your web connection; {0}".format(e), "red")
+        prompt()
     except sr.WaitTimeoutError:
         cprint("Timeout...", "red")
-        cprint(text_start, "green")
+        prompt()
 
 def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
     if robot:

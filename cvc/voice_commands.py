@@ -62,7 +62,7 @@ class VoiceCommands():
 
         cubes = robot.world.wait_until_observe_num_objects(num=2, object_type=cozmo.objects.LightCube, timeout=60)
 
-        print("found %s cube(s)" % cubes)
+        print("found %s cube(s)" % len(cubes))
 
         lookaround.stop()
 
