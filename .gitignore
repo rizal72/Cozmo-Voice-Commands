@@ -12,3 +12,4 @@ htmlcov
 *_old*
 # pycharm
 .idea
+.bak
