@@ -15,17 +15,17 @@ Assuming that you've already performed the [**Cozmo SDK Setup**](http://cozmosdk
 1. **CvC** requires `portaudio`:
 
   * on **MacOS** (see [Homebrew](http://brew.sh/index_it.html) if you don't know what `brew` is):
-  ```
-  brew install portaudio
-  ```
+```
+brew install portaudio
+```
 
   * on **Linux**:
-  ```
+```
 sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio
-  ```
+```
 
   * on **Windows**:  
-  you only need to [install git](https://git-scm.com/download/win) as it is not included by default.  
+you only need to [install git](https://git-scm.com/download/win) as it is not included by default.  
 
 2. install `cvc` package:  
 ```
