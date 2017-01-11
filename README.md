@@ -7,8 +7,7 @@ You can say *"Cozmo, DRIVE 20"*, or *"Please Cozmo, would you mind DRIVING backw
 **NEW FEATURE: now you can issue MULTIPLE COMMANDS at once!**  
 **i.e.** _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate 90 degrees **THEN** dance **THEN** drive back to your charger?"_
 
-**Tested on macOS, Windows and Linux!**  
-**Still in Beta - Work in Progress!**
+**Tested on macOS, Windows and Linux: Still in Beta - Work in Progress!**
 
 ### Two steps installation
 Assuming that you've already performed the [**Cozmo SDK Setup**](http://cozmosdk.anki.com/docs/), specific for your platform:  
@@ -16,26 +15,29 @@ Assuming that you've already performed the [**Cozmo SDK Setup**](http://cozmosdk
 1. **CvC** requires `portaudio`:
 
   * on **MacOS** (see [Homebrew](http://brew.sh/index_it.html) if you don't know what `brew` is):
-  ```shell
+  ```
   brew install portaudio
   ```
+
   * on **Linux**:
-  ```shell
-  sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio
   ```
+sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio
+  ```
+
   * on **Windows**:  
   you only need to [install git](https://git-scm.com/download/win) as it is not included by default.  
 
 2. install `cvc` package:  
-```shell
+```
 pip3 install git+https://github.com/rizal72/Cozmo-Voice-Commands
 ```
+
 **note:** to update **CvC**, repeat step **2**.
 
 ### Usage
 * run command `cvc` from the Terminal application
-* choose speech recognition language (English, Italian and French are currently supported)
-* issue commands by voice, not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: *"Ok COZMO, my friend, would you enjoy ROTATING 90 degrees?"*  
+* choose speech recognition language (1.English, 2.Italian and 3.French) and press enter.
+* press <SHIFT> when you are ready, then issue your commands by voice (you have 5 seconds to start talking before it Timeouts), not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: *"Ok COZMO, my friend, would you enjoy ROTATING 90 degrees?"*  
 **You can issue multiple commands at once:** use the word *"THEN"* (*"POI"* in Italian, *"ALORS"* in French), to separate them. Right now these commands will be executed in a sequence. I plan to make some of them to be executed in parallel in the near future.
 A list of supported commands and arguments is provided at runtime
 
