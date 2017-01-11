@@ -34,15 +34,15 @@ en_seq_action_separator = " then "# don't foget spaces!
 it_seq_action_separator = " poi " # don't foget spaces!
 fr_seq_action_separator = " alors " # don't foget spaces!
 
+text_instr_en = "You can issue voice commands to Cozmo. You can give multiple commands separating them with the word 'THEN'.\nAvailable Commands are:"
+text_instr_it = "Puoi impartire comandi vocali a Cozmo. Puoi dare comandi in sequenza separandoli con la parola 'POI'.\nI comandi disponibili sono:"
+text_instr_fr = "Donnez une commande vocale à Cozmo. Vous pouvez en donner plusieurs en les séparant par le mot 'ALORS'.\nI Les commandes disponibles sont:"
 text_start_en = "\nPRESS <SHIFT> WHEN YOU ARE READY TO SPEAK..."
 text_start_it = "\nPREMI <SHIFT> QUANDO SEI PRONTO A PARLARE..."
 text_start_fr = "\nAPPUYEZ SUR <SHIFT> LORSQUE VOUS ÊTES PRÊT À PARLER..."
 text_say_en = "\nSay your commands (Tiemout: 5 seconds - ctrl+c to exit)"
 text_say_it = "\nPronuncia i tuoi commandi (Tiemout: 5 secondi - ctrl+c to exit)"
 text_say_fr = "\nDites vos commandes (Tiemout: 5 secondes - ctrl+c pour quitter)"
-text_instr_en = "You can issue voice commands to Cozmo. You can give multiple commands separating them with the word 'THEN'.\nAvailable Commands are:"
-text_instr_it = "Puoi impartire comandi vocali a Cozmo. Puoi dare comandi in sequenza separandoli con la parola 'POI'.\nI comandi disponibili sono:"
-text_instr_fr = "Donnez une commande vocale à Cozmo. Vous pouvez en donner plusieurs en les séparant par le mot 'ALORS'.\nI Les commandes disponibles sont:"
 
 
 ##### MAIN ######
