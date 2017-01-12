@@ -6,6 +6,7 @@ Some commands support one argument, for example: if you say *"drive for 10 secon
 '''
 import asyncio
 import time
+from threading import Timer
 
 import cozmo
 from cozmo.util import distance_mm, speed_mmps, degrees
@@ -34,9 +35,13 @@ def extract_next_float(cmd_args, index=0):
         except ValueError:
             if "zero" in cmd_args:
                 return 0
-            if "one" in cmd_args or "uno" in cmd_args:
+            if "one" in cmd_args or "uno" or "i" in cmd_args:
                 return 1
     return None#, None
+
+def turn_off_cube_lights(cubes):
+    for cube in cubes:
+        cube.set_lights_off()
 
 class VoiceCommands():
 
@@ -57,21 +62,26 @@ class VoiceCommands():
         usage = "Cozmo plays with his blocks."
         if robot is None:
             return usage
-        print("looking for my blocks...")
+        print("looking for my blocks for 1 minute...")
         lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
 
-        cubes = robot.world.wait_until_observe_num_objects(num=2, object_type=cozmo.objects.LightCube, timeout=60)
+        cubes = robot.world.wait_until_observe_num_objects(num=3, object_type=cozmo.objects.LightCube, timeout=60)
 
         print("found %s cube(s)" % len(cubes))
 
         lookaround.stop()
+
+        for cube in cubes:
+            cube.set_lights(cozmo.lights.green_light.flash())
+
+        Timer(5, turn_off_cube_lights, [cubes]).start()
 
         if len(cubes) == 0:
             robot.play_anim_trigger(cozmo.anim.Triggers.MajorFail).wait_for_completed()
         elif len(cubes) == 1:
             robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.RollBlock, active_time=60)
         else:
-            robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.StackBlocks, active_time=60)
+            robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.StackBlocks, active_time=120)
 
     def it_gioca(self, robot:cozmo.robot.Robot = None, cmd_args = None):
         usage = "Cozmo gioca con i suoi cubi."
@@ -353,7 +363,8 @@ class VoiceCommands():
         if head_angle_01 is not None:
             #FORMULA: Result = ((Input - InputLow) / (InputHigh - InputLow)) * (OutputHigh - OutputLow) + OutputLow;
             head_angle = head_angle_01 * (44 + 25) - 25;
-            print("head angle = ", head_angle)
+            if log:
+                print("head angle = ", head_angle)
             head_angle_action = robot.set_head_angle(degrees(head_angle))
             clamped_head_angle = head_angle_action.angle.degrees
             head_angle_action.wait_for_completed()
