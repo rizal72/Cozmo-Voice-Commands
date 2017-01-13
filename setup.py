@@ -20,5 +20,6 @@ setup(name='cvc',
           "cozmo[camera]",
           "SpeechRecognition",
           "PyAudio",
+          "Pynput"
       ],
       zip_safe=False)
