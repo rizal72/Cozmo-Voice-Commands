@@ -36,7 +36,7 @@ def extract_next_float(cmd_args, index=0):
             if "zero" in cmd_args:
                 return 0
             #if "one" in cmd_args or "uno" in cmd_args or "i" in cmd_args or "un" in cmd_args:
-            if set(['one', 'uno', 'i', 'un']]) <= set(cmd_args):
+            if set(['one', 'uno', 'i', 'un']) <= set(cmd_args):
                 return 1
     return None#, None
 
