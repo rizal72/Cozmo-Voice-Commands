@@ -19,7 +19,7 @@ brew install portaudio
 
   * on **Linux**:
 ```
-sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install PyAudio
+sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo -H pip3 install PyAudio
 ```
 
   * on **Windows**:  
