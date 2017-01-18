@@ -26,7 +26,7 @@ from . import voice_commands
 ###### VARS ######
 title = "Cozmo-Voice-Commands (CvC) - Version 0.6.0"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
-log = True
+log = False
 lang = None
 lang_data = None
 commands_activate = ["cozmo", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
@@ -36,10 +36,11 @@ languages = []
 
 ##### MAIN ######
 def main():
-    clearScreen = os.system("clear")
+    clearScreen = os.system('cls' if os.name == 'nt' else 'clear')
     cprint(title, "green", attrs=['bold'], end='')
     cprint(author, "cyan")
     cozmo.robot.Robot.drive_off_charger_on_connect = False
+
     try:
         cozmo.run_program(run)
         #cozmo.run_program(run, use_viewer=True, force_viewer_on_top=True)
@@ -74,6 +75,7 @@ def run(robot: cozmo.robot.Robot):
     try:
         load_jsons()
         set_language()
+        vc.lang_data = lang_data
         printSupportedCommands()
         prompt(1)
 
@@ -90,6 +92,8 @@ def load_jsons():
     for file in glob.glob('cvc/languages/*.json'):
         with open(file) as json_file:
             languages.append(json.load(json_file))
+            if (log):
+                cprint("loaded: " + str(file) + " ", "yellow")
     if log:
         print("LANGUAGES:\n"+str(languages))
 
@@ -181,9 +185,12 @@ def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
         vc.check_charger(robot,distance=70)
     for i in range(len(cmd_funcs)):
         if cmd_funcs[i] is not None:
-            result_string = cmd_funcs[i](robot, cmd_args[i]) #remember: cmd_func contains vc as well thanks to 'getattr', like vc.en_dance()
-            if result_string:
-                print(result_string)
+            if robot:
+                result_string = getattr(vc, cmd_funcs[i])(robot, cmd_args[i]) #HERE IS WHERE WE CALL THE ACTION, FINALLY!
+                if result_string:
+                    print(result_string)
+            else: #DEBUG
+                print(str(cmd_funcs[i]) + " > called | with args: " + str(cmd_args[i]))
         else:
             cprint(lang_data['error_one'], "red")
             printSupportedCommands()
@@ -240,7 +247,8 @@ def get_command(command_name):
                 func_name = commands[i]['action'] #getting the action that corresponds to the spoken command
                 if log:
                     print("found the function: " + func_name + " matching the word: " + word)
-                return getattr(vc, func_name)
+                #return getattr(vc, func_name)
+                return func_name
     return None
 
 def extract_command_from_string(in_string):

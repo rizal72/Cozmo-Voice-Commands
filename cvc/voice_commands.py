@@ -48,6 +48,7 @@ class VoiceCommands():
 
     def __init__(self, robot):
         self.robot = robot
+        self.lang_data = None
 
     ##### NOT A VOICE COMMAND FOR NOW #####
     def check_charger(self, robot:cozmo.robot.Robot, distance=150, speed=100):
@@ -60,9 +61,7 @@ class VoiceCommands():
 
     ###### BLOCKS ######
     def blocks(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo plays with his blocks."
-        if robot is None:
-            return usage
+
         print("looking for my blocks for 1 minute...")
         lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)
 
@@ -87,9 +86,7 @@ class VoiceCommands():
 ###### DANCE ######
 
     def dance(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo dances."
-        if robot is None:
-            return usage
+
         print("dancing...")
         robot.play_anim("anim_speedtap_wingame_intensity02_01").wait_for_completed()
         return
@@ -97,9 +94,7 @@ class VoiceCommands():
 ###### LOOK ######
 
     def look(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo looks for a face."
-        if robot is None:
-            return usage
+
         any_face = None
         print("Looking for a face...")
         robot.set_head_angle(cozmo.robot.MAX_HEAD_ANGLE).wait_for_completed()
@@ -128,9 +123,7 @@ class VoiceCommands():
 ###### FOLLOW ######
 
     def follow(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo follows a face."
-        if robot is None:
-            return usage
+
         print("Following your face - any face...")
         # Move lift down and tilt the head up
         robot.move_lift(-3)
@@ -160,9 +153,7 @@ class VoiceCommands():
 ###### PICTURE ######
 
     def picture(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo takes a picture, then it saves it in the folder where you launched CvC."
-        if robot is None:
-            return usage
+
         robot.camera.image_stream_enabled = True
         print("taking a picture...")
         pic_filename = "cozmo_pic_" + str(int(time.time())) + ".png"
@@ -179,9 +170,6 @@ class VoiceCommands():
 ###### DRIVE ######
 
     def forward(self, robot:cozmo.robot.Robot = None, cmd_args = None, invert=False):
-        usage = "Cozmo drives forward for X seconds."
-        if robot is None:
-            return usage
 
         error_message = ""
         if log:
@@ -213,17 +201,12 @@ class VoiceCommands():
         return "Error: usage = " + usage + error_message
 
     def backward(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo drives backwards for X seconds."
-        if robot is None:
-            return usage
+
         self.forward(robot, cmd_args, True)
 
 ###### TURN ######
 
     def right(self, robot:cozmo.robot.Robot = None, cmd_args = None, invert=False):
-        usage = "Cozmo turns right X degrees."
-        if robot is None:
-            return usage
 
         drive_angle = extract_next_float(cmd_args)#[0]
 
@@ -238,16 +221,12 @@ class VoiceCommands():
         return "Error: usage = " + usage
 
     def right(self, robot:cozmo.robot.Robot = None, cmd_args = None, invert=False):
-        usage = "Cozmo turns left X degrees."
-        if robot is None:
-            return usage
+
         self.right(robot, cmd_args, True)
 ###### LIFT ######
 
     def lift(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo lifts his lift of X (min:0, max:1 - i.e. 'Cozmo, lift your lift of 0.5')."
-        if robot is None:
-            return usage
+
         lift_height = extract_next_float(cmd_args)#[0]
 
         if lift_height is not None:
@@ -259,9 +238,6 @@ class VoiceCommands():
 ###### HEAD ######
 
     def head(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo tilts his head of X (min:0, max:1)." #-25 (down) to 44.5 degrees (up)
-        if robot is None:
-            return usage
 
         head_angle_01 = extract_next_float(cmd_args)#[0]
 
@@ -283,9 +259,6 @@ class VoiceCommands():
 ###### SAY ######
 
     def say(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo says X (where X is any text)."
-        if robot is None:
-            return usage
 
         entire_message = None
         if len(cmd_args) > 0:
@@ -306,9 +279,6 @@ class VoiceCommands():
 ###### CHARGER ######
 
     def charger(self, robot:cozmo.robot.Robot = None, cmd_args = None):
-        usage = "Cozmo tries to park on is charger, in 3 tries."
-        if robot is None:
-            return usage
 
         trial = 1
         # try to find the charger
