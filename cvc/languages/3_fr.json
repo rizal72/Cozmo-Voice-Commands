@@ -1,0 +1,27 @@
+{
+    "name":"French",
+    "lang":"fr",
+    "lang_ext":"fr-FR",
+    "separator":"alors",
+    "instructions":"Donnez une commande vocale à Cozmo. Vous pouvez en donner plusieurs en les séparant par le mot 'ALORS'.\nI Les commandes disponibles sont:",
+    "text_wait":"\nAPPUYEZ SUR <SHIFT> LORSQUE VOUS ÊTES PRÊT À PARLER...",
+    "text_say":"\nDites vos commandes (Tiemout: 5 secondes - ctrl+c pour quitter)",
+    "error_one":"Je suis désolé, je n'ai pas compris toutes les commandes, les commandes disponibles sont:",
+    "error_all":"Je suis désolé, je n'ai compris aucune de vos commandes, les commandes disponibles sont:",
+    "commands":
+    [
+        {"action":"forward", "words":["avance","recule"], "usage":"Cozmo avance pendant X secondes."},
+        {"action":"backward", "words":["recule"], "usage":"Cozmo recule pendant X secondes."},
+        {"action":"right", "words":["droit"], "usage":"Cozmo tourne à droit de X degrés."},
+        {"action":"left", "words":["gauche"], "usage":"Cozmo tourne à gauche de X degrés."},
+        {"action":"lift", "words":["souleve"], "usage":"Cozmo soulève son bras de X (min:0, max:1 - ex. 'Cozmo, soulève ton bras de 0.5')."},
+        {"action":"head", "words":["hoche"], "usage":"Cozmo hoche sa tête de X (min:0, max:1)."},
+        {"action":"look", "words":["regarde"], "usage":"Cozmo regarde un visage."},
+        {"action":"follow", "words":["suit"], "usage":"Cozmo suit un visage."},
+        {"action":"picture", "words":["photo"], "usage":"Cozmo prend une photo, puis la sauvegarde dans le repertoire où a été lancé CvC."},
+        {"action":"say", "words":["dit"], "usage":"Cozmo dit X (où X est n'importe quel texte)."},
+        {"action":"blocks", "words":["joue"], "usage":"Cozmo joue avec ses blocs."},
+        {"action":"dance", "words":["danse"], "usage":"Cozmo danse."},
+        {"action":"charger", "words":["chargeur"], "usage":"Cozmo tente de retourner à son chargeur, en 3 tentatives."}
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "name":"English",
+    "lang":"en",
+    "lang_ext":"en-US",
+    "separator":"then",
+    "instructions":"You can issue voice commands to Cozmo. You can give multiple commands separating them with the word 'THEN'.\nAvailable Commands are:",
+    "text_wait":"\nPRESS <SHIFT> WHEN YOU ARE READY TO SPEAK...",
+    "text_say":"\nSay your commands (Tiemout: 5 seconds - ctrl+c to exit)",
+    "error_one":"Sorry I didn't understand all of your commands, available commands are:",
+    "error_all":"Sorry I didn't understand any of your commands, available commands are:",
+    "commands":
+    [
+        {"action":"forward", "words":["forward", "forwards"], "usage":"Cozmo drives forward for X seconds."},
+        {"action":"backward", "words":["backward","backwards"], "usage":"Cozmo drives backwards for X seconds."},
+        {"action":"right", "words":["right"], "usage":"Cozmo turns right X degrees."},
+        {"action":"left", "words":["left"], "usage":"Cozmo turns left X degrees."},
+        {"action":"lift", "words":["lift","arm"], "usage":"Cozmo lifts his lift of X (min:0, max:1 - i.e. 'Cozmo, lift your lift of 0.5')."},
+        {"action":"head", "words":["head"], "usage":"Cozmo tilts his head of X (min:0, max:1)."},
+        {"action":"look", "words":["look"], "usage":"Cozmo looks for a face."},
+        {"action":"follow", "words":["follow"], "usage":"Cozmo follows a face."},
+        {"action":"picture", "words":["picture","photo"], "usage":"Cozmo takes a picture, then it saves it in the folder where you launched CvC."},
+        {"action":"say", "words":["say","talk"], "usage":"Cozmo says X (where X is any text)."},
+        {"action":"blocks", "words":["blocks","cubes","play"], "usage":"Cozmo plays with his blocks."},
+        {"action":"dance", "words":["dance","jump"], "usage":"Cozmo dances."},
+        {"action":"charger", "words":["charger","base"], "usage":"Cozmo tries to park on is charger, in 3 tries."}
+    ]
+}

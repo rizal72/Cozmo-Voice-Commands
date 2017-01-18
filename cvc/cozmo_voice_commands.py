@@ -9,6 +9,8 @@ License: GNU
 import sys
 import os
 import asyncio
+import glob
+import json
 
 import cozmo
 
@@ -24,26 +26,13 @@ from . import voice_commands
 ###### VARS ######
 title = "Cozmo-Voice-Commands (CvC) - Version 0.5.2"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
-log = False
-lang = "en"
-commands_activate = ["cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
+log = True
+lang = None
+lang_data = None
+commands_activate = ["cozmo", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
 recognizer = sr.Recognizer()
 vc = None
-###### LOCALE ######
-en_seq_action_separator = " then "# don't foget spaces!
-it_seq_action_separator = " poi " # don't foget spaces!
-fr_seq_action_separator = " alors " # don't foget spaces!
-
-text_instr_en = "You can issue voice commands to Cozmo. You can give multiple commands separating them with the word 'THEN'.\nAvailable Commands are:"
-text_instr_it = "Puoi impartire comandi vocali a Cozmo. Puoi dare comandi in sequenza separandoli con la parola 'POI'.\nI comandi disponibili sono:"
-text_instr_fr = "Donnez une commande vocale à Cozmo. Vous pouvez en donner plusieurs en les séparant par le mot 'ALORS'.\nI Les commandes disponibles sont:"
-text_start_en = "\nPRESS <SHIFT> WHEN YOU ARE READY TO SPEAK..."
-text_start_it = "\nPREMI <SHIFT> QUANDO SEI PRONTO A PARLARE..."
-text_start_fr = "\nAPPUYEZ SUR <SHIFT> LORSQUE VOUS ÊTES PRÊT À PARLER..."
-text_say_en = "\nSay your commands (Tiemout: 5 seconds - ctrl+c to exit)"
-text_say_it = "\nPronuncia i tuoi commandi (Tiemout: 5 secondi - ctrl+c to exit)"
-text_say_fr = "\nDites vos commandes (Tiemout: 5 secondes - ctrl+c pour quitter)"
-
+languages = []
 
 ##### MAIN ######
 def main():
@@ -83,6 +72,7 @@ def run(robot: cozmo.robot.Robot):
         robot.play_anim("anim_cozmosays_getout_short_01")
 
     try:
+        load_jsons()
         set_language()
         printSupportedCommands()
         prompt(1)
@@ -94,39 +84,50 @@ def run(robot: cozmo.robot.Robot):
         print("")
         cprint("Exit requested by user", "yellow")
 
+def load_jsons():
+    global languages
+    cprint("loading languages files...","yellow")
+    for file in glob.glob('cvc/languages/*.json'):
+        with open(file) as json_file:
+            languages.append(json.load(json_file))
+    if log:
+        print("LANGUAGES:\n"+str(languages))
+
 def set_language():
-    global lang, lang_sphinx
+    global lang, lang_ext, lang_data
 
     cprint('\nCHOOSE YOUR LANGUAGE (hit "enter" for default [English]):', 'green')
-    print('1: English')
-    print('2: Italian')
-    print('3: French')
+    for i in range(len(languages)):
+        print(i+1, end='')
+        print(". " + str(languages[i]['name']))
 
-    newLang = 0
-    while not newLang:
+    lang = 0
+    while not lang:
         try:
-            newLang = int(input('>>> ').strip())
-            if newLang not in range(1, 4):
+            lang = int(input('>>> ').strip())
+            if lang not in range(1,len(languages)+1):
                 raise ValueError
         except ValueError:
-            if not newLang:
+            if not lang:
                 break
             else:
-                newLang = 0
+                lang = 0
                 cprint("That's not an option!", "red")
 
-    if newLang == 1 or not newLang:
-        lang = "en"
-        lang_sphinx = "en-US"
-    elif newLang == 2:
-        lang = "it"
-        lang_sphinx = "it-IT"
-    elif newLang == 3:
-        lang = "fr"
-        lang_sphinx = "fr-FR"
+    if lang == 1 or not lang:
+        lang = 0
+    else:
+        lang = lang - 1
 
-    cprint("\nlanguage set to: " + lang + "\n", "yellow")
-    cprint(eval("text_instr_"+lang), "green")
+    try:
+        #SETTING HERE THE LANGUAGE DATA VARIABLE
+        lang_data = languages[lang]
+    except:
+        sys.exit('language are missing!')
+        #lang_data = language_en
+
+    cprint("\nlanguage set to: " + lang_data['lang'] + "\n", "yellow")
+    cprint(lang_data['instructions'], "green")
 
 def listen(robot: cozmo.robot.Robot):
 
@@ -149,9 +150,9 @@ def listen(robot: cozmo.robot.Robot):
 
             '''for testing purposes, we're just using the default API key
             to use another API key, change key=None to your API key'''
-            recognized = recognizer.recognize_google(audio, key=None, language=lang_sphinx).lower() #GOOGLE
+            recognized = recognizer.recognize_google(audio, key=None, language=lang_data['lang_ext']).lower() #GOOGLE
             #recognized = recognizer.recognize_wit(audio, key=WIT_AI_KEY_EN) #WIT
-            #recognized = recognizer.recognize_sphinx(audio, language=lang_sphinx).lower() #SPINX
+            #recognized = recognizer.recognize_sphinx(audio, language=lang_ext).lower() #SPINX
             print("You said: " + recognized)
 
             '''Check if one of the activation commands is in the recognized string'''
@@ -160,7 +161,7 @@ def listen(robot: cozmo.robot.Robot):
                 cmd_funcs, cmd_args = extract_commands_from_string(recognized) #check if a corresponding command exists
                 executeComands(robot, cmd_funcs, cmd_args)
             else:
-                cprint("You did not say the magic word " + commands_activate[0], "red")
+                cprint("You did not say the magic word: " + commands_activate[0], "red")
                 if robot:
                     robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
             prompt()
@@ -184,21 +185,11 @@ def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
             if result_string:
                 print(result_string)
         else:
-            if lang=="en":
-                cprint("Sorry I didn't understand all of your commands, available commands are:", "red")
-            elif lang == "it":
-                cprint("Mi spiace non ho capito tutti i comandi, i comandi disponibili sono:", "red")
-            elif lang == "fr":
-                cprint("Je suis désolé, je n'ai pas compris toutes les commandes, les commandes disponibles sont:", "red")
+            cprint(lang_data['error_one'], "red")
             printSupportedCommands()
 
     if len(cmd_funcs) == 0:
-        if lang=="en":
-            cprint("Sorry I didn't understand any of your commands, available commands are:", "red")
-        elif lang == "it":
-            cprint("Mi spiace non ho capito nessuno dei comandi, i comandi disponibili sono:", "red")
-        elif lang == "fr":
-            cprint("Je suis désolé, je n'ai compris aucune de vos commandes, les commandes disponibles sont:", "red")
+        cprint(lang_data['error_all'], "red")
         printSupportedCommands()
         if robot:
             robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
@@ -207,9 +198,9 @@ def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
 
 def prompt(id = 1):
     if id == 1:
-        cprint(eval("text_start_"+lang), "green", attrs=['bold'])
+        cprint(lang_data['text_wait'], "green", attrs=['bold'])
     elif id == 2:
-        cprint(eval("text_say_"+lang), "magenta", attrs=['bold'], end="")
+        cprint(lang_data['text_say'], "magenta", attrs=['bold'], end="")
         cprint(" >>>", "green", attrs=['bold'])
 
 def checkBattery(robot: cozmo.robot.Robot):
@@ -223,30 +214,32 @@ def checkBattery(robot: cozmo.robot.Robot):
 def flash_backpack(robot: cozmo.robot.Robot, flag):
     robot.set_all_backpack_lights(cozmo.lights.green_light.flash() if flag else cozmo.lights.off_light)
 
-def get_supported_commands():
-    '''Construct a list of all methods in this class that start with 'lang' variabler content - these are commands we accept'''
-    prefix_str = lang + "_"
-    supported_commands = []
-    for func_name in dir(vc):
-        if func_name.startswith(prefix_str):
-            supported_commands.append({"name": func_name[len(prefix_str):], "usage": getattr(vc, func_name)()})
-    return supported_commands
-
 def printSupportedCommands():
-    commands = get_supported_commands()
+    commands = lang_data['commands']
+    #for command in sorted(commands, key=lambda a :(a['words'])): #TO GET SORTED RESULTS!
     for command in commands:
-        cprint(command['name'], "cyan", end="")
-        print(": " + command['usage'])
+        cprint("[ ", "cyan", end="")
+        words = command['words']
+        for i in range(0, len(words)):
+            cprint(words[i], "cyan", end="")
+            if i<len(words)-1:
+                cprint(", ", end="")
+
+        cprint(" ] : ", "cyan", end="")
+        cprint(command['usage'])
 
 def get_command(command_name):
-    '''Find a matching function inside 'VoiceCommands' class and return it. return None if there's no match'''
-    prefix_str = lang + "_"
-    for func_name in dir(vc):
-        '''cycle through all the methods in vc and look for one that is contained in the command as a substring!
-        this allows us to use similar words like drive o driving to be executed as well!'''
-        if func_name.startswith(prefix_str):
-            splitted = func_name[len(prefix_str):-1] #get only the right part minus the last letter
-            if splitted in command_name.lower(): #here the magic happens
+    commands = lang_data['commands']
+
+    #splitted = func_name[len(prefix_str):-1] #get only the right part minus the last letter
+    for i,command in enumerate(commands):
+        #cycle through all the words in the commands list and look for one that is contained in the command as a substring!
+        for word in command['words']:
+            wordcut = word[0:-1] #getting the word minus the last letter for conjugations
+            if wordcut in command_name.lower(): #checking if the word is contained in the command (driv in drive)
+                func_name = commands[i]['action'] #getting the action that corresponds to the spoken command
+                if log:
+                    print("found the function: " + func_name + " matching the word: " + word)
                 return getattr(vc, func_name)
     return None
 
@@ -263,7 +256,7 @@ def extract_command_from_string(in_string):
 
 def extract_commands_from_string(in_string):
     '''Separate inString at each "and" or "then", loop through until we find commands, return tuples of cmd_func and cmd_args'''
-    sentences = in_string.split(eval(lang + "_seq_action_separator"))
+    sentences = in_string.split(" " + lang_data['separator'] + " ")
     cmd_funcs = []
     cmd_args = []
     if log:
@@ -274,8 +267,10 @@ def extract_commands_from_string(in_string):
             cmd_func = get_command(words[i])
             if cmd_func:
                 cmd_funcs.append(cmd_func)
-                cmd_arg = words[i + 1:]
+                #cmd_arg = words[i + 1:] #this one passes only the words after the command
+                cmd_arg = words[i:] #this one passes all words included the command
                 cmd_args.append(cmd_arg)
+                break
     if log:
         print("commands: ", cmd_funcs, "arguments: ", cmd_args)
     return cmd_funcs, cmd_args # returns a touple of arrays of commands and arguments
