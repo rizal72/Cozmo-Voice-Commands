@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import os
 
 setup(name='cvc',
-      version="0.5.2",
+      version="0.6.0",
       description='Control Cozmo with your voice',
       url='https://github.com/rizal72/Cozmo-Voice-Commands',
       author='Riccardo Sallusti',
