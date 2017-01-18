@@ -10,8 +10,8 @@
     "error_all":"Mi spiace non ho capito nessuno dei comandi, i comandi disponibili sono:",
     "commands":
     [
-        {"action":"forward", "words":["avanti"], "usage":"Cozmo si muove in avanti per X secondi."},
-        {"action":"backward", "words":["indietro", "retro"], "usage":"Cozmo si muove all'indietro per X secondi."},
+        {"action":"forward", "words":["avanti","avanza"], "usage":"Cozmo si muove in avanti per X secondi."},
+        {"action":"backward", "words":["indietro","retro"], "usage":"Cozmo si muove all'indietro per X secondi."},
         {"action":"right", "words":["destra"], "usage":"Cozmo ruota a destra di X gradi."},
         {"action":"left", "words":["sinistra"], "usage":"Cozmo ruota a sinistra di X gradi."},
         {"action":"lift", "words":["solleva","abbassa","braccio"], "usage":"Cozmo solleva il suo braccio di X (min:0, max:1 - es. 'Cozmo, solleva il tuo braccio di 0.5')."},

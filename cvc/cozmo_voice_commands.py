@@ -128,7 +128,6 @@ def set_language():
         lang_data = languages[lang]
     except:
         sys.exit('language are missing!')
-        #lang_data = language_en
 
     cprint("\nlanguage set to: " + lang_data['lang'] + "\n", "yellow")
     cprint(lang_data['instructions'], "green")
@@ -140,7 +139,7 @@ def listen(robot: cozmo.robot.Robot):
         flash_backpack(robot, True)
 
     '''SETUP MIC'''
-    with sr.Microphone(chunk_size=512) as source:
+    with sr.Microphone() as source:
 
         prompt(2)
 
@@ -186,11 +185,13 @@ def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
     for i in range(len(cmd_funcs)):
         if cmd_funcs[i] is not None:
             if robot:
-                result_string = getattr(vc, cmd_funcs[i])(robot, cmd_args[i]) #HERE IS WHERE WE CALL THE ACTION, FINALLY!
+                result_string = getattr(vc, cmd_funcs[i]['command'])(robot, cmd_args[i]) #HERE IS WHERE WE CALL THE ACTION, FINALLY!
                 if result_string:
                     print(result_string)
             else: #DEBUG
-                print(str(cmd_funcs[i]) + " > called | with args: " + str(cmd_args[i]))
+                commands = lang_data['commands']
+                index = cmd_funcs[i]['index']
+                print(commands[index]['usage'])
         else:
             cprint(lang_data['error_one'], "red")
             printSupportedCommands()
@@ -235,7 +236,7 @@ def printSupportedCommands():
         cprint(" ] : ", "cyan", end="")
         cprint(command['usage'])
 
-def get_command(command_name):
+def get_command(command_name): #iterates json and returns the command and its index
     commands = lang_data['commands']
 
     #splitted = func_name[len(prefix_str):-1] #get only the right part minus the last letter
@@ -248,18 +249,7 @@ def get_command(command_name):
                 if log:
                     print("found the function: " + func_name + " matching the word: " + word)
                 #return getattr(vc, func_name)
-                return func_name
-    return None
-
-def extract_command_from_string(in_string):
-    '''Separate inString at each space, loop through until we find a command, return tuple of cmd_func and cmd_args'''
-    split_string = in_string.split()
-    for i in range(len(split_string)):
-        cmd_func = get_command(split_string[i])
-        if cmd_func:
-            cmd_args = split_string[i + 1:]
-            return cmd_func, cmd_args
-    # No valid command found
+                return func_name, i
     return None, None
 
 def extract_commands_from_string(in_string):
@@ -272,9 +262,9 @@ def extract_commands_from_string(in_string):
     for sentence in sentences:
         words = sentence.split()
         for i in range(len(words)):
-            cmd_func = get_command(words[i])
+            cmd_func, cmd_index = get_command(words[i])
             if cmd_func:
-                cmd_funcs.append(cmd_func)
+                cmd_funcs.append({'index':cmd_index,'command':cmd_func})
                 #cmd_arg = words[i + 1:] #this one passes only the words after the command
                 cmd_arg = words[i:] #this one passes all words included the command
                 cmd_args.append(cmd_arg)
