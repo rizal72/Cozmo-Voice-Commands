@@ -40,13 +40,14 @@ pip3 install --user git+https://github.com/rizal72/Cozmo-Voice-Commands
 * **A list of supported commands and arguments is provided at runtime.**
 
 ### Customization
-From version 0.6.0 you can now add new languages and commands with ease: inside `cvc/languages` folder you'll find one json file for each language (i.e. `1_en.json`). To add a new command just duplicate one of the commands already present in the json, changing its parameters with the desired ones (_be careful on maintaining the same structure_):  
-  * `'action'` is the name of the method you are going to create  
+From version 0.6.0 you can now add new languages and commands with ease: inside `cvc/languages` folder you'll find one .json file for each language (i.e. `1_en.json`). To add a new command just duplicate one of the existing commands inside the .json, changing its parameters with the desired ones (_be careful to keep the same structure_):  
+  * `'action'` is the name of the method you are going to create in `voice_commands.py`
   * `'words'` are the recognized words  
   * `'usage'` is a description/usage of your command
-then just open `voice_commands.py` and create the new method for your command, just copying an existing one.
-To add a new language, duplicate one of the included json language files, using the same naming, and translate its contents.
-Done.
+then open `voice_commands.py` and create the new method for your command, just copying an existing one, taking care to use the same name you set in the `'action'` parameter, inside the .json.  
+**You can even add new words to existing commands**, only be careful to not use the same words in different commands.  
+To add a new language, duplicate one of the included .json language files, using the same naming, and **translate its contents**.
+Your new language will be automatically loaded on startup, and a new language menu item automatically generated ;)
 
 #### Note for Developers:
 If you want to just run the App **without installing the package**, you need to execute `./cvc.py` from the root folder, after you have cloned/downloaded the [repository](https://github.com/rizal72/Cozmo-Voice-Commands) content.
