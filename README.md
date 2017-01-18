@@ -1,6 +1,6 @@
 # Cozmo voice Commands (CvC) - Version 0.6.0
 
-Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian and French*, very easy to add new languages!
+Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands and languages with ease. Recognizes *English, Italian and French*.
 
 ### Description
 You can say _"Cozmo, **forward** 20 THEN **right** 90"_, or _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate left 90 degrees **THEN** dance **THEN** drive back to your charger?"_, **and Cozmo will execute the commands in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, **it even parses verbs in their different conjugations**, and numbers as arguments of the action to perform.  
@@ -34,7 +34,7 @@ pip3 install --user git+https://github.com/rizal72/Cozmo-Voice-Commands
 
 ### Usage
 * run command `cvc` from the Terminal application
-* choose speech recognition language (1.English, 2.Italian and 3.French) and press enter.
+* choose speech recognition language and press enter.
 * press <SHIFT> when you are ready, then issue your commands by voice (you have 5 seconds to start talking before it Timeouts), not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: _"Ok COZMO, my friend, would you enjoy DANCING?"_  
 **You can issue multiple commands at once:** use the word *"THEN"* (_"POI"_ in Italian, _"ALORS"_ in French), to separate them. Right now these commands will be executed in a sequence. I plan to make some of them to be executed in parallel in the near future.
 * **A list of supported commands and arguments is provided at runtime.**
