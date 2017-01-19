@@ -26,7 +26,7 @@ from . import voice_commands
 ###### VARS ######
 title = "Cozmo-Voice-Commands (CvC) - Version 0.6.0"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
-log = False
+log = True
 lang = None
 lang_data = None
 commands_activate = ["cozmo", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
@@ -55,7 +55,7 @@ def run(robot: cozmo.robot.Robot):
     '''The run method runs once the Cozmo SDK is connected.'''
     global vc
 
-    vc = voice_commands.VoiceCommands(robot)
+    vc = voice_commands.VoiceCommands(robot,log)
 
     def on_press(key):
         #print('{0} pressed'.format(key))
@@ -94,8 +94,8 @@ def load_jsons():
             languages.append(json.load(json_file))
             if (log):
                 cprint("loaded: " + str(file) + " ", "yellow")
-    if log:
-        print("LANGUAGES:\n"+str(languages))
+    #if log:
+    #    print("LANGUAGES:\n"+str(languages))
 
 def set_language():
     global lang, lang_ext, lang_data
@@ -270,7 +270,7 @@ def extract_commands_from_string(in_string):
                 cmd_args.append(cmd_arg)
                 break
     if log:
-        print("commands: ", cmd_funcs, "arguments: ", cmd_args)
+        print("commands: ", cmd_funcs, "\narguments: ", cmd_args)
     return cmd_funcs, cmd_args # returns a touple of arrays of commands and arguments
 
 ###### ENTRY POINT ######
