@@ -101,7 +101,7 @@ def load_jsons():
             if (log):
                 cprint("loaded: " + str(file) + " ", "yellow")'''
 
-    json_files = [file for file in pkg_resources.resource_listdir('languages', '') if file.endswith('.json')]
+    json_files = [file for file in pkg_resources.resource_listdir('cvc/languages', '') if file.endswith('.json')]
     if log:
         print(json_files)
     languages = json.load(pkg_resources.resource_stream('languages', json_files[0]))
