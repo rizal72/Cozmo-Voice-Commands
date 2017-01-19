@@ -12,8 +12,8 @@
     [
         {"action":"forward", "words":["avanti","avanza"], "usage":"Cozmo si muove in avanti per X secondi."},
         {"action":"backward", "words":["indietro","retro"], "usage":"Cozmo si muove all'indietro per X secondi."},
-        {"action":"right", "words":["destra"], "usage":"Cozmo ruota a destra di X gradi."},
-        {"action":"left", "words":["sinistra"], "usage":"Cozmo ruota a sinistra di X gradi."},
+        {"action":"right", "words":["destra"], "usage":"Cozmo ruota a destra di X gradi, o di 90° se X non è specificato."},
+        {"action":"left", "words":["sinistra"], "usage":"Cozmo ruota a sinistra di X gradi, o di 90° se X non è specificato."},
         {"action":"lift", "words":["solleva","abbassa","braccio"], "usage":"Cozmo solleva il suo braccio di X (min:0, max:1 - es. 'Cozmo, solleva il tuo braccio di 0.5')."},
         {"action":"head", "words":["testa","capo"], "usage":"Cozmo muove la sua testa di X (min:0, max:1)."},
         {"action":"look", "words":["guarda","guardami","cerca"], "usage":"Cozmo cerca una faccia."},

@@ -12,8 +12,8 @@
     [
         {"action":"forward", "words":["forward", "forwards"], "usage":"Cozmo drives forward for X seconds."},
         {"action":"backward", "words":["backward","backwards"], "usage":"Cozmo drives backwards for X seconds."},
-        {"action":"right", "words":["right"], "usage":"Cozmo turns right X degrees."},
-        {"action":"left", "words":["left"], "usage":"Cozmo turns left X degrees."},
+        {"action":"right", "words":["right"], "usage":"Cozmo turns right X degrees, or 90 degrees if no argument."},
+        {"action":"left", "words":["left"], "usage":"Cozmo turns left X degrees, or 90 degrees if no argument."},
         {"action":"lift", "words":["lift","arm"], "usage":"Cozmo lifts his lift of X (min:0, max:1 - i.e. 'Cozmo, lift your lift of 0.5')."},
         {"action":"head", "words":["head","tilt"], "usage":"Cozmo tilts his head of X (min:0, max:1)."},
         {"action":"look", "words":["look","search"], "usage":"Cozmo looks for a face."},

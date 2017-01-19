@@ -13,7 +13,7 @@ from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 
 speed = 80
-log = False
+log = True
 
 def extract_float(cmd_args, index=0):
     if len(cmd_args) > index:
@@ -35,8 +35,8 @@ def extract_next_float(cmd_args, index=0):
         except ValueError:
             if "zero" in cmd_args:
                 return 0
-            #if "one" in cmd_args or "uno" in cmd_args or "i" in cmd_args or "un" in cmd_args:
-            if set(['one', 'uno', 'i', 'un']) <= set(cmd_args):
+            #check if cmd_args contains some number as letters and set them accordingly
+            if len(set(cmd_args).intersection(['one', 'uno', 'i', 'un'])) != 0:
                 return 1
     return None#, None
 
@@ -82,7 +82,7 @@ class VoiceCommands():
             robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.RollBlock, active_time=60)
         else:
             robot.run_timed_behavior(cozmo.behavior.BehaviorTypes.StackBlocks, active_time=120)
-
+        return
 ###### DANCE ######
 
     def dance(self, robot:cozmo.robot.Robot = None, cmd_args = None):
@@ -119,6 +119,7 @@ class VoiceCommands():
 
         anim = robot.play_anim_trigger(cozmo.anim.Triggers.LookInPlaceForFacesBodyPause)
         anim.wait_for_completed()
+        return
 
 ###### FOLLOW ######
 
@@ -147,7 +148,7 @@ class VoiceCommands():
             if turn_action:
                 # Complete the turn action if one was in progress
                 turn_action.wait_for_completed()
-
+        return
             #time.sleep(.1)
 
 ###### PICTURE ######
@@ -171,14 +172,8 @@ class VoiceCommands():
 
     def forward(self, robot:cozmo.robot.Robot = None, cmd_args = None, invert=False):
 
-        error_message = ""
         if log:
             print(cmd_args)
-
-        #check if the user said "drive to charger" and redirect the command to en_charger()
-        if "charger" in cmd_args:
-            self.en_charger(robot, cmd_args)
-            return
 
         drive_duration = extract_next_float(cmd_args)#[0]
 
@@ -196,9 +191,9 @@ class VoiceCommands():
             robot.drive_straight(distance_mm(drive_duration*drive_speed), speed_mmps(drive_speed), should_play_anim=True).wait_for_completed()
             #time.sleep(drive_duration)
 
-            return "I drove " + drive_dir + " for " + str(drive_duration) + " seconds!"
+            return #"I drove " + drive_dir + " for " + str(drive_duration) + " seconds!"
 
-        return "Error: usage = " + usage + error_message
+        return "Error: bad drive duration!"
 
     def backward(self, robot:cozmo.robot.Robot = None, cmd_args = None):
 
@@ -206,23 +201,24 @@ class VoiceCommands():
 
 ###### TURN ######
 
-    def right(self, robot:cozmo.robot.Robot = None, cmd_args = None, invert=False):
+    def left(self, robot:cozmo.robot.Robot = None, cmd_args = None, invert=False):
 
         drive_angle = extract_next_float(cmd_args)#[0]
 
-        if drive_angle is not None:
+        if drive_angle is None:
+            drive_angle = 90;
 
-            if invert:
-                drive_angle = -drive_angle
+        if invert:
+            drive_angle = -drive_angle
 
-            robot.turn_in_place(degrees(drive_angle)).wait_for_completed()
-            return "I turned " + str(drive_angle) + " degrees!"
+        robot.turn_in_place(degrees(drive_angle)).wait_for_completed()
+        return #"I turned " + str(drive_angle) + " degrees!"
 
-        return "Error: usage = " + usage
+        #return "Error: bad drive angle!"
 
     def right(self, robot:cozmo.robot.Robot = None, cmd_args = None, invert=False):
 
-        self.right(robot, cmd_args, True)
+        self.left(robot, cmd_args, True)
 ###### LIFT ######
 
     def lift(self, robot:cozmo.robot.Robot = None, cmd_args = None):
@@ -231,9 +227,9 @@ class VoiceCommands():
 
         if lift_height is not None:
             robot.set_lift_height(height=lift_height).wait_for_completed()
-            return "I moved lift to " + str(lift_height)
+            return #"I moved lift to " + str(lift_height)
 
-        return "Error: usage = " + usage
+        return "Error: bad height!"
 
 ###### HEAD ######
 
@@ -252,9 +248,9 @@ class VoiceCommands():
             resultString = "I moved head to " + "{0:.1f}".format(clamped_head_angle)
             if abs(head_angle - clamped_head_angle) > 0.01:
                 resultString += " (clamped to range)"
-            return resultString
+            return #resultString
 
-        return "Error: usage = " + usage
+        return "Error: bad angle!"
 
 ###### SAY ######
 
@@ -272,9 +268,9 @@ class VoiceCommands():
 
         if (entire_message is not None) and (len(entire_message) > 0):
             robot.say_text(entire_message).wait_for_completed()
-            return 'I said "' + entire_message + '"!'
+            return #'I said "' + entire_message + '"!'
 
-        return "Error: usage = " + usage
+        return "Error: no message!"
 
 ###### CHARGER ######
 
@@ -355,3 +351,5 @@ class VoiceCommands():
                     self.en_charger(robot)
                 else:
                     print("tired of trying. Giving up =(")
+
+        return
