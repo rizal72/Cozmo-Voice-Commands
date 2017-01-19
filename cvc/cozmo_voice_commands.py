@@ -24,7 +24,7 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-title = "Cozmo-Voice-Commands (CvC) - Version 0.6.0"
+title = "Cozmo-Voice-Commands (CvC) - Version 0.6.1"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = True
 lang = None
@@ -89,7 +89,10 @@ def run(robot: cozmo.robot.Robot):
 def load_jsons():
     global languages
     cprint("loading languages files...","yellow")
-    for file in glob.glob('./cvc/languages/*.json'):
+    files_location = os.getcwd() + '/cvc/languages/*.json'
+    if log:
+        print("Files Location: "+files_location)
+    for file in glob.glob(files_location):
         with open(file) as json_file:
             languages.append(json.load(json_file))
             if (log):

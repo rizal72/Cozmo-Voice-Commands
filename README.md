@@ -1,4 +1,4 @@
-# Cozmo voice Commands (CvC) - Version 0.6.0
+# Cozmo voice Commands (CvC) - Version 0.6.1
 
 Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian and French* but it's very easy to add new languages!
 
@@ -36,7 +36,7 @@ you only need to [install git](https://git-scm.com/download/win) as it is not in
 * **A list of supported commands and arguments is provided at runtime.**
 
 ### Customization
-From version 0.6.0 you can now add new languages and commands with ease: inside `cvc/languages` folder you'll find one .json file for each language (i.e. `1_en.json`). To add a new command just duplicate one of the existing commands inside the .json, changing its parameters with the desired ones (_be careful to keep the same structure_):  
+From version 0.6.1 you can now add new languages and commands with ease: inside `cvc/languages` folder you'll find one .json file for each language (i.e. `1_en.json`). To add a new command just duplicate one of the existing commands inside the .json, changing its parameters with the desired ones (_be careful to keep the same structure_):  
   * `'action'` is the name of the method/function you are going to create in `voice_commands.py`
   * `'words'` are the recognized words  
   * `'usage'` is a description/usage of your command
