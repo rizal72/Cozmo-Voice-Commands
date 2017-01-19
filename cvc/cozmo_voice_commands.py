@@ -26,7 +26,7 @@ from . import voice_commands
 ###### VARS ######
 title = "Cozmo-Voice-Commands (CvC) - Version 0.6.1"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
-log = True
+log = False
 lang = None
 lang_data = None
 commands_activate = ["cozmo", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
