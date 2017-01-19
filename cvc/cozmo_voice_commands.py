@@ -24,7 +24,7 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-title = "Cozmo-Voice-Commands (CvC) - Version 0.6.1"
+title = "Cozmo-Voice-Commands (CvC) - Version 0.6.2"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
 lang = None
@@ -47,7 +47,7 @@ def main():
     except SystemExit as e:
         print('exception = "%s"' % e)
         #ONLY FOR TESTING PURPOSES
-        cprint('\nGoing on without Cozmo: for testing purposes only!', 'yellow')
+        cprint('\nGoing on without Cozmo: for testing purposes only!', 'red')
         run(None)
 
 ##### APP ######
@@ -189,7 +189,7 @@ def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
         if cmd_funcs[i] is not None:
             if robot:
                 result_string = getattr(vc, cmd_funcs[i]['command'])(robot, cmd_args[i]) #HERE IS WHERE WE CALL THE ACTION, FINALLY!
-                if result_string:
+                if result_string and log:
                     print(result_string)
             else: #DEBUG
                 commands = lang_data['commands']
