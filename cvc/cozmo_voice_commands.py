@@ -265,8 +265,8 @@ def extract_commands_from_string(in_string):
             cmd_func, cmd_index = get_command(words[i])
             if cmd_func:
                 cmd_funcs.append({'index':cmd_index,'command':cmd_func})
-                #cmd_arg = words[i + 1:] #this one passes only the words after the command
-                cmd_arg = words[i:] #this one passes all words included the command
+                cmd_arg = words[i + 1:] #this one passes only the words after the command
+                #cmd_arg = words[i:] #this one passes all words included the command
                 cmd_args.append(cmd_arg)
                 break
     if log:
