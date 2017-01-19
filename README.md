@@ -22,9 +22,9 @@ Assuming that you've already performed the [**Cozmo SDK Setup**](http://cozmosdk
 you only need to [install git](https://git-scm.com/download/win) as it is not included by default.  
 
 2. install `cvc` package:  
-`pip3 install git+https://github.com/rizal72/Cozmo-Voice-Commands`  
+`pip3 install --upgrade git+https://github.com/rizal72/Cozmo-Voice-Commands`  
   * If you are having permission issues try:  
-  `pip3 install --user git+https://github.com/rizal72/Cozmo-Voice-Commands`
+  `pip3 install --upgrade --user git+https://github.com/rizal72/Cozmo-Voice-Commands`
 
 **note:** to update **CvC**, repeat step **2**.
 
