@@ -9,7 +9,6 @@ setup(name='cvc',
       author_email='riccardo.sallusti@gmail.com',
       license='GNU',
       packages=find_packages(),
-      package_data={'languages': ['languages/*.json']},
       entry_points={
               'console_scripts': [
                   'cvc = cvc.cozmo_voice_commands:main',
