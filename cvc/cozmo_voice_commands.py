@@ -23,7 +23,7 @@ except ImportError:
     sys.exit('some packages are required, install them doing: `pip3 install --user termcolor SpeechRecognition PyAudio Pynput` to run this script.\nIf you are on linux do: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install Pynput pyaudio`')
 
 from . import voice_commands
-from . import languages
+#from . import languages
 
 ###### VARS ######
 title = "Cozmo-Voice-Commands (CvC) - Version 0.6.1"

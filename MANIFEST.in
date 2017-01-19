@@ -1,1 +1,1 @@
-include cvc/languages/*
+include languages/*.json
