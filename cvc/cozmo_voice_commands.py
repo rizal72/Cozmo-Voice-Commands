@@ -89,7 +89,7 @@ def run(robot: cozmo.robot.Robot):
 def load_jsons():
     global languages
     cprint("loading languages files...","yellow")
-    files_location = 'cvc/languages/' #os.path.dirname(os.path.realpath(__file__)) + '/languages/*.json'
+    files_location = os.path.dirname(os.path.realpath(__file__)) + '/languages/*.json' #'cvc/languages/*.json'
     if log:
         print("Files Location: "+files_location)
     for file in glob.glob(files_location):
