@@ -11,6 +11,7 @@ import os
 import asyncio
 import glob
 import json
+import pkg_resources
 
 import cozmo
 
@@ -22,11 +23,12 @@ except ImportError:
     sys.exit('some packages are required, install them doing: `pip3 install --user termcolor SpeechRecognition PyAudio Pynput` to run this script.\nIf you are on linux do: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install Pynput pyaudio`')
 
 from . import voice_commands
+from . import languages
 
 ###### VARS ######
 title = "Cozmo-Voice-Commands (CvC) - Version 0.6.1"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
-log = False
+log = True
 lang = None
 lang_data = None
 commands_activate = ["cozmo", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
@@ -89,14 +91,20 @@ def run(robot: cozmo.robot.Robot):
 def load_jsons():
     global languages
     cprint("loading languages files...","yellow")
-    files_location = os.path.dirname(os.path.realpath(__file__)) + '/languages/*.json' #'cvc/languages/*.json'
+
+    '''files_location = os.path.dirname(os.path.realpath(__file__)) + '/languages/*.json' #'cvc/languages/*.json'
     if log:
         print("Files Location: "+files_location)
     for file in glob.glob(files_location):
         with open(file) as json_file:
             languages.append(json.load(json_file))
             if (log):
-                cprint("loaded: " + str(file) + " ", "yellow")
+                cprint("loaded: " + str(file) + " ", "yellow")'''
+
+    json_files = [file for file in pkg_resources.resource_listdir('languages', '') if file.endswith('.json')]
+    languages = json.load(pkg_resources.resource_stream('languages', json_files[0]))
+    if (log):
+        cprint("loaded: " + str(file) + " ", "yellow")
     #if log:
     #    print("LANGUAGES:\n"+str(languages))
 
