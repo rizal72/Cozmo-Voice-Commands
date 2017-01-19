@@ -23,7 +23,7 @@ except ImportError:
     sys.exit('some packages are required, install them doing: `pip3 install --user termcolor SpeechRecognition PyAudio Pynput` to run this script.\nIf you are on linux do: `sudo apt-get install flac portaudio19-dev python-all-dev python3-all-dev && sudo pip3 install Pynput pyaudio`')
 
 from . import voice_commands
-#from . import languages
+
 
 ###### VARS ######
 title = "Cozmo-Voice-Commands (CvC) - Version 0.6.1"
@@ -92,29 +92,14 @@ def load_jsons():
     global languages
     cprint("loading languages files...","yellow")
 
-    '''files_location = os.path.dirname(os.path.realpath(__file__)) + '/languages/*.json' #'cvc/languages/*.json'
+    files_location = os.path.dirname(os.path.realpath(__file__)) + '/languages/*.json' #'cvc/languages/*.json'
     if log:
         print("Files Location: "+files_location)
     for file in glob.glob(files_location):
         with open(file) as json_file:
             languages.append(json.load(json_file))
             if (log):
-                cprint("loaded: " + str(file) + " ", "yellow")'''
-
-    resource_package = __name__  # Could be any module/package name
-    resource_path = '/'.join(('languages', '*.json'))  # Do not use os.path.join(), see below
-
-    #template = pkg_resources.resource_string(resource_package, resource_path)
-    # or for a file-like stream:
-    json_files = pkg_resources.resource_stream(resource_package, resource_path)
-
-    #json_files = [file for file in pkg_resources.resource_listdir('languages', '') if file.endswith('.json')]
-    if log:
-        print(json_files)
-    sys.exit()
-    #languages = json.load(pkg_resources.resource_stream('languages/', json_files[0]))
-    if (log):
-        cprint("loaded: " + str(file) + " ", "yellow")
+                cprint("loaded: " + str(file) + " ", "yellow")
     #if log:
     #    print("LANGUAGES:\n"+str(languages))
 
