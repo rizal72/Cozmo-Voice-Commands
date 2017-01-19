@@ -101,10 +101,18 @@ def load_jsons():
             if (log):
                 cprint("loaded: " + str(file) + " ", "yellow")'''
 
-    json_files = [file for file in pkg_resources.resource_listdir('cvc/languages', '') if file.endswith('.json')]
+    resource_package = __name__  # Could be any module/package name
+    resource_path = '/'.join(('languages', '*.json'))  # Do not use os.path.join(), see below
+
+    #template = pkg_resources.resource_string(resource_package, resource_path)
+    # or for a file-like stream:
+    json_files = pkg_resources.resource_stream(resource_package, resource_path)
+
+    #json_files = [file for file in pkg_resources.resource_listdir('languages', '') if file.endswith('.json')]
     if log:
         print(json_files)
-    languages = json.load(pkg_resources.resource_stream('languages', json_files[0]))
+    sys.exit()
+    #languages = json.load(pkg_resources.resource_stream('languages/', json_files[0]))
     if (log):
         cprint("loaded: " + str(file) + " ", "yellow")
     #if log:
