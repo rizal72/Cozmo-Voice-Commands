@@ -27,8 +27,10 @@ you only need to [install git](https://git-scm.com/download/win) as it is not in
 
 2. install `cvc` package:  
 ```
-pip3 install --user git+https://github.com/rizal72/Cozmo-Voice-Commands
+pip3 install git+https://github.com/rizal72/Cozmo-Voice-Commands
 ```
+ * If you are having permission issues try:  
+`pip3 install --user git+https://github.com/rizal72/Cozmo-Voice-Commands`
 
 **note:** to update **CvC**, repeat step **2**.
 
