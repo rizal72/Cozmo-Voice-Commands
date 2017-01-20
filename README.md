@@ -30,7 +30,7 @@ you only need to [install git](https://git-scm.com/download/win) as it is not in
 
 ### Usage
 * run command `cvc` from the Terminal application.
-  * Optional arguments:
+  * Optional arguments:  
 `--no-wait[-N]`: enable deprecated continue listening mode  
 `--log[-L]`: enable verbose logging  
 * choose speech recognition language and press enter.
