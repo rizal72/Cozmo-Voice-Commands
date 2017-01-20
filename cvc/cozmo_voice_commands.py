@@ -24,9 +24,10 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-title = "Cozmo-Voice-Commands (CvC) - Version 0.6.2"
+title = "Cozmo-Voice-Commands (CvC) - Version 0.6.3"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
+wait_for_shift = True
 lang = None
 lang_data = None
 commands_activate = ["cozmo", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
@@ -40,6 +41,8 @@ def main():
     cprint(title, "green", attrs=['bold'], end='')
     cprint(author, "cyan")
     cozmo.robot.Robot.drive_off_charger_on_connect = False
+
+    parse_arguments()
 
     try:
         cozmo.run_program(run)
@@ -75,12 +78,16 @@ def run(robot: cozmo.robot.Robot):
     try:
         load_jsons()
         set_language()
-        vc.lang_data = lang_data
+        set_data()
         printSupportedCommands()
-        prompt(1)
+        prompt()
 
-        with Listener(on_press=on_press, on_release=on_release) as listener:
-            listener.join()
+        if wait_for_shift:
+            with Listener(on_press=on_press, on_release=on_release) as listener:
+                listener.join()
+        else:
+            while 1:
+                listen(robot)
 
     except KeyboardInterrupt:
         print("")
@@ -88,7 +95,7 @@ def run(robot: cozmo.robot.Robot):
 
 def load_jsons():
     global languages
-    cprint("loading languages files...","yellow")
+    cprint("\nloading languages files...","yellow")
     files_location = os.path.dirname(os.path.realpath(__file__)) + '/languages/*.json' #'cvc/languages/*.json'
     if log:
         print("Files Location: "+files_location)
@@ -97,6 +104,10 @@ def load_jsons():
             languages.append(json.load(json_file))
             if (log):
                 cprint("loaded: " + str(file) + " ", "yellow")
+
+    if len(languages) == 0:
+        cprint("\nno languages found! Quitting...", "red")
+        sys.exit()
     #if log:
     #    print("LANGUAGES:\n"+str(languages))
 
@@ -126,14 +137,22 @@ def set_language():
     else:
         lang = lang - 1
 
+
+def set_data():
+    global vc, lang_data
+
     try:
         #SETTING HERE THE LANGUAGE DATA VARIABLE
         lang_data = languages[lang]
     except:
-        sys.exit('language are missing!')
+        cprint("Language is not set! Quitting...", "red")
+        sys.exit()
+
+    vc.lang_data = lang_data
 
     cprint("\nlanguage set to: " + lang_data['lang'] + "\n", "yellow")
     cprint(lang_data['instructions'], "green")
+
 
 def listen(robot: cozmo.robot.Robot):
 
@@ -207,8 +226,20 @@ def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
 
 ###### HELPER METHODS #######
 
+def parse_arguments():
+    global wait_for_shift, log
+
+    if "--no-wait" or "-W" in sys.argv:
+        wait_for_shift = False
+    elif "--log" or "-L" in sys.argv:
+        log = True
+
+    if log:
+        print ('Argument List:', str(sys.argv))
+
+
 def prompt(id = 1):
-    if id == 1:
+    if id == 1 and wait_for_shift:
         cprint(lang_data['text_wait'], "green", attrs=['bold'])
     elif id == 2:
         cprint(lang_data['text_say'], "magenta", attrs=['bold'], end="")
