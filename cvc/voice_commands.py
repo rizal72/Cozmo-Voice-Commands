@@ -13,6 +13,7 @@ from cozmo.util import distance_mm, speed_mmps, degrees
 from termcolor import colored, cprint
 
 speed = 80
+words_to_numbers = ['one', 'uno', 'i', 'un']
 
 def extract_float(cmd_args, index=0):
     if len(cmd_args) > index:
@@ -35,7 +36,7 @@ def extract_next_float(cmd_args, index=0):
             if "zero" in cmd_args:
                 return 0
             #check if cmd_args contains some number as letters and set them accordingly
-            if len(set(cmd_args).intersection(self.words_to_numbers)) != 0:
+            if len(set(cmd_args).intersection(words_to_numbers)) != 0:
                 return 1
     return None#, None
 
@@ -49,7 +50,6 @@ class VoiceCommands():
         self.robot = robot
         self.lang_data = None
         self.log = log
-        self.words_to_numbers = ['one', 'uno', 'i', 'un']
 
     ##### NOT A VOICE COMMAND FOR NOW #####
     def check_charger(self, robot:cozmo.robot.Robot, distance=150, speed=100):
