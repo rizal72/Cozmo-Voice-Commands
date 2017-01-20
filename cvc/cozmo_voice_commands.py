@@ -229,9 +229,9 @@ def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
 def parse_arguments():
     global wait_for_shift, log
 
-    if "--no-wait" or "-W" in sys.argv:
+    if "--no-wait" in sys.argv or "-W" in sys.argv:
         wait_for_shift = False
-    if "--log" or "-L" in sys.argv:
+    if "--log" in sys.argv or "-L" in sys.argv:
         log = True
 
     if log:
