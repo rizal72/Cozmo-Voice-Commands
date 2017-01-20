@@ -35,7 +35,7 @@ def extract_next_float(cmd_args, index=0):
             if "zero" in cmd_args:
                 return 0
             #check if cmd_args contains some number as letters and set them accordingly
-            if len(set(cmd_args).intersection(['one', 'uno', 'i', 'un'])) != 0:
+            if len(set(cmd_args).intersection(self.words_to_numbers)) != 0:
                 return 1
     return None#, None
 
@@ -49,6 +49,7 @@ class VoiceCommands():
         self.robot = robot
         self.lang_data = None
         self.log = log
+        self.words_to_numbers = ['one', 'uno', 'i', 'un']
 
     ##### NOT A VOICE COMMAND FOR NOW #####
     def check_charger(self, robot:cozmo.robot.Robot, distance=150, speed=100):
@@ -157,16 +158,17 @@ class VoiceCommands():
 
         robot.camera.image_stream_enabled = True
         print("taking a picture...")
+        message = ""
         pic_filename = "cozmo_pic_" + str(int(time.time())) + ".png"
         robot.say_text("Say cheese!").wait_for_completed()
         latest_image = robot.world.latest_image
         if latest_image:
             latest_image.raw_image.convert('L').save(pic_filename)
-            print ("picture saved as: " + pic_filename)
+            message =  "picture saved as: " + pic_filename
         else:
-            print ("no picture saved")
+            message = "no picture saved"
         robot.camera.image_stream_enabled = False
-        return
+        return message
 
 ###### DRIVE ######
 
@@ -191,7 +193,7 @@ class VoiceCommands():
             robot.drive_straight(distance_mm(drive_duration*drive_speed), speed_mmps(drive_speed), should_play_anim=True).wait_for_completed()
             #time.sleep(drive_duration)
 
-            return #"I drove " + drive_dir + " for " + str(drive_duration) + " seconds!"
+            return "I drove " + drive_dir + " for " + str(drive_duration) + " seconds!"
 
         return "Error: bad drive duration!"
 
@@ -212,7 +214,7 @@ class VoiceCommands():
             drive_angle = -drive_angle
 
         robot.turn_in_place(degrees(drive_angle)).wait_for_completed()
-        return #"I turned " + str(drive_angle) + " degrees!"
+        return "I turned " + str(drive_angle) + " degrees!"
 
         #return "Error: bad drive angle!"
 
@@ -226,8 +228,8 @@ class VoiceCommands():
         lift_height = extract_next_float(cmd_args)#[0]
 
         if lift_height is not None:
-            robot.set_lift_height(height=lift_height).wait_for_completed()
-            return #"I moved lift to " + str(lift_height)
+            robot.set_lift_height(height=lift_height/100).wait_for_completed()
+            return "I moved lift to " + str(lift_height)
 
         return "Error: bad height!"
 
@@ -235,11 +237,11 @@ class VoiceCommands():
 
     def head(self, robot:cozmo.robot.Robot = None, cmd_args = None):
 
-        head_angle_01 = extract_next_float(cmd_args)#[0]
+        head_angle_100 = extract_next_float(cmd_args)#[0]
 
-        if head_angle_01 is not None:
+        if head_angle_100 is not None:
             #FORMULA: Result = ((Input - InputLow) / (InputHigh - InputLow)) * (OutputHigh - OutputLow) + OutputLow;
-            head_angle = head_angle_01 * (44 + 25) - 25;
+            head_angle = head_angle_100/100 * (44 + 25) - 25;
             if self.log:
                 print("head angle = ", head_angle)
             head_angle_action = robot.set_head_angle(degrees(head_angle))
@@ -248,7 +250,7 @@ class VoiceCommands():
             resultString = "I moved head to " + "{0:.1f}".format(clamped_head_angle)
             if abs(head_angle - clamped_head_angle) > 0.01:
                 resultString += " (clamped to range)"
-            return #resultString
+            return resultString
 
         return "Error: bad angle!"
 
@@ -268,7 +270,7 @@ class VoiceCommands():
 
         if (entire_message is not None) and (len(entire_message) > 0):
             robot.say_text(entire_message).wait_for_completed()
-            return #'I said "' + entire_message + '"!'
+            return 'I said "' + entire_message + '"!'
 
         return "Error: no message!"
 

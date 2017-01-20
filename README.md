@@ -1,6 +1,6 @@
-# Cozmo voice Commands (CvC) - Version 0.6.1
+# Cozmo voice Commands (CvC) - Version 0.6.3
 
-Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian and French* but it's very easy to add new languages!
+Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian, French, Dutch* but it's very easy to add new languages!
 
 ### Description
 You can say _"Cozmo, **forward** 20 THEN **right** 90"_, or _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate left 90 degrees **THEN** dance **THEN** drive back to your charger?"_, **and Cozmo will execute the commands in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, **it even parses verbs in their different conjugations**, and numbers as arguments of the action to perform.  
@@ -29,17 +29,22 @@ you only need to [install git](https://git-scm.com/download/win) as it is not in
 **note:** to update **CvC**, repeat step **2**.
 
 ### Usage
-* run command `cvc` from the Terminal application
+* run command `cvc` from the Terminal application.
+  * Optional arguments:  
+`--no-wait[-N]`: enable deprecated continue listening mode  
+`--log[-L]`: enable verbose logging  
 * choose speech recognition language and press enter.
-* press <SHIFT> when you are ready, then issue your commands by voice (you have 5 seconds to start talking before it Timeouts), not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: _"Ok COZMO, my friend, would you enjoy DANCING?"_  
-**You can issue multiple commands at once:** use the word *"THEN"* (_"POI"_ in Italian, _"ALORS"_ in French), to separate them. Right now these commands will be executed in a sequence. I plan to make some of them to be executed in parallel in the near future.
+* press **SHIFT** when you are ready, then issue your commands by voice (you have 5 seconds to start talking before it Timeouts), not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: _"Ok COZMO, my friend, would you enjoy DANCING?"_  
+**You can issue multiple commands at once:** use the word *"THEN"* (_"POI"_ in Italian, _"ALORS"_ in French, _"DAARNA"_ in Dutch, and so on...), to separate them. Right now these commands will be executed in a sequence. I plan to make some of them to be executed in parallel in the near future.
 * **A list of supported commands and arguments is provided at runtime.**
 
 ### Customization
 From version 0.6 you can now add new languages and commands with ease: inside `cvc/languages` folder you'll find one .json file for each language (i.e. `1_en.json`). To add a new command just duplicate one of the existing commands inside the .json, changing its parameters with the desired ones (_be careful to keep the same structure_):  
-  * `'action'` is the name of the method/function you are going to create in `voice_commands.py`
-  * `'words'` are the recognized words  
-  * `'usage'` is a description/usage of your command
+
+* `'action'` is the name of the method/function you are going to create in `voice_commands.py`
+* `'words'` are the recognized words  
+* `'usage'` is a description/usage of your command  
+
 then open `voice_commands.py` and create the new method/function for your command, just copying an existing one, taking care to use the same name you set in the `'action'` parameter, inside the .json.  
 **You can even add new words to existing commands**, only be careful to not use the same words in different commands.  
 To add a new language, duplicate one of the included .json language files, using the same naming, and **translate its contents**.

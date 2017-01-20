@@ -1,0 +1,27 @@
+{
+    "name":"Nederlands",
+    "lang":"nl",
+    "lang_ext":"nl-NL",
+    "separator":"daarna",
+    "instructions":"Het is mogelijk stem commando's te geven aan Cozmo. Meerdere commando's kunnen tegelijkertijd gegeven worden door ze te scheiden met het woord 'DAARNA'.\nBeschikbare commando's zijn:",
+    "text_wait":"\nDRUK OP DE <SHIFT> TOETS OM COMMANDO'S TE GEVEN...",
+    "text_say":"\nSPREEK DE COMMANDO'S NU IN (Time out: 5 seconden - gebruik ctrl+c om het programma te verlaten)",
+    "error_one":"Sorry, maar ik begreep niet alle commando's. Beschikbare commando's zijn:",
+    "error_all":"Sorry, maar ik begreep geen enkel commando. Beschikbare commando's zijn:",
+    "commands":
+    [
+        {"action":"forward", "words":["vooruit","voorruit","voorwaarts","voren","rechtdoor"], "usage":"Cozmo rijdt X seconden vooruit."},
+        {"action":"backward", "words":["achteruit","achteren", "terug"], "usage":"Cozmo rijdt X seconden achteruit."},
+        {"action":"right", "words":["rechts"], "usage":"Cozmo draait X graden naar rechts, of een kwartslag als er geen graden worden opgegeven."},
+        {"action":"left", "words":["links"], "usage":"Cozmo draait X graden naar links, of een kwartslag als er geen graden worden opgegeven."},
+        {"action":"lift", "words":["optillen","omhoog","til","arm"], "usage":"Cozmo tilt zijn arm naar X (min:0, max:1)."},
+        {"action":"head", "words":["hoofd","draai","til"], "usage":"Cozmo tilt zijn hoofd naar X (min:0, max:1)."},
+        {"action":"look", "words":["kijk","zoek"], "usage":"Cozmo zoekt naar een gezicht."},
+        {"action":"follow", "words":["volg","bekijk"], "usage":"Cozmo volgt een gezicht."},
+        {"action":"picture", "words":["foto"], "usage":"Cozmo maakt een foto en bewaart deze in de map waar CvC is gestart."},
+        {"action":"say", "words":["zeg","praat","spreek"], "usage":"Cozmo zegt X (X is alles na het commando 'zeg')."},
+        {"action":"blocks", "words":["blokken","kubussen","speel"], "usage":"Cozmo speelt met zijn blokken."},
+        {"action":"dance", "words":["dans","spring"], "usage":"Cozmo danst."},
+        {"action":"charger", "words":["oplader","basis"], "usage":"Cozmo probeert in 3 pogingen op zijn lader te rijden."}
+    ]
+}
