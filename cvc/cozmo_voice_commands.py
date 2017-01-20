@@ -231,7 +231,7 @@ def parse_arguments():
 
     if "--no-wait" or "-W" in sys.argv:
         wait_for_shift = False
-    elif "--log" or "-L" in sys.argv:
+    if "--log" or "-L" in sys.argv:
         log = True
 
     if log:
