@@ -181,8 +181,9 @@ def listen(robot: cozmo.robot.Robot):
             print("You said: " + recognized)
 
             '''Check if one of the activation commands is in the recognized string'''
-            if set(commands_activate).intersection(recognized.split()):
-                cprint("Action command recognized", "green")
+            found_command = set(commands_activate).intersection(recognized.split())
+            if found_command:
+                cprint("Action command recognized: " + str(found_command), "green")
                 cmd_funcs, cmd_args = extract_commands_from_string(recognized) #check if a corresponding command exists
                 executeComands(robot, cmd_funcs, cmd_args)
             else:
