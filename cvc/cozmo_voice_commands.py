@@ -102,12 +102,11 @@ def load_jsons():
 
     if log:
         print("Package Location: " + package_location + "\nRelative location: " + relative_location)
-        
+
     for file in glob.glob(absolute_location):
         with open(file) as json_file:
             languages.append(json.load(json_file))
-            if (log):
-                cprint("loaded: " + str(file) + " ", "yellow")
+            cprint("loaded: " + str(file.rpartition("/")[-1]) + " ", "yellow")
 
     if len(languages) == 0:
         cprint("\nno languages found! Quitting...", "red")
