@@ -236,7 +236,7 @@ def parse_arguments():
         log = True
 
     if log:
-        print ('Argument List:', str(sys.argv))
+        print ('Arguments list:', str(sys.argv[1:]))
 
 
 def prompt(id = 1):

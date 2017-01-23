@@ -5,7 +5,7 @@
     "separator":"poi",
     "instructions":"Puoi impartire comandi vocali a Cozmo. Puoi dare comandi in sequenza separandoli con la parola 'POI'.\nI comandi disponibili sono:",
     "text_wait":"\nPREMI <SHIFT> QUANDO SEI PRONTO A PARLARE...",
-    "text_say":"\nPronuncia i tuoi commandi (Tiemout: 5 secondi - ctrl+c to exit)",
+    "text_say":"\nPronuncia i tuoi commandi (Tiemout: 5 secondi - ctrl+c per uscire)",
     "error_one":"Mi spiace non ho capito tutti i comandi, i comandi disponibili sono:",
     "error_all":"Mi spiace non ho capito nessuno dei comandi, i comandi disponibili sono:",
     "commands":
