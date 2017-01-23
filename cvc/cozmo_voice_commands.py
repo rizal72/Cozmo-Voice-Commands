@@ -185,7 +185,7 @@ def listen(robot: cozmo.robot.Robot):
             if found_command:
                 cprint("Action command recognized: " + str(found_command), "green")
                 cmd_funcs, cmd_args = extract_commands_from_string(recognized) #check if a corresponding command exists
-                executeComands(robot, cmd_funcs, cmd_args)
+                executeCommands(robot, cmd_funcs, cmd_args)
             else:
                 cprint("You did not say the magic word: " + commands_activate[0], "red")
                 if robot:
@@ -202,7 +202,7 @@ def listen(robot: cozmo.robot.Robot):
             cprint("Timeout...", "red")
             prompt()
 
-def executeComands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
+def executeCommands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
     if robot:
         vc.check_charger(robot,distance=70)
     for i in range(len(cmd_funcs)):
