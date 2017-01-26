@@ -175,7 +175,14 @@ def listen(robot: cozmo.robot.Robot):
         recognized = None
 
         '''LISTENING'''
-        audio = recognizer.listen(source, timeout = 5)
+        try:
+            audio = recognizer.listen(source, timeout = 5)
+        except sr.WaitTimeoutError:
+            cprint("Timeout...", "red")
+            if robot:
+                flash_backpack(robot, False)
+            prompt()
+            return
 
         cprint("Done Listening: recognizing...","green")
 
@@ -209,9 +216,7 @@ def listen(robot: cozmo.robot.Robot):
         except sr.RequestError as e:
             cprint("Could not request results from Speech Recognition service, check your web connection; {0}".format(e), "red")
             prompt()
-        except sr.WaitTimeoutError:
-            cprint("Timeout...", "red")
-            prompt()
+
 
 def executeCommands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
     if robot:
