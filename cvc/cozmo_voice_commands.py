@@ -104,9 +104,9 @@ def load_jsons():
 
     for file in glob.glob(absolute_location):
         with open(file) as json_file:
-            filename = file.rpartition("/")[-1]
-            id = int(filename[0])
-            languages.insert(id-1, json.load(json_file))
+            filename = file.rpartition("/")[-1] #get filename from path
+            id = int(filename[0]) #get index from filename
+            languages.insert(id-1, json.load(json_file)) #insert json at index
             cprint("loaded: " + str(filename) + " ", "yellow")
 
     if len(languages) == 0:
