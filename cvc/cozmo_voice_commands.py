@@ -24,7 +24,8 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-title = "Cozmo-Voice-Commands (CvC) - Version 0.6.5"
+version = "Version 0.6.5"
+title = "Cozmo-Voice-Commands (CvC) - " + version
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
 wait_for_shift = True
@@ -36,12 +37,12 @@ languages = []
 
 ##### MAIN ######
 def main():
+    parse_arguments()
     clearScreen = os.system('cls' if os.name == 'nt' else 'clear')
     cprint(title, "green", attrs=['bold'], end='')
     cprint(author, "cyan")
     cozmo.robot.Robot.drive_off_charger_on_connect = False
 
-    parse_arguments()
 
     try:
         cozmo.run_program(run)
@@ -250,7 +251,9 @@ def executeCommands(robot: cozmo.robot.Robot, cmd_funcs, cmd_args):
 
 def parse_arguments():
     global wait_for_shift, log
-
+    if "--version" in sys.argv or "-V" in sys.argv:
+        print(version)
+        sys.exit()
     if "--no-wait" in sys.argv or "-W" in sys.argv:
         wait_for_shift = False
     if "--log" in sys.argv or "-L" in sys.argv:
