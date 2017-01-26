@@ -32,7 +32,7 @@ you only need to [install git](https://git-scm.com/download/win) as it is not in
 * run command `cvc` from the Terminal application.
   * Optional arguments:  
 `--version[-V]`: print version and exit  
-`--no-wait[-N]`: enable deprecated continue listening mode  
+`--no-wait[-N]`: enable deprecated continuous listening mode  
 `--log[-L]`: enable verbose logging  
 * choose speech recognition language and press enter.
 * press **SHIFT** when you are ready, then issue your commands by voice (you have 5 seconds to start talking before it Timeouts), not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: _"Ok COZMO, my friend, would you enjoy DANCING?"_  
