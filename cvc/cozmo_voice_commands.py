@@ -104,8 +104,10 @@ def load_jsons():
 
     for file in glob.glob(absolute_location):
         with open(file) as json_file:
-            languages.append(json.load(json_file))
-            cprint("loaded: " + str(file.rpartition("/")[-1]) + " ", "yellow")
+            filename = file.rpartition("/")[-1]
+            id = int(filename[0])
+            languages.insert(id-1, json.load(json_file))
+            cprint("loaded: " + str(filename) + " ", "yellow")
 
     if len(languages) == 0:
         cprint("\nno languages found! Quitting...", "red")
