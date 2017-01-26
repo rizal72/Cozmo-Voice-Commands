@@ -110,6 +110,8 @@ def load_jsons():
     if len(languages) == 0:
         cprint("\nno languages found! Quitting...", "red")
         sys.exit()
+    else:
+        languages.sort()
     #if log:
     #    print("LANGUAGES:\n"+str(languages))
 
