@@ -24,14 +24,13 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-title = "Cozmo-Voice-Commands (CvC) - Version 0.6.4"
+title = "Cozmo-Voice-Commands (CvC) - Version 0.6.5"
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
 wait_for_shift = True
 lang = None
 lang_data = None
 commands_activate = ["cozmo", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
-recognizer = sr.Recognizer()
 vc = None
 languages = []
 
@@ -163,19 +162,28 @@ def listen(robot: cozmo.robot.Robot):
         checkBattery(robot)
         flash_backpack(robot, True)
 
+    recognizer = sr.Recognizer()
+
     '''SETUP MIC'''
     with sr.Microphone() as source:
 
         prompt(2)
 
-        recognizer.pause_threshold = 0.8
-        recognizer.dynamic_energy_threshold = True
+        #recognizer.pause_threshold = 0.8
+        recognizer.dynamic_energy_threshold = False #was True
+        recognizer.adjust_for_ambient_noise(source)
         recognized = None
 
-        '''STARTS LISTENING'''
-        try:
-            audio = recognizer.listen(source, timeout = 5)
+        '''LISTENING'''
+        audio = recognizer.listen(source, timeout = 5)
 
+        cprint("Done Listening: recognizing...","green")
+
+        if robot:
+            flash_backpack(robot, False)
+
+        '''RECOGNIZING'''
+        try:
             '''for testing purposes, we're just using the default API key
             to use another API key, change key=None to your API key'''
             recognized = recognizer.recognize_google(audio, key=None, language=lang_data['lang_ext']).lower() #GOOGLE
