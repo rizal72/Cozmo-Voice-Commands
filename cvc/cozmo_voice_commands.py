@@ -175,7 +175,7 @@ def listen(robot: cozmo.robot.Robot):
 
         prompt(2)
 
-        #recognizer.pause_threshold = 0.8
+        recognizer.pause_threshold = 0.8
         recognizer.dynamic_energy_threshold = False #was True
         recognizer.adjust_for_ambient_noise(source)
         recognized = None
@@ -216,7 +216,7 @@ def listen(robot: cozmo.robot.Robot):
                     robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
             prompt()
 
-        except sr.UnknownValueError:
+        except sr.UnknownValueError or LookupError:
             cprint("Speech Recognition service could not understand audio", "red")
             prompt()
         except sr.RequestError as e:
