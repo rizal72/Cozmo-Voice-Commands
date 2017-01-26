@@ -22,6 +22,6 @@
         {"action":"say", "words":["say","talk"], "usage":"Cozmo says X (where X is any text)."},
         {"action":"blocks", "words":["blocks","cubes","play"], "usage":"Cozmo plays with his blocks."},
         {"action":"dance", "words":["dance","jump"], "usage":"Cozmo dances."},
-        {"action":"charger", "words":["charger","base"], "usage":"Cozmo tries to park on is charger, in 3 tries."}
+        {"action":"charger", "words":["charger","base"], "usage":"Cozmo tries to park on his charger, in 3 tries."}
     ]
 }
