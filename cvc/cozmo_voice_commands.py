@@ -25,7 +25,7 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-version = "Version 0.6.6"
+version = "Version 0.6.7"
 title = "Cozmo-Voice-Commands (CvC) - " + version
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
