@@ -9,6 +9,7 @@ License: GNU
 import sys
 import os
 import asyncio
+import operator
 import glob
 import json
 
@@ -122,7 +123,8 @@ def load_jsons():
         cprint("\nno languages found! Quitting...", "red")
         sys.exit()
     else:
-        languages = sorted(languages, key=lambda k: k['id']) #sort lang by ID
+        #languages = sorted(languages, key=lambda k: k['id']) #sort lang by ID
+        languages.sort(key=operator.itemgetter('id'))
 
     #if log:
     #    print("LANGUAGES:\n"+str(languages))
