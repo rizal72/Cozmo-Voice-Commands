@@ -40,8 +40,9 @@ you only need to [install git](https://git-scm.com/download/win) as it is not in
 * **A list of supported commands and arguments is provided at runtime.**
 
 ### Customization
-From version 0.6 you can now add new languages and commands with ease: inside `cvc/languages` folder you'll find one .json file for each language (i.e. `1_en.json`). To add a new command just duplicate one of the existing commands inside the .json, changing its parameters with the desired ones (_be careful to keep the same structure_):  
+From version 0.6 you can now add new languages and commands with ease: inside `cvc/languages` folder you'll find one .json file for each language (i.e. `en.json`). To add a new command just duplicate one of the existing commands inside the .json, changing its parameters with the desired ones (_be careful to keep the same structure_):  
 
+* **DO NOT FORGET** to change the id number, that decides language order (it's the first parameter).
 * `'action'` is the name of the method/function you are going to create in `voice_commands.py`
 * `'words'` are the recognized words  
 * `'usage'` is a description/usage of your command  
