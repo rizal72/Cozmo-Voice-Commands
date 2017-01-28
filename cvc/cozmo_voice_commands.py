@@ -24,7 +24,7 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-version = "Version 0.6.5"
+version = "Version 0.6.6"
 title = "Cozmo-Voice-Commands (CvC) - " + version
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
@@ -105,16 +105,24 @@ def load_jsons():
 
     for file in glob.glob(absolute_location):
         with open(file) as json_file:
+            languages.append(json.load(json_file))
+            if (log):
+                cprint("loaded: " + str(file) + " ", "yellow")
+
+    '''ALT VERSION
+    for file in glob.glob(absolute_location):
+        with open(file) as json_file:
             filename = file.rpartition("/")[-1] #get filename from path
             id = int(filename[0]) #get index from filename
             languages.insert(id-1, json.load(json_file)) #insert json at index
             cprint("loaded: " + str(filename) + " ", "yellow")
+    '''
 
     if len(languages) == 0:
         cprint("\nno languages found! Quitting...", "red")
         sys.exit()
-    #else:
-    #    languages.sort()
+    else:
+        languages = sorted(languages, key=lambda k: k['id']) #sort lang by ID
 
     #if log:
     #    print("LANGUAGES:\n"+str(languages))
