@@ -174,6 +174,8 @@ def set_data():
 
 def listen(robot: cozmo.robot.Robot):
 
+    cprint("wait...")
+
     if robot:
         checkBattery(robot)
         flash_backpack(robot, True)
@@ -183,12 +185,12 @@ def listen(robot: cozmo.robot.Robot):
     '''SETUP MIC'''
     with sr.Microphone() as source:
 
-        prompt(2)
-
         recognizer.pause_threshold = 0.8
         recognizer.dynamic_energy_threshold = False #was True
         recognizer.adjust_for_ambient_noise(source)
         recognized = None
+
+        prompt(2)
 
         '''LISTENING'''
         try:
