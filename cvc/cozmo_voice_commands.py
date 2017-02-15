@@ -32,7 +32,6 @@ log = False
 wait_for_shift = True
 lang = None
 lang_data = None
-commands_activate = ["cozmo", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
 vc = None
 languages = []
 
