@@ -25,14 +25,14 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-version = "Version 0.6.7"
+version = "Version 0.6.8"
 title = "Cozmo-Voice-Commands (CvC) - " + version
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
 wait_for_shift = True
 lang = None
 lang_data = None
-commands_activate = ["cozmo", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
+commands_activate = ["cozmo", "robot", "cosmo", "cosimo", "cosma", "cosima", "kosmos", "cosmos", "cosmic", "osmo", "kosovo", "peau", "kosmo", "kozmo", "gizmo"]
 vc = None
 languages = []
 
@@ -223,7 +223,7 @@ def listen(robot: cozmo.robot.Robot):
                 cmd_funcs, cmd_args = extract_commands_from_string(recognized) #check if a corresponding command exists
                 executeCommands(robot, cmd_funcs, cmd_args)
             else:
-                cprint("You did not say the magic word: " + commands_activate[0], "red")
+                cprint("You did not say the magic words: " + commands_activate[0] + ", " + commands_activate[1], "red")
                 if robot:
                     robot.play_anim("anim_pounce_reacttoobj_01_shorter").wait_for_completed()
             prompt()

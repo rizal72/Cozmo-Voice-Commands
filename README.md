@@ -1,4 +1,4 @@
-# Cozmo voice Commands (CvC) - Version 0.6.7
+# Cozmo voice Commands (CvC) - Version 0.6.8
 
 Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian, French, Dutch* but it's very easy to add new languages!
 
@@ -35,7 +35,7 @@ you only need to [install git](https://git-scm.com/download/win) as it is not in
 `--no-wait[-N]`: enable deprecated continuous listening mode  
 `--log[-L]`: enable verbose logging  
 * choose speech recognition language and press enter.
-* press **SHIFT** when you are ready, then issue your commands by voice (you have 5 seconds to start talking before it Timeouts), not too far from your PC, taking care to include the word "**Cozmo**" before any command you'll say: _"Ok COZMO, my friend, would you enjoy DANCING?"_  
+* press **SHIFT** when you are ready, then issue your commands by voice (you have 5 seconds to start talking before it Timeouts), not too far from your PC, taking care to include the words "**Cozmo**" or "**Robot**" before any command you'll say: _"Ok COZMO, my friend, would you enjoy DANCING?"_  
 **You can issue multiple commands at once:** use the word *"THEN"* (_"POI"_ in Italian, _"ALORS"_ in French, _"DAARNA"_ in Dutch, and so on...), to separate them. Right now these commands will be executed in a sequence. I plan to make some of them to be executed in parallel in the near future.
 * **A list of supported commands and arguments is provided at runtime.**
 
