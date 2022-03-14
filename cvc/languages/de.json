@@ -1,0 +1,28 @@
+{
+    "id":5,
+    "name":"Deutsch",
+    "lang":"de",
+    "lang_ext":"de-DE",
+    "separator":"danach",
+    "instructions":"Es ist möglich, Cozmo Sprachbefehle zu erteilen. Mehrere Befehle können gleichzeitig gegeben werden, indem sie mit dem Wort „danach“ getrennt werden.\nVerfügbare Befehle sind:",
+    "text_wait":"\nDrücken Sie die <SHIFT> -Taste, um Befehle zu geben...",
+    "text_say":"\nSprechen Sie die Befehle Jetzt (Zeitüberschreitung: 5 Sekunden - verwenden Sie Strg+C, um das Programm zu beenden)",
+    "error_one":"Entschuldigung, aber ich habe nicht alle Befehle verstanden. Verfügbare Befehle sind:",
+    "error_all":"Entschuldigung, aber ich habe keinen Befehl verstanden. Verfügbare Befehle sind:",
+    "commands":
+    [
+        {"action":"forward", "words":["Vorwärts","Vorwerts","forwerts","forverts","vorwert"], "usage":"Cozmo fährt X Sekunden vorwärts."},
+        {"action":"backward", "words":["rückwärts","rückwerts", "rueckwerts"], "usage":"Cozmo fährt X Sekunden zurück."},
+        {"action":"right", "words":["rechts","recht"], "usage":"Cozmo dreht X Grad nach rechts oder eine Vierteldrehung, wenn keine Grad angegeben sind."},
+        {"action":"left", "words":["links","Link","Linke"], "usage":"Cozmo dreht X Grad nach links oder eine Vierteldrehung, wenn keine Grad angegeben sind."},
+        {"action":"lift", "words":["arm hoch","ärmehoch","arm hoch","ärme hoch"], "usage":"Cozmo hebt seinen Arm zu X (min:0, max:1)."},
+        {"action":"head", "words":["Kopf","gopf","kop"], "usage":"Cozmo hebt seinen Kopf zu X (min:0, max:1)."},
+        {"action":"look", "words":["Guck","kuck","kuk","guk"], "usage":"Cozmo sucht nach einem Gesicht."},
+        {"action":"follow", "words":["folgen","folge","volge"], "usage":"Cozmo folgt einem Gesicht."},
+        {"action":"picture", "words":["foto","photo"], "usage":"Cozmo macht ein Foto und speichert es in dem Ordner, in dem CvC gestartet wurde."},
+        {"action":"say", "words":["sage","sag","saagen","saage"], "usage":"Cozmo zegt X (X is alles na het commando 'zeg')."},
+        {"action":"blocks", "words":["Qube","Blöcke","cube","kube"], "usage":"Cozmo spielt mit seinen Cubes."},
+        {"action":"dance", "words":["Tanzen","tanze","tanz"], "usage":"Cozmo tanzt."},
+        {"action":"charger", "words":["ladestation","basis","laden"], "usage":"Cozmo versucht in 3 Versuchen, sein Ladegerät zu fahren."}
+    ]
+}
