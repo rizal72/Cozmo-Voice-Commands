@@ -1,4 +1,4 @@
-# Cozmo voice Commands (CvC) - Version 0.6.9
+# Cozmo voice Commands (CvC)
 
 Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian, French, Dutch* but it's very easy to add new languages!
 

@@ -12,6 +12,7 @@ import asyncio
 import operator
 import glob
 import json
+import pkg_resources
 
 import cozmo
 
@@ -25,8 +26,8 @@ except ImportError:
 from . import voice_commands
 
 ###### VARS ######
-version = "Version 0.6.8"
-title = "Cozmo-Voice-Commands (CvC) - " + version
+version = pkg_resources.require("MyProject")[0].version
+title = "Cozmo-Voice-Commands (CvC) - Version " + version
 author =" - Riccardo Sallusti (http://riccardosallusti.it)"
 log = False
 wait_for_shift = True
