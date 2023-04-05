@@ -1,6 +1,18 @@
-# Cozmo voice Commands (CvC) - Version 0.6.8
+# Cozmo voice Commands (CvC) - Version 0.6.9
 
 Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian, French, Dutch* but it's very easy to add new languages!
+
+**IMPORTANT**  
+Cozmo and Cozmo SDK are no longer supported by their developers so, as time goes by, they will become no more compatible with newer Python versions and libraries.  
+**Cozmo SDK works well with Python 3.6**, so what I sugget is to create a Python virtual environment with that specific version. You can use VEnv, Conda or whathever software you like, as long as you install and use **CvC** in this environment. Otherwise you will end up having issues.  
+So, for example, if you use conda, first create the virtual environment, name it as you like (here I use cvc as name):  
+`conda create -n cvc python=3.6`  
+then activate it:  
+`conda activate cvc`  
+and then you can install CvC as described below:  
+`pip install --upgrade git+https://github.com/rizal72/Cozmo-Voice-Commands`
+then run it, typing:  
+`cvc`
 
 ### Description
 You can say _"Cozmo, **forward** 20 THEN **right** 90"_, or _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate left 90 degrees **THEN** dance **THEN** drive back to your charger?"_, **and Cozmo will execute the commands in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, **it even parses verbs in their different conjugations**, and numbers as arguments of the action to perform.  
@@ -22,9 +34,9 @@ Assuming that you've already performed the [**Cozmo SDK Setup**](http://cozmosdk
 you only need to [install git](https://git-scm.com/download/win) as it is not included by default.  
 
 2. install `cvc` package:  
-`pip3 install --upgrade git+https://github.com/rizal72/Cozmo-Voice-Commands`  
+`pip install --upgrade git+https://github.com/rizal72/Cozmo-Voice-Commands`  
   * If you are having permission issues (happens mainly on Linux) try:  
-  `pip3 install --upgrade --user git+https://github.com/rizal72/Cozmo-Voice-Commands`
+  `pip install --upgrade --user git+https://github.com/rizal72/Cozmo-Voice-Commands`
 
 **note:** to update **CvC**, repeat step **2**.
 
