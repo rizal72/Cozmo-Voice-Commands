@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 '''
 Cozmo Voice Commands (CvC)
 Author: Riccardo Sallusti - http://riccardosallusti.it
