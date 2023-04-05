@@ -1,18 +1,23 @@
 # Cozmo voice Commands (CvC)
 
-Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian, French, Dutch* but it's very easy to add new languages!
+Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian, French, German, Dutch* but it's very easy to add new languages!
 
-### **IMPORTANT**  
-Cozmo and Cozmo SDK are no longer supported by their developers so, as time goes by, they will be no longer compatible with newer Python versions and libraries.  
-**Cozmo SDK works well with Python 3.6**, so what I sugget is to create a Python virtual environment with that specific version. You can use VEnv, Conda or whathever software you like, as long as you install and use **CvC** in this environment. Otherwise you will end up having issues.  
-So, for example, if you use conda, first create the virtual environment, name it as you like (here I use cvc as name):  
+# **IMPORTANT!**  
+Unfortunately Cozmo and Cozmo SDK are no longer supported or updated by their developers so, as time goes by, they will be no longer compatible with newer Python versions and libraries.  
+**Cozmo SDK works well with Python 3.6**, so what I sugget is to create a Python **virtual environment** with that specific version, then let this app run inside it.   
+
+I suggest to use [Miniconda](https://docs.conda.io/en/latest/miniconda.html), because it's easy to specify a custom Python version on the fly.   
+First create the virtual environment and name it as you like (here I use cvc for simplicity):  
 `conda create -n cvc python=3.6`  
 then activate it:  
 `conda activate cvc`  
-and then you can install CvC as described below:  
+and then you can install CvC package as described below:  
 `pip install --upgrade git+https://github.com/rizal72/Cozmo-Voice-Commands` 
 then run it, typing:  
 `cvc`
+
+*note: remeber that you will still need `portaudio` to be installed on your system as described in the installation section below.
+#
 
 ### Description
 You can say _"Cozmo, **forward** 20 THEN **right** 90"_, or _"Hello Cozmo, my little friend, could you please drive forward for 3 seconds **THEN** rotate left 90 degrees **THEN** dance **THEN** drive back to your charger?"_, **and Cozmo will execute the commands in both cases**: the application will always dynamically match the recognized spoken words with the code methods and arguments, **it even parses verbs in their different conjugations**, and numbers as arguments of the action to perform.  
