@@ -3,14 +3,14 @@
 Issue multiple voice commands to [Cozmo](https://anki.com/en-us/cozmo), and watch him execute all of them sequentially: highly customizable, you can add new commands with ease. Recognizes *English, Italian, French, Dutch* but it's very easy to add new languages!
 
 ### **IMPORTANT**  
-Cozmo and Cozmo SDK are no longer supported by their developers so, as time goes by, they will become no more compatible with newer Python versions and libraries.  
+Cozmo and Cozmo SDK are no longer supported by their developers so, as time goes by, they will be no longer compatible with newer Python versions and libraries.  
 **Cozmo SDK works well with Python 3.6**, so what I sugget is to create a Python virtual environment with that specific version. You can use VEnv, Conda or whathever software you like, as long as you install and use **CvC** in this environment. Otherwise you will end up having issues.  
 So, for example, if you use conda, first create the virtual environment, name it as you like (here I use cvc as name):  
 `conda create -n cvc python=3.6`  
 then activate it:  
 `conda activate cvc`  
 and then you can install CvC as described below:  
-`pip install --upgrade git+https://github.com/rizal72/Cozmo-Voice-Commands`
+`pip install --upgrade git+https://github.com/rizal72/Cozmo-Voice-Commands` 
 then run it, typing:  
 `cvc`
 
